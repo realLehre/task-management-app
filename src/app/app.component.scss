@@ -47,6 +47,10 @@
   width: 56px;
   cursor: pointer;
 
+  &:hover {
+    background: $purple_light;
+  }
+
   & img {
     position: absolute;
     top: 50%;
