@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewChecked,
+  AfterViewInit,
+  Component,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MatDrawer, MatDrawerToggleResult } from '@angular/material/sidenav';
 
 @Component({
@@ -6,11 +12,18 @@ import { MatDrawer, MatDrawerToggleResult } from '@angular/material/sidenav';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewChecked, AfterViewInit {
   showFiller: boolean = false;
-  @ViewChild('drawer') drawer!: MatDrawer;
+  @ViewChild('drawer', { static: false }) drawer!: MatDrawer;
 
-  ngOnInit(): void {
-    this.drawer.toggle;
+  ngOnInit(): void {}
+
+  ngAfterViewChecked(): void {
+    // this.drawer.toggle();
+  }
+
+  ngAfterViewInit(): void {
+    console.log(this.drawer);
+    this.drawer.opened = true;
   }
 }

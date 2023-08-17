@@ -1,16 +1,24 @@
 @import "config";
 
 .app-container {
-  padding: 30px 0;
+  padding: 0px 0;
   position: relative;
   width: 100%;
   height: 100%;
+  background: $light;
 }
 
 .app-header {
-  position: absolute;
-  top: 30px;
-  left: 30px;
+  //   position: absolute;
+  //   top: 30px;
+  //   left: 30px;
+  z-index: 6;
+  margin-bottom: 20px;
+}
+
+.drawer-container {
+  position: relative;
+  z-index: 5;
 }
 
 .sidenav {
