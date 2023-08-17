@@ -5,7 +5,7 @@
 
   <mat-drawer-container class="drawer-container">
     <mat-drawer #drawer class="sidenav" mode="side">
-      <app-boards></app-boards>
+      <app-boards (showSideBar)="toggleSideNav()"></app-boards>
     </mat-drawer>
 
     <div class="sidenav-content">
@@ -15,4 +15,8 @@
       <router-outlet></router-outlet>
     </div>
   </mat-drawer-container>
+
+  <div class="sideBar-toggler" *ngIf="isShowSideNav" (click)="toggleSideNav()">
+    <img src="../assets/eye.png" alt="" />
+  </div>
 </div>

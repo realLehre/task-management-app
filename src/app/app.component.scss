@@ -34,3 +34,23 @@
   padding-left: 30px;
   padding-top: 30px;
 }
+
+.sideBar-toggler {
+  position: absolute;
+  z-index: 7;
+  left: 0;
+  bottom: 20px;
+  background: $purple_dark;
+  border-top-right-radius: 50%;
+  border-bottom-right-radius: 50%;
+  height: 56px;
+  width: 56px;
+  cursor: pointer;
+
+  & img {
+    position: absolute;
+    top: 50%;
+    right: 45%;
+    transform: translateY(-50%);
+  }
+}

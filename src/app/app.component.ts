@@ -13,17 +13,19 @@ import { MatDrawer, MatDrawerToggleResult } from '@angular/material/sidenav';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit, AfterViewChecked, AfterViewInit {
-  showFiller: boolean = false;
+  isShowSideNav: boolean = false;
   @ViewChild('drawer', { static: false }) drawer!: MatDrawer;
 
   ngOnInit(): void {}
 
-  ngAfterViewChecked(): void {
-    // this.drawer.toggle();
-  }
+  ngAfterViewChecked(): void {}
 
   ngAfterViewInit(): void {
-    console.log(this.drawer);
     this.drawer.opened = true;
+  }
+
+  toggleSideNav() {
+    this.isShowSideNav = !this.isShowSideNav;
+    this.drawer.opened = !this.drawer.opened;
   }
 }
