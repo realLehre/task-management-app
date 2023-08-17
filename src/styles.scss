@@ -5,11 +5,23 @@
 html,
 body {
   height: 100%;
+}
+
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
 body {
   font-family: $font-family;
   font-size: 10px;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
 }

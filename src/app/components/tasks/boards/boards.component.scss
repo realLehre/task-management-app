@@ -1,0 +1,67 @@
+@import "config";
+
+.boards-container {
+  width: 100%;
+  height: 100%;
+}
+
+// .boards-main {
+// }
+
+.boards-heading {
+  padding-left: 30px;
+  font-size: $heading-S;
+  font-weight: 500;
+  color: $grey-medium;
+  letter-spacing: 2.4px;
+}
+
+.boards {
+  margin-top: 20px;
+}
+
+.board {
+  padding: 15px 0;
+  padding-left: 30px;
+  width: 90%;
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
+  cursor: pointer;
+
+  &.active {
+    background: $purple_dark;
+
+    & a {
+      color: $white;
+
+      & svg {
+        color: $white;
+      }
+    }
+  }
+
+  &.new {
+    background: transparent;
+
+    & a {
+      color: $purple_dark;
+
+      & svg {
+        color: $purple_dark;
+      }
+    }
+  }
+
+  & a {
+    display: flex;
+    align-items: center;
+    font-size: $heading-M;
+    font-weight: 500;
+    color: $grey-medium;
+
+    & svg {
+      margin-right: 10px;
+      color: $grey-medium;
+    }
+  }
+}
