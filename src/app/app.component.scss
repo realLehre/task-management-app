@@ -1,0 +1,23 @@
+@import "config";
+
+.app-container {
+  padding: 30px 0;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.app-header {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+}
+
+.sidenav {
+  width: 276px;
+  height: 100%;
+}
+
+.sidenav-content {
+  height: 100%;
+}
