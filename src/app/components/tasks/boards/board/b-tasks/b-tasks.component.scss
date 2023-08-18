@@ -1,0 +1,61 @@
+@import "config";
+
+.tasks-container {
+  width: 100%;
+  background: $light;
+  padding-left: 30px;
+}
+
+.tasks-main {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+  background: $light;
+  padding-bottom: 40px;
+}
+
+.tasks-group {
+  width: 280px;
+
+  &:not(:last-child) {
+    margin-right: 25px;
+  }
+
+  &-heading {
+    font-size: $heading-M;
+    font-weight: 500;
+    color: $grey-medium;
+    letter-spacing: 2.4px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+
+    & .icon {
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background: red;
+      display: inline-block;
+      margin-right: 12px;
+    }
+  }
+}
+
+.new-column {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: $heading-XL;
+  color: $grey-medium;
+  font-weight: 600;
+  width: 280px;
+  height: 100vh;
+  background: $purple_X_light;
+  cursor: pointer;
+  margin-top: 40px;
+
+  &:hover {
+    color: $purple_dark;
+  }
+}

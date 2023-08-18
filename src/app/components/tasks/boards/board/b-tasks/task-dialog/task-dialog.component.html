@@ -1,0 +1,57 @@
+<div class="task-dialog-container">
+  <div class="add-task">
+    <div class="add-task-heading">Add New Task</div>
+
+    <div class="add-task-form">
+      <form class="add-task-form-main">
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input
+            name="title"
+            type="text"
+            placeholder="e.g. Take coffee break"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea
+            name="description"
+            id=""
+            cols="30"
+            rows="10"
+            placeholder="e.g. It’s always good to take a break. This 15 minute break will 
+recharge the batteries a little."
+          ></textarea>
+        </div>
+
+        <div class="form-group sub-tasks">
+          <label>Subtasks</label>
+          <div class="sub-tasks">
+            <div class="sub-task">
+              <input type="text" placeholder="e.g. Make coffee" />
+              <i class="fa-solid fa-xmark"></i>
+            </div>
+
+            <div class="sub-task">
+              <input type="text" placeholder="e.g. Drink coffee & Smile" />
+              <i class="fa-solid fa-xmark"></i>
+            </div>
+          </div>
+          <button type="button">+Add New Subtask</button>
+        </div>
+
+        <div class="form-group slect">
+          <label for="status">Status</label>
+          <select name="status" id="status-select">
+            <option value="todo">Todo</option>
+            <option value="doing">Doing</option>
+            <option value="done">Done</option>
+          </select>
+        </div>
+
+        <button type="submit">Create Task</button>
+      </form>
+    </div>
+  </div>
+</div>

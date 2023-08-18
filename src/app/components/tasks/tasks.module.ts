@@ -5,6 +5,7 @@ import { BTasksComponent } from './boards/board/b-tasks/b-tasks.component';
 import { BTaskComponent } from './boards/board/b-tasks/b-task/b-task.component';
 import { CommonModule } from '@angular/common';
 import { TasksRoutingModule } from './tasks-routing.module';
+import { TaskDialogComponent } from './boards/board/b-tasks/task-dialog/task-dialog.component';
 
 @NgModule({
   imports: [CommonModule, TasksRoutingModule],
@@ -13,6 +14,7 @@ import { TasksRoutingModule } from './tasks-routing.module';
     BoardComponent,
     BTasksComponent,
     BTaskComponent,
+    TaskDialogComponent,
   ],
   exports: [BoardsComponent, BoardComponent, BTasksComponent, BTaskComponent],
 })

@@ -8,9 +8,10 @@ import { AppComponent } from './app.component';
 import { TasksModule } from './components/tasks/tasks.module';
 import { HeaderComponent } from './components/header/header.component';
 import { MaterialModule } from './material.module';
+import { DialogComponent } from './shared/dialog/dialog.component';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent],
+  declarations: [AppComponent, HeaderComponent, DialogComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

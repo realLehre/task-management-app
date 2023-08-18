@@ -1,0 +1,87 @@
+@import "config";
+
+.task-dialog-container {
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.add-task {
+  &-heading {
+    font-size: $heading-L;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+}
+
+.add-task-form {
+  width: 100%;
+}
+
+.add-task-form-main {
+  width: 100%;
+
+  & .form-group {
+    & label {
+      display: block;
+      font-size: 15px;
+      font-weight: 600;
+      color: $grey-medium;
+      margin-bottom: 8px;
+    }
+
+    & input,
+    textarea,
+    select {
+      width: 100%;
+      border: 2px solid $purple_X_light;
+      padding: 12px 10px;
+      border-radius: 4px;
+      font-size: 15px;
+      line-height: 1.5;
+
+      &::placeholder {
+        font-size: 15px;
+        color: rgba(black, 0.5);
+        line-height: 1.5;
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    &:not(:last-child) {
+      margin-bottom: 20px;
+    }
+  }
+}
+
+.sub-tasks {
+  & .sub-task {
+    display: flex;
+    align-items: center;
+
+    &:not(:last-child) {
+      margin-bottom: 15px;
+    }
+
+    & i {
+      margin-left: 20px;
+      font-size: 30px;
+      font-weight: bold;
+      color: $grey-medium;
+      cursor: pointer;
+    }
+  }
+
+  & button {
+    @include button(rgba($purple_dark, 0.3), $purple_dark, $heading-M);
+    width: 100%;
+    margin-top: 20px;
+  }
+}
+
+#status-select {
+  & option {
+    padding: 40px;
+  }
+}
