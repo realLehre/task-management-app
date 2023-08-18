@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./task-dialog.component.scss'],
 })
 export class TaskDialogComponent implements OnInit {
-  t = 6;
+  checked = false;
   constructor() {}
 
   ngOnInit(): void {}

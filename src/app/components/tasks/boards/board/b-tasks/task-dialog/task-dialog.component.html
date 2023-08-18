@@ -1,5 +1,5 @@
 <div class="task-dialog-container">
-  <div class="add-task">
+  <!-- <div class="add-task">
     <div class="add-task-heading">Add New Task</div>
 
     <div class="add-task-form">
@@ -41,17 +41,67 @@ recharge the batteries a little."
           <button type="button">+Add New Subtask</button>
         </div>
 
-        <div class="form-group slect">
+       
+        <div class="form-group select">
           <label for="status">Status</label>
-          <select name="status" id="status-select">
-            <option value="todo">Todo</option>
-            <option value="doing">Doing</option>
-            <option value="done">Done</option>
-          </select>
+          <mat-form-field>
+            <mat-select>
+              <mat-option value="todo" selected> Todo </mat-option>
+              <mat-option value="doing"> Doing </mat-option>
+              <mat-option value="done"> Done </mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
 
-        <button type="submit">Create Task</button>
+        <button type="submit" class="submit-btn">Create Task</button>
       </form>
+    </div>
+  </div> -->
+
+  <div class="view-task">
+    <div class="view-task-heading">
+      <div class="task-heading">
+        Research pricing points of various competitors and trial different
+        business models
+      </div>
+      <i class="fa-solid fa-ellipsis-vertical"></i>
+    </div>
+
+    <div class="view-task-description">
+      We know what we're planning to build for version one. Now we need to
+      finalise the first pricing model we'll use. Keep iterating the subtasks
+      until we have a coherent proposition.
+    </div>
+
+    <div class="view-task-subtasks">
+      <div class="view-task-subtasks-heading">Subtasks (2 of 3)</div>
+      <div class="checks">
+        <mat-checkbox class="example-margin" [(ngModel)]="checked"
+          >Research competitor pricing and business models</mat-checkbox
+        >
+
+        <mat-checkbox class="example-margin" [(ngModel)]="checked"
+          >Outline a business model that works for our solution</mat-checkbox
+        >
+
+        <mat-checkbox class="example-margin" [(ngModel)]="checked"
+          >Talk to potential customers about our proposed solution and ask for
+          fair price expectancy</mat-checkbox
+        >
+      </div>
+    </div>
+
+    <div class="status">
+      <div class="form-group select">
+        <label for="status"> Current Status</label>
+        <mat-form-field>
+          <mat-select>
+            <mat-option value="todo" selected> Todo </mat-option>
+            <mat-option value="doing"> Doing </mat-option>
+            <mat-option value="done"> Done </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
     </div>
   </div>
 </div>

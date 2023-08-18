@@ -30,13 +30,15 @@
 
     & input,
     textarea,
-    select {
+    select,
+    mat-select {
       width: 100%;
       border: 2px solid $purple_X_light;
       padding: 12px 10px;
       border-radius: 4px;
       font-size: 15px;
       line-height: 1.5;
+      cursor: pointer;
 
       &::placeholder {
         font-size: 15px;
@@ -46,6 +48,7 @@
 
       &:focus {
         outline: none;
+        border: 2px solid $purple_light;
       }
     }
 
@@ -70,6 +73,10 @@
       font-weight: bold;
       color: $grey-medium;
       cursor: pointer;
+
+      &:hover {
+        color: $orange_dark;
+      }
     }
   }
 
@@ -83,5 +90,70 @@
 #status-select {
   & option {
     padding: 40px;
+  }
+}
+
+mat-form-field {
+  width: 100%;
+  margin-top: -20px;
+}
+
+.mat-option.mat-focus-indicator {
+  &:hover {
+    background: $purple_light;
+  }
+}
+
+.mat-option-text {
+  font-size: 17px;
+}
+
+.mat-form-field-infix.ng-tns-c70-0 {
+  padding: 10px 0;
+  padding-right: 15px;
+}
+
+.mat-form-field-infix {
+  background-color: white;
+  border-color: blue !important;
+  border-top: none;
+  border-bottom: 3px solid $purple_dark;
+  padding-left: 5px !important;
+}
+
+.mat-select-value,
+.mat-select-arrow,
+.mat-form-field-hide-placeholder .mat-select-placeholder,
+.mat-form-field-appearance-legacy .mat-form-field-label {
+  color: black !important;
+  opacity: 1;
+}
+
+.mat-form-field-appearance-legacy .mat-select-value {
+  font-size: 18px;
+}
+
+::ng-deep .mat-form-field-underline {
+  display: none;
+}
+
+.submit-btn {
+  width: 100%;
+  @include button($purple_dark, $white, $heading-M);
+
+  &:hover {
+    background: $purple_light;
+  }
+}
+
+.view-task {
+  width: 100%;
+}
+
+mat-checkbox {
+  width: 100%;
+
+  & mat-checkbox-label {
+    word-wrap: break-word;
   }
 }
