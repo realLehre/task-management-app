@@ -9,6 +9,7 @@ import { BTaskComponent } from './boards/board/b-tasks/b-task/b-task.component';
 import { TasksRoutingModule } from './tasks-routing.module';
 import { TaskDialogComponent } from './boards/board/b-tasks/task-dialog/task-dialog.component';
 import { MaterialModule } from 'src/app/material.module';
+import { BoardsDialogComponent } from './boards/boards-dialog/boards-dialog.component';
 
 @NgModule({
   imports: [CommonModule, TasksRoutingModule, MaterialModule, FormsModule],
@@ -18,7 +19,15 @@ import { MaterialModule } from 'src/app/material.module';
     BTasksComponent,
     BTaskComponent,
     TaskDialogComponent,
+    BoardsDialogComponent,
   ],
-  exports: [BoardsComponent, BoardComponent, BTasksComponent, BTaskComponent],
+  exports: [
+    BoardsComponent,
+    BoardComponent,
+    BTasksComponent,
+    BTaskComponent,
+    TaskDialogComponent,
+    BoardsDialogComponent,
+  ],
 })
 export class TasksModule {}

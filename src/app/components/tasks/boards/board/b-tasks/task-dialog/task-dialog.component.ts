@@ -10,4 +10,8 @@ export class TaskDialogComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  toggleCheck() {
+    this.checked = !this.checked;
+  }
 }
