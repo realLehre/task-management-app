@@ -9,6 +9,7 @@
   align-items: center;
 }
 
+// ***** ADD TASK *****
 .add-task {
   &-heading {
     font-size: $heading-L;
@@ -151,6 +152,8 @@ mat-form-field {
   }
 }
 
+// ***** VIEW TASK *******
+
 .view-task {
   width: 100%;
 
@@ -194,6 +197,7 @@ mat-form-field {
       margin-bottom: 20px;
 
       & .box-group {
+        position: relative;
         background: $light;
         border-radius: 4px;
         padding: 12px 10px;
@@ -202,28 +206,74 @@ mat-form-field {
         width: 100%;
         cursor: pointer;
 
-        & input {
-          border: none;
-          outline: none;
-          width: 20px !important;
-          height: 20px !important;
+        .check-input {
+          width: 20px;
+          height: 20px;
           margin-right: 10px;
-          border: 1px solid rgba(black, 0.3);
 
-          &:checked + .strikethrough {
+          & input {
+            border: none;
+            outline: none;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: $purple_dark;
+            visibility: hidden;
+
+            &:checked ~ .checkmark {
+              background: $purple_dark;
+
+              &:after {
+                display: block;
+              }
+            }
+          }
+
+          .checkmark {
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%);
+            height: 20px;
+            width: 20px;
+            background-color: $white;
+            border-radius: 4px;
+            border: 1px solid rgba($grey-medium, 0.4);
+
+            &:after {
+              content: "";
+              position: absolute;
+              display: none;
+              left: 5px;
+              bottom: 3px;
+              width: 4px;
+              height: 10px;
+              border: solid white;
+              border-width: 0 4px 4px 0;
+              -webkit-transform: rotate(45deg);
+              -ms-transform: rotate(45deg);
+              transform: rotate(45deg);
+            }
+          }
+        }
+
+        & label {
+          font-weight: 700;
+          width: 90%;
+          cursor: pointer;
+
+          &.strikethrough {
             text-decoration: line-through;
             color: $grey-medium;
           }
         }
 
-        & label {
-          font-weight: 600;
-          width: 90%;
-          cursor: pointer;
-        }
-
         &:not(:last-child) {
           margin-bottom: 10px;
+        }
+
+        &:hover {
+          background: rgba($purple_dark, 0.4);
         }
       }
     }
@@ -250,6 +300,8 @@ mat-select {
   cursor: pointer;
   font-weight: 600;
 }
+
+//*** DELETE TASK ********
 
 .delete-task {
   &-heading {
@@ -290,6 +342,29 @@ mat-select {
       &:hover {
         background: $purple_X_light;
       }
+    }
+  }
+}
+
+// **** MENU STYLE ***
+
+::ng-deep.mat-menu-panel {
+  padding: 15px 15px;
+  width: 200px;
+
+  & a {
+    display: block;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+
+    &.edit_task {
+      color: $grey-medium;
+      margin-bottom: 30px;
+    }
+
+    &.delete_task {
+      color: $orange_dark;
     }
   }
 }

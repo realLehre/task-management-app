@@ -5,7 +5,7 @@ i {
 
 .header-container {
   width: 100%;
-  background: $white;
+  background: var(--textHeaderColor);
   padding: 20px 0;
 }
 
@@ -60,6 +60,29 @@ i {
         color: $purple_light;
         cursor: pointer;
       }
+    }
+  }
+}
+
+// **** MENU STYLE ***
+
+::ng-deep.mat-menu-panel {
+  padding: 15px 10px;
+  width: 200px;
+
+  & a {
+    display: block;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+
+    &.edit_board {
+      color: $grey-medium;
+      margin-bottom: 30px;
+    }
+
+    &.delete_board {
+      color: $orange_dark;
     }
   }
 }

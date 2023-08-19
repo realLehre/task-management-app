@@ -3,6 +3,7 @@
 $purple_dark: #635fc7;
 $purple_light: #a8a4ff;
 $purple_X_light: #e4ebfa;
+$black: black;
 $dark_very: #000112;
 $dark_slight: #20212c;
 $grey_very: #2b2c37;
@@ -30,4 +31,24 @@ $body-M: 12px;
   font-size: $font;
   font-weight: 600;
   cursor: pointer;
+}
+
+@mixin lighten() {
+  $purple_dark: #635fc7;
+  $purple_light: #a8a4ff;
+  $purple_X_light: #e4ebfa;
+  $dark_very: #000112;
+  $dark_slight: #20212c;
+  $grey_very: #2b2c37;
+  $grey_slight: #3e3f4e;
+  $grey-medium: #828fa3;
+  --bgColorHeaderBoardTask: #{$white};
+  --bgColorContentCheck: #{$light};
+  --textHeaderColor: #{$black};
+}
+
+@mixin darken() {
+  --bgColorHeaderBoardTask: #{$grey_very};
+  --bgColorContentCheck: #{$dark_slight};
+  --textHeaderColor: #{$white};
 }

@@ -15,4 +15,16 @@ export class BoardsComponent implements OnInit {
   hideSideBar() {
     this.showSideBar.emit(false);
   }
+
+  toggleMode() {
+    const body = document.getElementsByTagName('body')[0];
+
+    // body.classList.toggle(Mode.LIGHT);
+    // body.classList.toggle(Mode.DARK);
+    // if (this.currentMode === Mode.LIGHT) {
+    //   this.updateCurrentMode(Mode.DARK);
+    // } else {
+    //   this.updateCurrentMode(Mode.LIGHT);
+    // }
+  }
 }

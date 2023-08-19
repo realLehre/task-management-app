@@ -64,7 +64,7 @@ recharge the batteries a little."
         Research pricing points of various competitors and trial different
         business models
       </div>
-      <i class="fa-solid fa-ellipsis-vertical"></i>
+      <i class="fa-solid fa-ellipsis-vertical" [matMenuTriggerFor]="menu"></i>
     </div>
 
     <div class="view-task-description">
@@ -77,22 +77,29 @@ recharge the batteries a little."
       <div class="view-task-subtasks-heading">Subtasks (2 of 3)</div>
       <div class="checks">
         <div class="box-group checked" (click)="toggleCheck()">
-          <input type="checkbox" value="1" [checked]="checked" />
-          <label for="packers" class="strikethrough"
+          <div class="check-input">
+            <input type="checkbox" value="1" [checked]="checked" />
+            <span class="checkmark"></span>
+          </div>
+          <label for="packers" [ngClass]="{ strikethrough: checked }"
             >Research competitor pricing and business models</label
           >
         </div>
 
         <div class="box-group">
-          <input type="checkbox" value="1" />
-          <label for="packers" class="strikethrough"
+          <div class="check-input">
+            <input type="checkbox" value="1" [checked]="checked" />
+          </div>
+          <label for="packers"
             >Outline a business model that works for our solution</label
           >
         </div>
 
         <div class="box-group">
-          <input type="checkbox" value="1" />
-          <label for="packers" class="strikethrough"
+          <div class="check-input">
+            <input type="checkbox" value="1" [checked]="checked" />
+          </div>
+          <label for="packers"
             >Talk to potential customers about our proposed solution and ask for
             fair price expectancy</label
           >
@@ -112,6 +119,13 @@ recharge the batteries a little."
         </mat-form-field>
       </div>
     </div>
+  </div>
+
+  <div class="view-task-menu">
+    <mat-menu #menu="matMenu">
+      <a class="edit_task">Edit Task</a>
+      <a class="delete_task">Delete Task</a>
+    </mat-menu>
   </div>
 
   <!-- <div class="delete-task">

@@ -13,10 +13,10 @@ export class HeaderComponent implements OnInit {
   constructor(private dialog: MatDialog) {}
 
   ngOnInit(): void {
-    const dialogRef = this.dialog.open(TaskDialogComponent, {
-      height: '900px',
-      width: '600px',
-    });
+    // const dialogRef = this.dialog.open(TaskDialogComponent, {
+    //   height: '900px',
+    //   width: '600px',
+    // });
   }
 
   openModal(): void {

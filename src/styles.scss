@@ -43,6 +43,13 @@ body {
 body {
   font-size: 10px;
   font-family: "Plus Jakarta Sans", sans-serif;
+
+  &.light {
+    @include lighten();
+  }
+  &.dark {
+    @include darken();
+  }
 }
 
 li {

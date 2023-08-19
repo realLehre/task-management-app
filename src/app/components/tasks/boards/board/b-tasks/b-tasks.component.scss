@@ -1,6 +1,7 @@
 @import "config";
 
 .tasks-container {
+  //   position: relative;
   width: 100%;
   background: $light;
   padding-left: 30px;
@@ -57,5 +58,39 @@
 
   &:hover {
     color: $purple_dark;
+  }
+}
+
+// ** EMPTY TASKS **
+
+.empty-tasks {
+  position: absolute;
+  top: 50%;
+  right: 5%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+
+  &-heading {
+    font-size: $heading-L;
+    color: $grey-medium;
+    font-weight: 500;
+    margin-bottom: 25px;
+  }
+
+  &-button {
+    & button {
+      border: none;
+      background: $purple_dark;
+      padding: 12px 15px;
+      border-radius: 50px;
+      color: $white;
+      font-size: $heading-M;
+      font-weight: 500;
+      cursor: pointer;
+
+      &:hover {
+        background: $purple_light;
+      }
+    }
   }
 }

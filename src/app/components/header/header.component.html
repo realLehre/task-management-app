@@ -13,7 +13,17 @@
         </div>
 
         <div class="header-extra">
-          <i class="fa-solid fa-ellipsis-vertical"></i>
+          <i
+            class="fa-solid fa-ellipsis-vertical"
+            [matMenuTriggerFor]="board_menu"
+          ></i>
+
+          <div class="board-menu">
+            <mat-menu #board_menu="matMenu">
+              <a class="edit_board">Edit Board</a>
+              <a class="delete_board">Delete Board</a>
+            </mat-menu>
+          </div>
         </div>
       </div>
     </div>

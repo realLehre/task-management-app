@@ -90,9 +90,9 @@
 // }
 
 .theme-container {
-  width: 90%;
+  width: 80%;
   margin-inline: auto;
-  background: $purple_X_light;
+  background: $light;
   border-radius: 6px;
   display: flex;
   align-items: center;
@@ -106,6 +106,7 @@
     background: $purple_dark;
     border-radius: 50px;
     margin: 0 15px;
+    cursor: pointer;
 
     & .roller {
       position: absolute;
@@ -117,21 +118,32 @@
       border-radius: 50%;
       background: $white;
     }
+
+    &:hover {
+      background: $purple_light;
+    }
   }
 }
 
 .sidebar-toggler {
   width: 90%;
-  margin-inline: auto;
   font-size: $heading-M;
   font-weight: 500;
   color: $grey-medium;
-  margin-top: 20px;
+  margin-top: 5px;
   cursor: pointer;
   display: flex;
   align-items: center;
+  padding: 15px 0;
+  padding-left: 30px;
 
   & img {
     margin-right: 15px;
+  }
+
+  &:hover {
+    background: rgba($purple_dark, 0.4);
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
   }
 }
