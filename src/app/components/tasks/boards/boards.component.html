@@ -90,7 +90,11 @@
     <div class="theme-container">
       <img src="../../../../assets/light-icon.png" alt="" />
 
-      <div class="theme-toggler">
+      <div
+        class="theme-toggler"
+        (click)="toggleMode()"
+        [ngClass]="{ dark: isToggled }"
+      >
         <div class="roller"></div>
       </div>
 

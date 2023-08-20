@@ -2,7 +2,7 @@
 
 .task-main {
   width: 280px;
-  background: $white;
+  background: var(--bgColorHeaderBoardTask);
   box-shadow: 1px 1px 8px rgba(black, 0.1);
   padding: 22px 15px;
   border-radius: 8px;
@@ -13,7 +13,7 @@
     font-weight: 600;
     margin-bottom: 10px;
     letter-spacing: 0.5px;
-    color: black;
+    color: var(--taskText);
   }
 
   &-sub-task {

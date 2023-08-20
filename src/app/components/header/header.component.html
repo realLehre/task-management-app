@@ -1,7 +1,16 @@
 <div class="header-container">
   <div class="header-main">
     <div class="logo">
-      <img src="../../../assets/logo-dark.png" alt="" />
+      <img
+        src="../../../assets/logo-light.png"
+        alt=""
+        [ngClass]="{ light: themeState == 'light' }"
+      />
+      <img
+        src="../../../assets/logo-dark.png"
+        alt=""
+        [ngClass]="{ dark: themeState == 'dark' }"
+      />
     </div>
 
     <div class="header-content">

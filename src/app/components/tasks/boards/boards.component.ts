@@ -1,4 +1,12 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  OnInit,
+  Output,
+  Renderer2,
+} from '@angular/core';
+import { TaskService } from 'src/app/shared/services/task.service';
 
 @Component({
   selector: 'app-boards',
@@ -7,24 +15,50 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 })
 export class BoardsComponent implements OnInit {
   @Output() showSideBar = new EventEmitter<boolean>();
+  currentMode: string | null = 'light';
+  isToggled: boolean = false;
 
-  constructor() {}
+  constructor(private renderer: Renderer2, private taskService: TaskService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.taskService.themeState.next(this.currentMode);
+
+    if (localStorage.getItem('theme') != null) {
+      this.currentMode = localStorage.getItem('theme')
+        ? localStorage.getItem('theme')
+        : null;
+      this.saveTheme();
+      this.taskService.themeState.next(this.currentMode);
+    }
+  }
 
   hideSideBar() {
     this.showSideBar.emit(false);
   }
 
   toggleMode() {
-    const body = document.getElementsByTagName('body')[0];
+    this.isToggled = !this.isToggled;
 
-    // body.classList.toggle(Mode.LIGHT);
-    // body.classList.toggle(Mode.DARK);
-    // if (this.currentMode === Mode.LIGHT) {
-    //   this.updateCurrentMode(Mode.DARK);
-    // } else {
-    //   this.updateCurrentMode(Mode.LIGHT);
-    // }
+    if (this.currentMode == 'light') {
+      this.renderer.addClass(document.body, 'dark');
+      this.currentMode = 'dark';
+      localStorage.setItem('theme', this.currentMode);
+    } else {
+      this.renderer.removeClass(document.body, 'dark');
+      this.currentMode = 'light';
+      localStorage.setItem('theme', this.currentMode);
+    }
+
+    this.taskService.themeState.next(this.currentMode);
+  }
+
+  saveTheme() {
+    if (this.currentMode == 'dark') {
+      this.renderer.addClass(document.body, 'dark');
+      this.isToggled = true;
+    } else {
+      this.renderer.removeClass(document.body, 'dark');
+      this.isToggled = false;
+    }
   }
 }

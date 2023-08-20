@@ -13,6 +13,9 @@ $light: #f4f7fd;
 $white: #ffffff;
 $orange_dark: #ea5555;
 $orange_light: #ff9898;
+$stroke: #979797;
+$sideBar_light: white;
+$sideBar_dark: blue;
 
 $font-family: "Plus Jakarta Sans", sans-serif;
 $heading-XL: 24px;
@@ -34,21 +37,25 @@ $body-M: 12px;
 }
 
 @mixin lighten() {
-  $purple_dark: #635fc7;
-  $purple_light: #a8a4ff;
-  $purple_X_light: #e4ebfa;
-  $dark_very: #000112;
-  $dark_slight: #20212c;
-  $grey_very: #2b2c37;
-  $grey_slight: #3e3f4e;
-  $grey-medium: #828fa3;
   --bgColorHeaderBoardTask: #{$white};
   --bgColorContentCheck: #{$light};
   --textHeaderColor: #{$black};
+  --column: #{$purple_X_light};
+  --taskText: #{$black};
+  --sideBar: #{$dark_very};
+  --menu: #{$white};
+  --dialogBg: #{$white};
+  --subHeadingLabel: #{$grey-medium};
 }
 
 @mixin darken() {
   --bgColorHeaderBoardTask: #{$grey_very};
   --bgColorContentCheck: #{$dark_slight};
   --textHeaderColor: #{$white};
+  --column: #{$grey_very};
+  --taskText: #{$white};
+  --sideBar: #{$sideBar_light};
+  --menu: #{$dark_slight};
+  --dialogBg: #{$grey_very};
+  --subHeadingLabel: #{$white};
 }

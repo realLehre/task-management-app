@@ -5,7 +5,7 @@ i {
 
 .header-container {
   width: 100%;
-  background: var(--textHeaderColor);
+  background: var(--bgColorHeaderBoardTask);
   padding: 20px 0;
 }
 
@@ -19,6 +19,16 @@ i {
 
 .logo {
   flex: 18%;
+
+  & img {
+    display: none;
+    &.dark {
+      display: block;
+    }
+    &.light {
+      display: block;
+    }
+  }
 }
 
 .header-content {
@@ -30,6 +40,7 @@ i {
   .header-text {
     font-size: $heading-XL;
     font-weight: 500;
+    color: var(--textHeaderColor);
   }
 
   & .header-actions {
@@ -69,6 +80,7 @@ i {
 ::ng-deep.mat-menu-panel {
   padding: 15px 10px;
   width: 200px;
+  background: var(--menu);
 
   & a {
     display: block;

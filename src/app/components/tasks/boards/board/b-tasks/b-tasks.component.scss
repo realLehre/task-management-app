@@ -3,7 +3,7 @@
 .tasks-container {
   //   position: relative;
   width: 100%;
-  background: $light;
+  background: var(--bgColorContentCheck);
   padding-left: 30px;
 }
 
@@ -12,7 +12,7 @@
   height: 100%;
   display: flex;
   align-items: flex-start;
-  background: $light;
+  background: var(--bgColorContentCheck);
   padding-bottom: 40px;
 }
 
@@ -52,7 +52,7 @@
   font-weight: 600;
   width: 280px;
   height: 100vh;
-  background: $purple_X_light;
+  background: var(--column);
   cursor: pointer;
   margin-top: 40px;
 

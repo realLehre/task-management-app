@@ -1,5 +1,9 @@
 @import "config";
 
+::ng-deep.mat-dialog-container {
+  padding: 0;
+}
+
 .task-dialog-container {
   font-family: "Plus Jakarta Sans", sans-serif;
   width: 100%;
@@ -7,6 +11,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background: var(--dialogBg);
+  padding: 35px;
 }
 
 // ***** ADD TASK *****
@@ -15,6 +21,7 @@
     font-size: $heading-L;
     font-weight: 700;
     margin-bottom: 20px;
+    color: var(--taskText);
   }
 }
 
@@ -169,6 +176,7 @@ mat-form-field {
       font-weight: 700;
       width: 80%;
       line-height: 1.4;
+      color: var(--taskText);
     }
 
     & i {
@@ -189,7 +197,7 @@ mat-form-field {
     &-heading {
       font-size: 15px;
       font-weight: 600;
-      color: $grey-medium;
+      color: var(--subHeadingLabel);
       margin-bottom: 10px;
     }
 
@@ -198,7 +206,7 @@ mat-form-field {
 
       & .box-group {
         position: relative;
-        background: $light;
+        background: var(--bgColorContentCheck);
         border-radius: 4px;
         padding: 12px 10px;
         display: flex;
@@ -284,7 +292,7 @@ mat-form-field {
   & label {
     font-size: 15px;
     font-weight: 600;
-    color: $grey-medium;
+    color: var(--subHeadingLabel);
     margin-bottom: 10px;
     display: block;
   }
