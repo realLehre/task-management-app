@@ -6,7 +6,9 @@ import {
   Output,
   Renderer2,
 } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { TaskService } from 'src/app/shared/services/task.service';
+import { BoardsDialogComponent } from './boards-dialog/boards-dialog.component';
 
 @Component({
   selector: 'app-boards',
@@ -18,7 +20,11 @@ export class BoardsComponent implements OnInit {
   currentMode: string | null = 'light';
   isToggled: boolean = false;
 
-  constructor(private renderer: Renderer2, private taskService: TaskService) {}
+  constructor(
+    private renderer: Renderer2,
+    private taskService: TaskService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.taskService.themeState.next(this.currentMode);
@@ -34,6 +40,14 @@ export class BoardsComponent implements OnInit {
 
   hideSideBar() {
     this.showSideBar.emit(false);
+  }
+
+  onCreateNewBoard() {
+    const dialogRef = this.dialog.open(BoardsDialogComponent, {
+      height: '900px',
+      width: '600px',
+      data: 'create',
+    });
   }
 
   toggleMode() {

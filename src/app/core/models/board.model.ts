@@ -1,4 +1,5 @@
 export interface Board {
   name: string;
-  columns: Array<string>;
+  columns: Array<any>;
+  id: string;
 }

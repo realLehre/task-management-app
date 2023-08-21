@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 import { BoardsComponent } from './boards/boards.component';
@@ -12,7 +12,13 @@ import { MaterialModule } from 'src/app/material.module';
 import { BoardsDialogComponent } from './boards/boards-dialog/boards-dialog.component';
 
 @NgModule({
-  imports: [CommonModule, TasksRoutingModule, MaterialModule, FormsModule],
+  imports: [
+    CommonModule,
+    TasksRoutingModule,
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
   declarations: [
     BoardsComponent,
     BoardComponent,

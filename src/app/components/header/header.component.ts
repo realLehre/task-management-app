@@ -21,19 +21,14 @@ export class HeaderComponent implements OnInit, AfterViewChecked {
 
   constructor(private dialog: MatDialog, private taskService: TaskService) {}
 
-  ngOnInit(): void {
-    const dialogRef = this.dialog.open(BoardsDialogComponent, {
-      height: '900px',
-      width: '600px',
-    });
-  }
+  ngOnInit(): void {}
 
   ngAfterViewChecked(): void {
-    // if (localStorage.getItem('theme') != null) {
-    //   this.themeState = localStorage.getItem('theme');
-    // } else {
-    //   this.themeState = 'dark';
-    // }
+    if (localStorage.getItem('theme') != null) {
+      this.themeState = localStorage.getItem('theme');
+    } else {
+      this.themeState = 'dark';
+    }
     // console.log(this.themeState);
   }
 

@@ -1,27 +1,59 @@
 <div class="boards-dialog-container">
   <!-- ** ADD BOARD ** -->
-  <div class="add-board">
+  <div class="add-board" *ngIf="type == 'create'">
     <div class="add-board-heading">Add New Board</div>
-    <form class="add-board-form-main">
+    <form
+      class="add-board-form-main"
+      [formGroup]="createBoardForm"
+      (ngSubmit)="onSubmit()"
+    >
       <div class="form-group">
         <label for="title">Name</label>
-        <input name="title" type="text" placeholder="e.g. Web Design" />
+        <div class="input-container">
+          <input
+            formControlName="name"
+            name="title"
+            type="text"
+            placeholder="e.g. Web Design"
+            [ngClass]="{ error: name.invalid && name.touched }"
+          />
+          <span class="error-msg" *ngIf="name.invalid && name.touched">
+            Can't be empty</span
+          >
+        </div>
       </div>
 
-      <div class="form-group columns-group">
-        <label>Columns</label>
-        <div class="columns">
-          <div class="column">
-            <input type="text" value="Todo" />
-            <i class="fa-solid fa-xmark"></i>
-          </div>
-
-          <div class="column">
-            <input type="text" value="Doing" />
-            <i class="fa-solid fa-xmark"></i>
+      <div class="form-group columns-group" formArrayName="columns">
+        <label *ngIf="columns.controls.length > 0">Columns</label>
+        <div
+          class="columns"
+          *ngFor="let columnControl of columns.controls; let i = index"
+          [formGroupName]="i"
+        >
+          <div
+            class="column"
+            [ngClass]="{ margin: columns.controls.length > 0 }"
+          >
+            <div class="input-container">
+              <input
+                formControlName="column"
+                type="text"
+                value="Todo"
+                [ngClass]="{
+                  error: columnControl.invalid && columnControl.touched
+                }"
+              />
+              <span
+                class="error-msg"
+                *ngIf="columnControl.invalid && columnControl.touched"
+              >
+                Can't be empty</span
+              >
+            </div>
+            <i class="fa-solid fa-xmark" (click)="removeColumn(i)"></i>
           </div>
         </div>
-        <button type="button">+Add New Column</button>
+        <button type="button" (click)="addColumn()">+Add New Column</button>
       </div>
 
       <button type="submit" class="submit-btn">Create New Board</button>
@@ -29,7 +61,7 @@
   </div>
 
   <!-- **DELETE BOARD ** -->
-  <!-- <div class="delete-board">
+  <div class="delete-board" *ngIf="type == 'delete'">
     <div class="delete-board-heading">Delete this board?</div>
 
     <div class="delete-board-copy">
@@ -41,5 +73,5 @@
       <button id="delete">Delete</button>
       <button id="cancel">Cancel</button>
     </div>
-  </div> -->
+  </div>
 </div>

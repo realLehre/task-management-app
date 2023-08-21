@@ -18,10 +18,13 @@
     "importHelpers": true,
     "target": "es2020",
     "module": "es2020",
-    "lib": [
-      "es2020",
-      "dom"
-    ]
+    "lib": ["es2020", "dom"],
+    "paths": {
+      "@store": ["src/app/shared/store/app.reducer.ts"],
+      "@boardsPageActions": [
+        "src/app/components/tasks/boards/boards-store/boards.actions.ts"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

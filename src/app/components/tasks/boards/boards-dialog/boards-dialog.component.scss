@@ -42,9 +42,12 @@
       color: var(--subHeadingLabel);
     }
 
-    & input,
-    textarea,
-    select {
+    & .input-container {
+      position: relative;
+      width: 100%;
+    }
+
+    & input {
       width: 100%;
       border: 2px solid rgba($grey-medium, 0.4);
       padding: 12px 10px;
@@ -66,6 +69,19 @@
         outline: none;
         border: 2px solid $purple_light;
       }
+
+      &.error {
+        border: 2px solid $orange_dark;
+      }
+    }
+
+    & .error-msg {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 15px;
+      color: $orange_dark;
     }
 
     &:not(:last-child) {
@@ -79,7 +95,7 @@
     display: flex;
     align-items: center;
 
-    &:not(:last-child) {
+    &.margin {
       margin-bottom: 15px;
     }
 

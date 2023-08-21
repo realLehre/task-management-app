@@ -9,6 +9,9 @@ import { TasksModule } from './components/tasks/tasks.module';
 import { HeaderComponent } from './components/header/header.component';
 import { MaterialModule } from './material.module';
 import { DialogComponent } from './shared/dialog/dialog.component';
+import * as fromApp from './shared/store/app.reducer';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, DialogComponent],
@@ -18,7 +21,11 @@ import { DialogComponent } from './shared/dialog/dialog.component';
     MaterialModule,
     TasksModule,
     BrowserAnimationsModule,
-    StoreModule.forRoot({}, {}),
+    StoreModule.forRoot(fromApp.appReducer),
+    StoreDevtoolsModule.instrument({
+      name: 'Kanban Task Management App',
+      logOnly: environment.production,
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],
