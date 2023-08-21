@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit, AfterViewChecked {
   constructor(private dialog: MatDialog, private taskService: TaskService) {}
 
   ngOnInit(): void {
-    const dialogRef = this.dialog.open(TaskDialogComponent, {
+    const dialogRef = this.dialog.open(BoardsDialogComponent, {
       height: '900px',
       width: '600px',
     });

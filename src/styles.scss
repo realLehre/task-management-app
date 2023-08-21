@@ -33,9 +33,7 @@ body {
   height: 100%;
 }
 
-*,
-*:after,
-*:before {
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -45,10 +43,8 @@ body {
 body {
   font-size: 10px;
   font-family: "Plus Jakarta Sans", sans-serif;
+  @include lighten();
 
-  &.light {
-    @include lighten();
-  }
   &.dark {
     @include darken();
   }

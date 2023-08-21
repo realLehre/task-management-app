@@ -17,6 +17,7 @@
 
 // ***** ADD TASK *****
 .add-task {
+  width: 100%;
   &-heading {
     font-size: $heading-L;
     font-weight: 700;
@@ -37,7 +38,7 @@
       display: block;
       font-size: 15px;
       font-weight: 600;
-      color: $grey-medium;
+      color: var(--subHeadingLabel);
       margin-bottom: 8px;
     }
 
@@ -46,16 +47,18 @@
     select,
     mat-select {
       width: 100%;
-      border: 2px solid $purple_X_light;
+      border: 2px solid rgba($grey-medium, 0.4);
       padding: 12px 10px;
       border-radius: 4px;
       font-size: 15px;
       line-height: 1.5;
       cursor: pointer;
+      background-color: transparent;
+      color: var(--taskText);
 
       &::placeholder {
         font-size: 15px;
-        color: rgba(black, 0.5);
+        color: var(--textInput);
         line-height: 1.5;
       }
 
@@ -94,7 +97,7 @@
   }
 
   & button {
-    @include button(rgba($purple_dark, 0.3), $purple_dark, $heading-M);
+    @include button(var(--secBtn), $purple_dark, $heading-M);
     width: 100%;
     margin-top: 20px;
   }
@@ -111,14 +114,19 @@ mat-form-field {
   margin-top: -20px;
 }
 
+::ng-deep .mat-select-panel {
+  background-color: var(--menu);
+}
+
 .mat-option.mat-focus-indicator {
   &:hover {
     background: $purple_light;
   }
 }
 
-.mat-option-text {
-  font-size: 17px;
+::ng-deep .mat-option-text {
+  font-size: 15px;
+  color: $grey-medium;
 }
 
 .mat-form-field-infix.ng-tns-c70-0 {
@@ -126,20 +134,9 @@ mat-form-field {
   padding-right: 15px;
 }
 
-.mat-form-field-infix {
-  background-color: white;
-  border-color: blue !important;
-  border-top: none;
-  border-bottom: 3px solid $purple_dark;
-  padding-left: 5px !important;
-}
-
-.mat-select-value,
-.mat-select-arrow,
-.mat-form-field-hide-placeholder .mat-select-placeholder,
-.mat-form-field-appearance-legacy .mat-form-field-label {
-  color: black !important;
-  opacity: 1;
+::ng-deep .mat-select-min-line,
+::ng-deep .mat-select-arrow {
+  color: var(--taskText);
 }
 
 .mat-form-field-appearance-legacy .mat-select-value {
@@ -206,7 +203,7 @@ mat-form-field {
 
       & .box-group {
         position: relative;
-        background: var(--bgColorContentCheck);
+        background-color: var(--bgColorContentCheck);
         border-radius: 4px;
         padding: 12px 10px;
         display: flex;
@@ -269,6 +266,7 @@ mat-form-field {
           font-weight: 700;
           width: 90%;
           cursor: pointer;
+          color: var(--taskText);
 
           &.strikethrough {
             text-decoration: line-through;
@@ -300,13 +298,17 @@ mat-form-field {
 
 mat-select {
   width: 100%;
-  border: 2px solid $purple_X_light;
+  border: 1px solid $purple_dark;
   padding: 12px 10px;
   border-radius: 4px;
   font-size: 15px;
   line-height: 1.5;
   cursor: pointer;
   font-weight: 600;
+
+  & mat-option {
+    color: var(--taskText);
+  }
 }
 
 //*** DELETE TASK ********

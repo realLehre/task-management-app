@@ -28,7 +28,7 @@ $body-M: 12px;
 @mixin button($background, $color, $font) {
   border: none;
   background: $background;
-  padding: 12px 0px;
+  padding: 14px 0px;
   border-radius: 50px;
   color: $color;
   font-size: $font;
@@ -46,6 +46,8 @@ $body-M: 12px;
   --menu: #{$white};
   --dialogBg: #{$white};
   --subHeadingLabel: #{$grey-medium};
+  --textInput: #{rgba(black, 0.5)};
+  --secBtn: #{rgba($purple_dark, 0.3)};
 }
 
 @mixin darken() {
@@ -58,4 +60,6 @@ $body-M: 12px;
   --menu: #{$dark_slight};
   --dialogBg: #{$grey_very};
   --subHeadingLabel: #{$white};
+  --textInput: #{rgba(white, 0.5)};
+  --secBtn: #{$white};
 }

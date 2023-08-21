@@ -1,5 +1,9 @@
 @import "config";
 
+::ng-deep.mat-dialog-container {
+  padding: 0;
+}
+
 .boards-dialog-container {
   font-family: "Plus Jakarta Sans", sans-serif;
   width: 100%;
@@ -7,6 +11,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background: var(--dialogBg);
+  padding: 35px;
 }
 
 // ** ADD BOARD **
@@ -16,6 +22,7 @@
     font-size: $heading-L;
     font-weight: 700;
     margin-bottom: 20px;
+    color: var(--taskText);
   }
 }
 
@@ -31,25 +38,27 @@
       display: block;
       font-size: 15px;
       font-weight: 600;
-      color: $grey-medium;
       margin-bottom: 8px;
+      color: var(--subHeadingLabel);
     }
 
     & input,
     textarea,
     select {
       width: 100%;
-      border: 2px solid $purple_X_light;
+      border: 2px solid rgba($grey-medium, 0.4);
       padding: 12px 10px;
       border-radius: 4px;
       font-size: 15px;
       font-weight: 600;
       line-height: 1.5;
+      background-color: transparent;
+      color: var(--taskText);
       cursor: pointer;
 
       &::placeholder {
         font-size: 15px;
-        color: rgba(black, 0.5);
+        color: var(--textInput);
         line-height: 1.5;
       }
 
@@ -88,7 +97,7 @@
   }
 
   & button {
-    @include button(rgba($purple_dark, 0.3), $purple_dark, $heading-M);
+    @include button(var(--secBtn), $purple_dark, $heading-M);
     width: 100%;
     margin-top: 20px;
   }
