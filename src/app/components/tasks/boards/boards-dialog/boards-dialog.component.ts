@@ -1,11 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from 'src/app/store/app.reducer';
 import * as fromBoardsActions from '@boardsPageActions';
-import { ColdObservable } from 'rxjs/internal/testing/ColdObservable';
 
 @Component({
   selector: 'app-boards-dialog',
@@ -18,7 +17,8 @@ export class BoardsDialogComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: string,
-    private store: Store<fromStore.State>
+    private store: Store<fromStore.State>,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -88,5 +88,7 @@ export class BoardsDialogComponent implements OnInit {
         id: this.generateRandomString(),
       })
     );
+
+    this.dialog.closeAll();
   }
 }

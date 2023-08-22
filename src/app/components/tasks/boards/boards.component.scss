@@ -32,6 +32,26 @@
   border-bottom-right-radius: 50px;
   cursor: pointer;
 
+  & a {
+    display: flex;
+    align-items: center;
+    font-size: $heading-M;
+    font-weight: 500;
+    color: $grey-medium;
+    text-transform: capitalize;
+
+    & .board-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    & svg {
+      margin-right: 10px;
+      color: $grey-medium;
+    }
+  }
+
   &.active {
     background: $purple_dark;
 
@@ -69,19 +89,6 @@
       & svg {
         color: $purple_dark;
       }
-    }
-  }
-
-  & a {
-    display: flex;
-    align-items: center;
-    font-size: $heading-M;
-    font-weight: 500;
-    color: $grey-medium;
-
-    & svg {
-      margin-right: 10px;
-      color: $grey-medium;
     }
   }
 }
