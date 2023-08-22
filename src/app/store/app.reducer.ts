@@ -3,7 +3,7 @@ import {
   createFeatureSelector,
   createSelector,
 } from '@ngrx/store';
-import * as fromBoards from '../../components/tasks/boards/boards-store/boards.reducer';
+import * as fromBoards from '../components/tasks/boards/boards-store/boards.reducer';
 
 export interface State {
   boards: fromBoards.State;

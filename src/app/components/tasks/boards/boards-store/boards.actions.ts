@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Board } from 'src/app/core/models/board.model';
+import { Board } from 'src/app/shared/models/board.model';
 
 export const createNewBoard = createAction(
   '[Boards Page] Create New Board',

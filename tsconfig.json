@@ -20,7 +20,7 @@
     "module": "es2020",
     "lib": ["es2020", "dom"],
     "paths": {
-      "@store": ["src/app/shared/store/app.reducer.ts"],
+      "@store": ["src/app/store/app.reducer.ts"],
       "@boardsPageActions": [
         "src/app/components/tasks/boards/boards-store/boards.actions.ts"
       ]

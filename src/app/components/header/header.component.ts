@@ -8,7 +8,8 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { TaskDialogComponent } from '../tasks/boards/board/b-tasks/task-dialog/task-dialog.component';
 import { BoardsDialogComponent } from '../tasks/boards/boards-dialog/boards-dialog.component';
-import { TaskService } from 'src/app/shared/services/task.service';
+import { TaskService } from 'src/app/core/services/task.service';
+import { ThemeService } from 'src/app/core/theme.service';
 
 @Component({
   selector: 'app-header',
@@ -19,10 +20,14 @@ export class HeaderComponent implements OnInit, AfterViewChecked {
   themeState: string | null = 'light';
   logoSrc!: string;
 
-  constructor(private dialog: MatDialog, private taskService: TaskService) {}
+  constructor(
+    private dialog: MatDialog,
+    private taskService: TaskService,
+    private themeService: ThemeService
+  ) {}
 
   ngOnInit(): void {
-    this.taskService.themeState.subscribe((value) => {
+    this.themeService.themeState.subscribe((value) => {
       if (value) {
         this.themeState = value;
       }
