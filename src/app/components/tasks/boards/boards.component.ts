@@ -27,14 +27,11 @@ export class BoardsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.taskService.themeState.next(this.currentMode);
-
     if (localStorage.getItem('theme') != null) {
       this.currentMode = localStorage.getItem('theme')
         ? localStorage.getItem('theme')
         : null;
       this.saveTheme();
-      this.taskService.themeState.next(this.currentMode);
     }
   }
 

@@ -16,21 +16,20 @@ import { TaskService } from 'src/app/shared/services/task.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit, AfterViewChecked {
-  themeState!: string | null;
+  themeState: string | null = 'light';
   logoSrc!: string;
 
   constructor(private dialog: MatDialog, private taskService: TaskService) {}
 
-  ngOnInit(): void {}
-
-  ngAfterViewChecked(): void {
-    if (localStorage.getItem('theme') != null) {
-      this.themeState = localStorage.getItem('theme');
-    } else {
-      this.themeState = 'dark';
-    }
-    // console.log(this.themeState);
+  ngOnInit(): void {
+    this.taskService.themeState.subscribe((value) => {
+      if (value) {
+        this.themeState = value;
+      }
+    });
   }
+
+  ngAfterViewChecked(): void {}
 
   openModal(): void {
     const dialogRef = this.dialog.open(TaskDialogComponent, {

@@ -1,7 +1,16 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class TaskService {
-  themeState = new Subject<string | null>();
+  themeState = new BehaviorSubject<string | null>(
+    localStorage.getItem('theme')
+  );
+
+  constructor() {
+    const theme = localStorage.getItem('theme');
+    if (theme) {
+      this.themeState.next(theme);
+    }
+  }
 }
