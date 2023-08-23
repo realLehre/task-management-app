@@ -21,6 +21,7 @@ export class BoardsDialogComponent implements OnInit {
   type!: string;
   createBoardForm!: FormGroup;
   board!: Board;
+  editState: boolean = false;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
@@ -31,6 +32,7 @@ export class BoardsDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.type = this.data.mode;
+    this.editState = this.data.isAddColumn;
 
     this.createBoardForm = new FormGroup<boardForm>({
       name: new FormControl(null, Validators.required),
@@ -45,12 +47,27 @@ export class BoardsDialogComponent implements OnInit {
     });
 
     this.store.select(fromStore.selectActiveBoard).subscribe((board) => {
+      console.log(board);
+
       this.board = board ?? this.board;
-      if (this.data.isAddColumn == true) {
+      if (this.editState == true) {
         this.name.setValue(board?.name);
 
         const columns = board?.columns ?? [];
-        // this.columns.setValue(columns);
+
+        const newColumns = new FormArray<
+          FormGroup<{ column: FormControl<string | null> }>
+        >([]);
+
+        columns.map((column) => {
+          newColumns.push(
+            new FormGroup({
+              column: new FormControl(column, Validators.required),
+            })
+          );
+        });
+
+        // this.columns.patchValue([...newColumns]);
       }
     });
   }
@@ -86,11 +103,11 @@ export class BoardsDialogComponent implements OnInit {
       newColumns.push(columns[key].column);
     }
 
-    if (this.data.isAddColumn == true) {
+    if (this.editState == true) {
       this.store.dispatch(
         fromBoardsActions.addColumn({
           board: {
-            name: this.board.name,
+            name: name,
             columns: newColumns,
             id: this.board?.id,
           },

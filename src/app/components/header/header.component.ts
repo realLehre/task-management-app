@@ -51,4 +51,14 @@ export class HeaderComponent implements OnInit, AfterViewChecked {
       width: '600px',
     });
   }
+
+  onEdit(type: string) {
+    if (type == 'board') {
+      const dialogRef = this.dialog.open(BoardsDialogComponent, {
+        height: '900px',
+        width: '600px',
+        data: { mode: 'create', isAddColumn: true },
+      });
+    }
+  }
 }

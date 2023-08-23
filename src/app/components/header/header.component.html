@@ -18,7 +18,7 @@
 
       <div class="header-actions">
         <div class="header-add-task">
-          <button (click)="openModal()">+ Add New Task</button>
+          <button (click)="onEdit('task')">+ Add New Task</button>
         </div>
 
         <div class="header-extra">
@@ -29,7 +29,7 @@
 
           <div class="board-menu">
             <mat-menu #board_menu="matMenu">
-              <a class="edit_board">Edit Board</a>
+              <a class="edit_board" (click)="onEdit('board')">Edit Board</a>
               <a class="delete_board">Delete Board</a>
             </mat-menu>
           </div>

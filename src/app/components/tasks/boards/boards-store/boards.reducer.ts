@@ -24,8 +24,10 @@ const addColumn = (boards: Board[], toUpdateBoard: Board) => {
     ...toUpdateBoard,
   };
 
-  const newBoards = [...boards, newBoard];
-  boards.find((board) => {});
+  const i = boards.findIndex((board) => board.id == toUpdateBoard.id);
+
+  const newBoards = [...boards];
+  newBoards[i] = newBoard;
 
   return newBoards;
 };
