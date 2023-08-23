@@ -1,15 +1,12 @@
 @import "config";
 
 .tasks-container {
-  //   position: relative;
-  width: 100%;
   background: var(--bgColorContentCheck);
   padding-left: 30px;
+  padding-right: 50px;
 }
 
 .tasks-main {
-  width: 100%;
-  height: 100%;
   display: flex;
   align-items: flex-start;
   background: var(--bgColorContentCheck);
@@ -50,11 +47,12 @@
   font-size: $heading-XL;
   color: $grey-medium;
   font-weight: 600;
-  width: 280px;
+  width: 280px !important;
   height: 100vh;
   background: var(--column);
   cursor: pointer;
   margin-top: 40px;
+  // margin-right: 30px;
 
   &:hover {
     color: $purple_dark;

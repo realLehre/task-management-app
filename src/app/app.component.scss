@@ -9,9 +9,8 @@
 }
 
 .app-header {
-  //   position: absolute;
-  //   top: 30px;
-  //   left: 30px;
+  position: fixed;
+  width: 100%;
   z-index: 6;
 }
 
@@ -19,6 +18,13 @@
   position: relative;
   z-index: 5;
   height: 100%;
+  padding-top: 80px;
+}
+
+.drawer-container-main {
+  height: 100%;
+  width: 100vw;
+  background-color: var(--bgColorContentCheck);
 }
 
 .sidenav {
@@ -29,17 +35,23 @@
 }
 
 .sidenav-content {
-  width: 100vw;
-  height: 100vh;
+  display: flex;
+  height: 100%;
   background-color: var(--bgColorContentCheck);
   padding-top: 30px;
 }
+
+// .test {
+//   width: 10px;
+//   height: 500px;
+//   background-color: red;
+// }
 
 .sideBar-toggler {
   position: absolute;
   z-index: 7;
   left: 0;
-  bottom: 20px;
+  bottom: 45px;
   background: $purple_dark;
   border-top-right-radius: 50%;
   border-bottom-right-radius: 50%;
