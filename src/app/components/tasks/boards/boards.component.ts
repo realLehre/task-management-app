@@ -43,6 +43,8 @@ export class BoardsComponent implements OnInit {
 
     this.store.select(fromStore.selectAllBoards).subscribe((data) => {
       this.boards = data;
+      console.log(data);
+      this.store.dispatch(fromBoardsActions.selectBoard({ id: data[0].id }));
     });
   }
 
@@ -54,7 +56,7 @@ export class BoardsComponent implements OnInit {
     const dialogRef = this.dialog.open(BoardsDialogComponent, {
       height: '900px',
       width: '600px',
-      data: 'create',
+      data: { mode: 'create', isAddColumn: false },
     });
   }
 

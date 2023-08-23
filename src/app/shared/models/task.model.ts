@@ -3,4 +3,5 @@ export interface Task {
   description: string;
   sub_tasks: Array<string>;
   status: string;
+  id: string;
 }

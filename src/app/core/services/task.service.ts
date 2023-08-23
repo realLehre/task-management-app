@@ -1,16 +1,19 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class TaskService {
-  themeState = new BehaviorSubject<string | null>(
-    localStorage.getItem('theme')
-  );
+  constructor() {}
 
-  constructor() {
-    const theme = localStorage.getItem('theme');
-    if (theme) {
-      this.themeState.next(theme);
+  generateRandomString() {
+    const randomChar =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz01234567';
+
+    let randomString = '';
+    for (let d = 0; d < 10; d++) {
+      randomString += randomChar.charAt(
+        Math.floor(Math.random() * randomChar.length)
+      );
     }
+    return randomString;
   }
 }

@@ -41,6 +41,7 @@ i {
     font-size: $heading-XL;
     font-weight: 500;
     color: var(--textHeaderColor);
+    text-transform: capitalize;
   }
 
   & .header-actions {

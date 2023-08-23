@@ -1,44 +1,18 @@
 <div class="tasks-container">
-  <div class="tasks-main">
-    <div class="tasks-group">
-      <div class="tasks-group-heading"><span class="icon"></span>TODO (4)</div>
+  <div class="tasks-main" *ngIf="activeBoard.columns.length > 0">
+    <div class="tasks-main-group" *ngFor="let column of activeBoard.columns">
+      <div class="tasks-group">
+        <div class="tasks-group-heading">
+          <span class="icon"></span>{{ column.toUpperCase() }}
+        </div>
 
-      <div class="tasks">
-        <app-b-task></app-b-task>
+        <div class="tasks">
+          <app-b-task></app-b-task>
+        </div>
       </div>
     </div>
 
-    <div class="tasks-group">
-      <div class="tasks-group-heading"><span class="icon"></span>DOING (4)</div>
-
-      <div class="tasks">
-        <app-b-task></app-b-task>
-        <app-b-task></app-b-task>
-        <app-b-task></app-b-task>
-        <app-b-task></app-b-task>
-      </div>
-    </div>
-
-    <div class="tasks-group">
-      <div class="tasks-group-heading"><span class="icon"></span>DONE (4)</div>
-
-      <div class="tasks">
-        <app-b-task></app-b-task>
-        <app-b-task></app-b-task>
-      </div>
-    </div>
-    <div class="tasks-group">
-      <div class="tasks-group-heading">
-        <span class="icon"></span>DONEdd (4)
-      </div>
-
-      <div class="tasks">
-        <app-b-task></app-b-task>
-        <app-b-task></app-b-task>
-      </div>
-    </div>
-
-    <div class="new-column">+ New Column</div>
+    <div class="new-column" (click)="onAddColumn()">+ New Column</div>
   </div>
 
   <!-- <div class="empty-tasks">

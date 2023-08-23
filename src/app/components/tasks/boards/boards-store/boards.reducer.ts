@@ -16,6 +16,20 @@ const createBoard = (boards: Board[], board: Board) => [...boards, board];
 //     })
 // }
 
+const addColumn = (boards: Board[], toUpdateBoard: Board) => {
+  const oldBoard = boards.find((board) => board.id == toUpdateBoard.id);
+
+  const newBoard = {
+    ...oldBoard,
+    ...toUpdateBoard,
+  };
+
+  const newBoards = [...boards, newBoard];
+  boards.find((board) => {});
+
+  return newBoards;
+};
+
 const editBoard = (boards: Board[], edit: Board) =>
   boards.find((board) => board.id === edit.id);
 
@@ -60,6 +74,13 @@ export const boardsReducer = createReducer(
     return {
       ...state,
       boards: [...state.boards, action.board],
+    };
+  }),
+
+  on(BoardsPageActions.addColumn, (state, action) => {
+    return {
+      ...state,
+      boards: addColumn(state.boards, action.board),
     };
   }),
 

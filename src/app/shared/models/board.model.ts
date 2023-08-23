@@ -1,5 +1,8 @@
+import { Task } from './task.model';
+
 export interface Board {
   name: string;
-  columns: Array<any>;
+  columns: Array<string>;
+  tasks?: { [key: string]: Task[] };
   id: string;
 }

@@ -21,6 +21,11 @@ export const editBoard = createAction(
   props<{ board: Board }>()
 );
 
+export const addColumn = createAction(
+  '[Boards Page] New Column',
+  props<{ board: Board }>()
+);
+
 export const deleteBoard = createAction(
   '[Boards Page] Delete Board',
   props<{ id: string }>()
