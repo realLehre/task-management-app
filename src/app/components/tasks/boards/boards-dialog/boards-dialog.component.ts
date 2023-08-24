@@ -109,6 +109,7 @@ export class BoardsDialogComponent implements OnInit {
             name: name,
             columns: newColumns,
             id: this.board?.id,
+            tasks: [],
           },
         })
       );
@@ -118,6 +119,7 @@ export class BoardsDialogComponent implements OnInit {
           name: name,
           columns: newColumns,
           id: this.taskService.generateRandomString(),
+          tasks: [],
         })
       );
     }

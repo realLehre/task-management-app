@@ -35,9 +35,13 @@
       width: 15px;
       height: 15px;
       border-radius: 50%;
-      background: red;
       display: inline-block;
+      background-color: $green_ball;
       margin-right: 12px;
+
+      &.purple {
+        background-color: $purple_dark;
+      }
     }
   }
 }

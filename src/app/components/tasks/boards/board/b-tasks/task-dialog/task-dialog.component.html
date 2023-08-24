@@ -1,12 +1,19 @@
 <div class="task-dialog-container">
-  <!-- <div class="add-task">
-    <div class="add-task-heading">Add New Task</div>
+  <div class="add-task" *ngIf="type == 'add_task' && isEdit == false">
+    <div class="add-task-heading">
+      {{ isEdit ? "Edit Task" : "Add New Task" }}
+    </div>
 
     <div class="add-task-form">
-      <form class="add-task-form-main">
+      <form
+        class="add-task-form-main"
+        [formGroup]="createTaskForm"
+        (ngSubmit)="onSubmit()"
+      >
         <div class="form-group">
           <label for="title">Title</label>
           <input
+            formControlName="title"
             name="title"
             type="text"
             placeholder="e.g. Take coffee break"
@@ -16,6 +23,7 @@
         <div class="form-group">
           <label for="description">Description</label>
           <textarea
+            formControlName="description"
             name="description"
             id=""
             cols="30"
@@ -27,14 +35,17 @@ recharge the batteries a little."
 
         <div class="form-group sub-tasks">
           <label>Subtasks</label>
-          <div class="sub-tasks">
+          <div
+            class="sub-tasks"
+            *ngFor="let subtaskControl of subtasksI.controls; let i = index"
+            [formGroupName]="i"
+          >
             <div class="sub-task">
-              <input type="text" placeholder="e.g. Make coffee" />
-              <i class="fa-solid fa-xmark"></i>
-            </div>
-
-            <div class="sub-task">
-              <input type="text" placeholder="e.g. Drink coffee & Smile" />
+              <input
+                formControlName="subtask"
+                type="text"
+                placeholder="e.g. Make coffee"
+              />
               <i class="fa-solid fa-xmark"></i>
             </div>
           </div>
@@ -52,14 +63,16 @@ recharge the batteries a little."
           </mat-form-field>
         </div>
 
-        <button type="submit" class="submit-btn">Create Task</button>
+        <button type="submit" class="submit-btn">
+          {{ isEdit ? "Save Changes" : "Create Task" }}
+        </button>
       </form>
     </div>
-  </div> -->
+  </div>
 
   <!-- ** VIEW TASK ** -->
 
-  <!-- <div class="view-task">
+  <div class="view-task" *ngIf="type == 'view_task' && isEdit == false">
     <div class="view-task-heading">
       <div class="task-heading">
         Research pricing points of various competitors and trial different
@@ -127,10 +140,10 @@ recharge the batteries a little."
       <a class="edit_task">Edit Task</a>
       <a class="delete_task">Delete Task</a>
     </mat-menu>
-  </div> -->
+  </div>
 
   <!-- ** DELETE TASK ** -->
-  <div class="delete-task">
+  <div class="delete-task" *ngIf="type == 'delete_task' && isEdit == false">
     <div class="delete-task-heading">Delete this task?</div>
 
     <div class="delete-task-copy">

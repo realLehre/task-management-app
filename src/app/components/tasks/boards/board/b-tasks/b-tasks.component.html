@@ -1,9 +1,13 @@
 <div class="tasks-container">
   <div class="tasks-main" *ngIf="activeBoard.columns.length > 0">
-    <div class="tasks-main-group" *ngFor="let column of activeBoard.columns">
+    <div
+      class="tasks-main-group"
+      *ngFor="let column of activeBoard.columns; let i = index"
+    >
       <div class="tasks-group">
         <div class="tasks-group-heading">
-          <span class="icon"></span>{{ column.toUpperCase() }}
+          <span class="icon" [ngClass]="{ purple: (i + 1) % 2 == 0 }"></span
+          >{{ column.toUpperCase() }}
         </div>
 
         <div class="tasks">

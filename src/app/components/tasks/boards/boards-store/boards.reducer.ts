@@ -117,6 +117,7 @@ export const selectActiveBoard = createSelector(
         name: '',
         columns: [],
         id: '',
+        tasks: [],
       };
     }
   }

@@ -45,26 +45,28 @@ export class HeaderComponent implements OnInit, AfterViewChecked {
 
   ngAfterViewChecked(): void {}
 
-  openModal(): void {
-    const dialogRef = this.dialog.open(TaskDialogComponent, {
-      height: '700px',
-      width: '600px',
-    });
+  onEditBoard_Task(type: string) {
+    switch (type) {
+      case 'board':
+        this.openModal(BoardsDialogComponent, 'create', true);
+        break;
+      case 'delete_board':
+        this.openModal(BoardsDialogComponent, 'delete', false);
+        break;
+      case 'add_task':
+        const dialogRef = this.dialog.open(TaskDialogComponent, {
+          height: '900px',
+          width: '600px',
+          data: { type: 'add_task', mode: { isEdit: false } },
+        });
+    }
   }
 
-  onEditBoard_Task(type: string) {
-    if (type == 'board') {
-      const dialogRef = this.dialog.open(BoardsDialogComponent, {
-        height: '900px',
-        width: '600px',
-        data: { mode: 'create', isAddColumn: true },
-      });
-    } else if (type == 'delete_board') {
-      const dialogRef = this.dialog.open(BoardsDialogComponent, {
-        height: '900px',
-        width: '600px',
-        data: { mode: 'delete', isAddColumn: false },
-      });
-    }
+  openModal(component: any, mode: string, isAddColumn?: boolean) {
+    const dialogRef = this.dialog.open(BoardsDialogComponent, {
+      height: '900px',
+      width: '600px',
+      data: { mode: mode, isAddColumn: isAddColumn },
+    });
   }
 }

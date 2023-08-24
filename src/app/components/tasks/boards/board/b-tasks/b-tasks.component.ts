@@ -18,6 +18,7 @@ export class BTasksComponent implements OnInit {
     name: '',
     columns: [],
     id: '',
+    tasks: [],
   };
   showTasks: boolean = false;
 
@@ -29,30 +30,23 @@ export class BTasksComponent implements OnInit {
   ngOnInit(): void {
     this.store.select(fromStore.selectActiveBoard).subscribe((board) => {
       this.activeBoard = board ?? this.activeBoard;
-    });
-  }
-
-  onAddColumn() {
-    const dialogRef = this.dialog.open(BoardsDialogComponent, {
-      height: '900px',
-      width: '600px',
-      data: { mode: 'create', isAddColumn: true },
+      console.log(this.activeBoard);
     });
   }
 
   onAddBoard_Column(type: string) {
     if (type == 'column') {
-      const dialogRef = this.dialog.open(BoardsDialogComponent, {
-        height: '900px',
-        width: '600px',
-        data: { mode: 'create', isAddColumn: true },
-      });
+      this.openModal(true);
     } else if (type == 'board') {
-      const dialogRef = this.dialog.open(BoardsDialogComponent, {
-        height: '900px',
-        width: '600px',
-        data: { mode: 'create', isAddColumn: false },
-      });
+      this.openModal(false);
     }
+  }
+
+  openModal(isAddColuimn: boolean) {
+    const dialogRef = this.dialog.open(BoardsDialogComponent, {
+      height: '900px',
+      width: '600px',
+      data: { mode: 'create', isAddColumn: isAddColuimn },
+    });
   }
 }
