@@ -29,8 +29,6 @@ export class BTasksComponent implements OnInit {
   ngOnInit(): void {
     this.store.select(fromStore.selectActiveBoard).subscribe((board) => {
       this.activeBoard = board ?? this.activeBoard;
-      // if(this.activeBoard)
-      console.log(this.activeBoard);
     });
   }
 
@@ -40,5 +38,21 @@ export class BTasksComponent implements OnInit {
       width: '600px',
       data: { mode: 'create', isAddColumn: true },
     });
+  }
+
+  onAddBoard_Column(type: string) {
+    if (type == 'column') {
+      const dialogRef = this.dialog.open(BoardsDialogComponent, {
+        height: '900px',
+        width: '600px',
+        data: { mode: 'create', isAddColumn: true },
+      });
+    } else if (type == 'board') {
+      const dialogRef = this.dialog.open(BoardsDialogComponent, {
+        height: '900px',
+        width: '600px',
+        data: { mode: 'create', isAddColumn: false },
+      });
+    }
   }
 }

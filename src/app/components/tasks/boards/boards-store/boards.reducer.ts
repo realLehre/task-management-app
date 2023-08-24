@@ -113,7 +113,11 @@ export const selectActiveBoard = createSelector(
     if (boards.length > 0) {
       return boards.find((board) => board.id == activeBoardId);
     } else {
-      return;
+      return {
+        name: '',
+        columns: [],
+        id: '',
+      };
     }
   }
 );
