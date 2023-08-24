@@ -22,6 +22,7 @@ export class BoardsDialogComponent implements OnInit {
   createBoardForm!: FormGroup;
   board!: Board;
   editState: boolean = false;
+  boardId!: string;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
@@ -47,27 +48,25 @@ export class BoardsDialogComponent implements OnInit {
     });
 
     this.store.select(fromStore.selectActiveBoard).subscribe((board) => {
-      console.log(board);
-
       this.board = board ?? this.board;
+      this.boardId = board?.id ?? this.boardId;
+
       if (this.editState == true) {
         this.name.setValue(board?.name);
 
         const columns = board?.columns ?? [];
 
-        const newColumns = new FormArray<
-          FormGroup<{ column: FormControl<string | null> }>
-        >([]);
+        while (this.columns.length != 0) {
+          this.columns.removeAt(0);
+        }
 
         columns.map((column) => {
-          newColumns.push(
+          this.columns.push(
             new FormGroup({
               column: new FormControl(column, Validators.required),
             })
           );
         });
-
-        // this.columns.patchValue([...newColumns]);
       }
     });
   }
@@ -123,6 +122,16 @@ export class BoardsDialogComponent implements OnInit {
       );
     }
 
+    this.dialog.closeAll();
+  }
+
+  onDeleteBoard() {
+    this.store.dispatch(fromBoardsActions.deleteBoard({ id: this.boardId }));
+
+    this.dialog.closeAll();
+  }
+
+  onCloseDialog() {
     this.dialog.closeAll();
   }
 }

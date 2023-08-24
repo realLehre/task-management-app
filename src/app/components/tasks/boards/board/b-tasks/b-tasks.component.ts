@@ -19,6 +19,7 @@ export class BTasksComponent implements OnInit {
     columns: [],
     id: '',
   };
+  showTasks: boolean = false;
 
   constructor(
     private store: Store<fromStore.State>,
@@ -28,9 +29,9 @@ export class BTasksComponent implements OnInit {
   ngOnInit(): void {
     this.store.select(fromStore.selectActiveBoard).subscribe((board) => {
       this.activeBoard = board ?? this.activeBoard;
+      // if(this.activeBoard)
+      console.log(this.activeBoard);
     });
-
-    console.log(this.activeBoard);
   }
 
   onAddColumn() {

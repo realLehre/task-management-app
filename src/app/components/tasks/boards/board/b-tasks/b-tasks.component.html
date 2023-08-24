@@ -15,12 +15,12 @@
     <div class="new-column" (click)="onAddColumn()">+ New Column</div>
   </div>
 
-  <!-- <div class="empty-tasks">
+  <div class="empty-tasks" *ngIf="activeBoard.columns.length == 0">
     <div class="empty-tasks-heading">
       This board is empty. Create a new column to get started.
     </div>
     <div class="empty-tasks-button">
       <button>+Add New Column</button>
     </div>
-  </div> -->
+  </div>
 </div>

@@ -30,3 +30,5 @@ export const deleteBoard = createAction(
   '[Boards Page] Delete Board',
   props<{ id: string }>()
 );
+
+export const showNoBoard = createAction('[Boards Page] Show No Board');

@@ -5,14 +5,14 @@ import {
   OnInit,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Store } from '@ngrx/store';
 
 import { TaskDialogComponent } from '../tasks/boards/board/b-tasks/task-dialog/task-dialog.component';
 import { BoardsDialogComponent } from '../tasks/boards/boards-dialog/boards-dialog.component';
 import { TaskService } from 'src/app/core/services/task.service';
 import { ThemeService } from 'src/app/core/theme.service';
 import * as fromStore from '@store';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import * as fromBoardsActions from '@boardsPageActions';
 
 @Component({
   selector: 'app-header',
@@ -38,9 +38,9 @@ export class HeaderComponent implements OnInit, AfterViewChecked {
       }
     });
 
-    this.store
-      .select(fromStore.selectActiveBoard)
-      .subscribe((board) => (this.boardName = board?.name ?? this.boardName));
+    this.store.select(fromStore.selectActiveBoard).subscribe((board) => {
+      this.boardName = board?.name ?? this.boardName;
+    });
   }
 
   ngAfterViewChecked(): void {}
@@ -52,12 +52,18 @@ export class HeaderComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  onEdit(type: string) {
+  onEditBoard_Task(type: string) {
     if (type == 'board') {
       const dialogRef = this.dialog.open(BoardsDialogComponent, {
         height: '900px',
         width: '600px',
         data: { mode: 'create', isAddColumn: true },
+      });
+    } else if (type == 'delete_board') {
+      const dialogRef = this.dialog.open(BoardsDialogComponent, {
+        height: '900px',
+        width: '600px',
+        data: { mode: 'delete', isAddColumn: false },
       });
     }
   }

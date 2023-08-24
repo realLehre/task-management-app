@@ -43,8 +43,11 @@ export class BoardsComponent implements OnInit {
 
     this.store.select(fromStore.selectAllBoards).subscribe((data) => {
       this.boards = data;
-      console.log(data);
-      this.store.dispatch(fromBoardsActions.selectBoard({ id: data[0].id }));
+      if (this.boards.length > 0) {
+        this.store.dispatch(fromBoardsActions.selectBoard({ id: data[0].id }));
+      } else {
+        this.store.dispatch(fromBoardsActions.showNoBoard());
+      }
     });
   }
 
@@ -61,7 +64,6 @@ export class BoardsComponent implements OnInit {
   }
 
   onSelectBoard(id: string) {
-    console.log(id);
     this.store.dispatch(fromBoardsActions.selectBoard({ id: id }));
   }
 

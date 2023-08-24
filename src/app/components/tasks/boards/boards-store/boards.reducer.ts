@@ -90,6 +90,14 @@ export const boardsReducer = createReducer(
     return {
       ...state,
       boards: deleteBoard(state.boards, action.id),
+      activeBoard: null,
+    };
+  }),
+
+  on(BoardsPageActions.showNoBoard, (state) => {
+    return {
+      ...state,
+      ...initialState,
     };
   })
 );
@@ -102,6 +110,10 @@ export const selectActiveBoard = createSelector(
   selectBoards,
   selectActiveBoardId,
   (boards, activeBoardId) => {
-    return boards.find((board) => board.id == activeBoardId);
+    if (boards.length > 0) {
+      return boards.find((board) => board.id == activeBoardId);
+    } else {
+      return;
+    }
   }
 );
