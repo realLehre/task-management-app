@@ -33,11 +33,11 @@ recharge the batteries a little."
           ></textarea>
         </div>
 
-        <div class="form-group sub-tasks">
+        <div class="form-group sub-tasks" formArrayName="subtasks">
           <label>Subtasks</label>
           <div
             class="sub-tasks"
-            *ngFor="let subtaskControl of subtasksI.controls; let i = index"
+            *ngFor="let subTaskControl of subtasks.controls; let i = index"
             [formGroupName]="i"
           >
             <div class="sub-task">
@@ -55,10 +55,10 @@ recharge the batteries a little."
         <div class="form-group select">
           <label for="status">Status</label>
           <mat-form-field>
-            <mat-select>
-              <mat-option value="todo" selected> Todo </mat-option>
-              <mat-option value="doing"> Doing </mat-option>
-              <mat-option value="done"> Done </mat-option>
+            <mat-select formControlName="status">
+              <mat-option *ngFor="let column of boardColumns" [value]="column"
+                >{{ column }}
+              </mat-option>
             </mat-select>
           </mat-form-field>
         </div>

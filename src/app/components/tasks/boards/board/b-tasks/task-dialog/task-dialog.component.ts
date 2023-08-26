@@ -9,7 +9,8 @@ import * as fromTasksActions from '@tasksPageActions';
 interface TaskForm {
   title: FormControl<string | null>;
   description: FormControl<string | null>;
-  subtasksI: FormArray<FormGroup<{ subtask: FormControl<string | null> }>>;
+  subtasks: FormArray<FormGroup<{ subtask: FormControl<string | null> }>>;
+  status: FormControl<string | null>;
 }
 
 @Component({
@@ -21,6 +22,7 @@ export class TaskDialogComponent implements OnInit {
   checked = false;
   type!: string;
   isEdit: boolean = false;
+  boardColumns: string[] = [];
 
   createTaskForm!: FormGroup;
 
@@ -33,17 +35,22 @@ export class TaskDialogComponent implements OnInit {
     this.type = this.data.type;
     this.isEdit = this.data.mode.isEdit;
 
-    this.createTaskForm = new FormGroup({
+    this.store.select(fromStore.selectActiveBoard).subscribe((board) => {
+      this.boardColumns = board?.columns ?? [];
+    });
+
+    this.createTaskForm = new FormGroup<TaskForm>({
       title: new FormControl(null, Validators.required),
       description: new FormControl(null, Validators.required),
-      subtasksI: new FormArray([
+      subtasks: new FormArray([
         new FormGroup({
-          subtask: new FormControl(null, Validators.required),
+          subtask: new FormControl('', Validators.required),
         }),
         new FormGroup({
-          subtask: new FormControl(null, Validators.required),
+          subtask: new FormControl('', Validators.required),
         }),
       ]),
+      status: new FormControl(null, Validators.required),
     });
 
     // this.store.dispatch(fromTasksActions.addTask)
@@ -57,8 +64,8 @@ export class TaskDialogComponent implements OnInit {
     return <FormControl>this.createTaskForm.get('description');
   }
 
-  get subtasksI() {
-    return <FormArray>this.createTaskForm.get('subtasksI');
+  get subtasks() {
+    return <FormArray>this.createTaskForm.get('subtasks');
   }
 
   toggleCheck() {
@@ -66,6 +73,6 @@ export class TaskDialogComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.createTaskForm.value);
+    console.log(this.createTaskForm);
   }
 }

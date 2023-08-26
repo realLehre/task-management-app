@@ -99,7 +99,7 @@ export class BoardsDialogComponent implements OnInit {
 
     let newColumns = [];
     for (const key in columns) {
-      newColumns.push(columns[key].column);
+      newColumns.push(columns[key].column.toLowerCase());
     }
 
     if (this.editState == true) {

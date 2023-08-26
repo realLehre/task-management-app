@@ -127,6 +127,7 @@ mat-form-field {
 ::ng-deep .mat-option-text {
   font-size: 15px;
   color: $grey-medium;
+  text-transform: capitalize;
 }
 
 .mat-form-field-infix.ng-tns-c70-0 {
@@ -137,6 +138,7 @@ mat-form-field {
 ::ng-deep .mat-select-min-line,
 ::ng-deep .mat-select-arrow {
   color: var(--taskText);
+  text-transform: capitalize;
 }
 
 .mat-form-field-appearance-legacy .mat-select-value {
@@ -308,6 +310,7 @@ mat-select {
 
   & mat-option {
     color: var(--taskText);
+    text-transform: capitalize;
   }
 }
 
