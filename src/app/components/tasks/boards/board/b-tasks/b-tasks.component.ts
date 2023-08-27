@@ -6,6 +6,7 @@ import * as fromStore from '@store';
 import { switchMap } from 'rxjs';
 import { Board } from 'src/app/shared/models/board.model';
 import { BoardsDialogComponent } from '../../boards-dialog/boards-dialog.component';
+import { Task } from 'src/app/shared/models/task.model';
 
 @Component({
   selector: 'app-b-tasks',
@@ -21,6 +22,13 @@ export class BTasksComponent implements OnInit {
     tasks: {},
   };
   showTasks: boolean = false;
+  testTask: Task = {
+    title: 'test',
+    description: 'test description',
+    sub_tasks: ['hffhf'],
+    status: 'doing',
+    id: 'testid',
+  };
 
   constructor(
     private store: Store<fromStore.State>,
@@ -30,6 +38,7 @@ export class BTasksComponent implements OnInit {
   ngOnInit(): void {
     this.store.select(fromStore.selectActiveBoard).subscribe((board) => {
       this.activeBoard = board ?? this.activeBoard;
+
       console.log(this.activeBoard);
     });
   }

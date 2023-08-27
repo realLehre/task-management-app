@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Task } from 'src/app/shared/models/task.model';
 
 @Component({
   selector: 'app-b-task',
@@ -6,7 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./b-task.component.scss'],
 })
 export class BTaskComponent implements OnInit {
-  test = 5;
+  @Input() tasks: Task[] = [];
+
   constructor() {}
 
   ngOnInit(): void {}

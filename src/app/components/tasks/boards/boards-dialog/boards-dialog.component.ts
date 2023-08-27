@@ -52,12 +52,11 @@ export class BoardsDialogComponent implements OnInit {
     this.store.select(fromStore.selectActiveBoard).subscribe((board) => {
       this.board = board ?? this.board;
       this.boardId = board?.id ?? this.boardId;
+      localStorage.setItem('tasks', JSON.stringify(this.board.tasks));
 
       if (this.editState == true) {
         this.name.setValue(board?.name);
-
         const columns = board?.columns ?? [];
-
         while (this.columns.length != 0) {
           this.columns.removeAt(0);
         }
@@ -98,27 +97,51 @@ export class BoardsDialogComponent implements OnInit {
       return;
     }
     const { name, columns } = this.createBoardForm.value;
+    console.log(columns);
+
+    let tasksStored: any = JSON.parse(localStorage.getItem('tasks') || '{}');
+    console.log(tasksStored);
 
     let newColumns = [];
     const tasks: any = {};
     for (const key in columns) {
       newColumns.push(columns[key].column.toLowerCase());
-      tasks[columns[key].column.toLowerCase()] = [];
+
+      if (tasksStored[columns[key].column]) {
+        if (tasksStored[columns[key].column].length > 0) {
+          tasks[columns[key]] = [...tasksStored[columns[key].column]];
+        } else {
+          tasks[columns[key].column.toLowerCase()] = [];
+        }
+      }
+      // tasks[columns[key].column.toLowerCase()] = [];
     }
+    console.log(tasks);
 
     const generatedId = this.taskService.generateRandomString();
 
     if (this.editState == true) {
-      this.store.dispatch(
-        fromBoardsActions.updateBoard({
-          board: {
-            name: name,
-            columns: newColumns,
-            id: this.board?.id,
-            tasks: { ...tasks },
-          },
-        })
-      );
+      let tasks: any = JSON.parse(localStorage.getItem('tasks') || '{}');
+      let newTasks: any = {};
+      for (const key in tasks) {
+        newColumns.find((column) => {
+          if (column == key) {
+            newTasks[column] = [tasks[column]];
+          }
+        });
+      }
+      console.log(newColumns);
+
+      // this.store.dispatch(
+      //   fromBoardsActions.updateBoard({
+      //     board: {
+      //       name: name,
+      //       columns: newColumns,
+      //       id: this.board?.id,
+      //       tasks: { ...newTasks },
+      //     },
+      //   })
+      // );
 
       localStorage.setItem('board_id', this.board?.id);
       this.router.navigate(['tasks', this.board?.id]);
