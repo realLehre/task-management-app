@@ -5,6 +5,10 @@ import { Store } from '@ngrx/store';
 
 import * as fromStore from '@store';
 import * as fromTasksActions from '@tasksPageActions';
+import * as fromBoardsActions from '@boardsPageActions';
+import { TaskService } from 'src/app/core/services/task.service';
+import { Board } from 'src/app/shared/models/board.model';
+import { Task } from 'src/app/shared/models/task.model';
 
 interface TaskForm {
   title: FormControl<string | null>;
@@ -22,13 +26,15 @@ export class TaskDialogComponent implements OnInit {
   checked = false;
   type!: string;
   isEdit: boolean = false;
+  board!: Board | any;
   boardColumns: string[] = [];
 
   createTaskForm!: FormGroup;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
-    private store: Store<fromStore.State>
+    private store: Store<fromStore.State>,
+    private taskService: TaskService
   ) {}
 
   ngOnInit(): void {
@@ -37,6 +43,7 @@ export class TaskDialogComponent implements OnInit {
 
     this.store.select(fromStore.selectActiveBoard).subscribe((board) => {
       this.boardColumns = board?.columns ?? [];
+      this.board = board ?? this.board;
     });
 
     this.createTaskForm = new FormGroup<TaskForm>({
@@ -52,12 +59,10 @@ export class TaskDialogComponent implements OnInit {
       ]),
       status: new FormControl(null, Validators.required),
     });
-
-    // this.store.dispatch(fromTasksActions.addTask)
   }
 
-  get name() {
-    return <FormControl>this.createTaskForm.get('name');
+  get title() {
+    return <FormControl>this.createTaskForm.get('title');
   }
 
   get description() {
@@ -68,11 +73,55 @@ export class TaskDialogComponent implements OnInit {
     return <FormArray>this.createTaskForm.get('subtasks');
   }
 
+  get status() {
+    return <FormControl>this.createTaskForm.get('status');
+  }
+
   toggleCheck() {
     this.checked = !this.checked;
   }
 
+  addSubtask() {
+    this.subtasks.push(
+      new FormGroup({
+        subtask: new FormControl('', Validators.required),
+      })
+    );
+  }
+
   onSubmit() {
-    console.log(this.createTaskForm);
+    if (this.createTaskForm.invalid) {
+      return;
+    }
+
+    let subtasks = [];
+
+    for (const key in this.subtasks.value) {
+      subtasks.push(this.subtasks.value[key].subtask);
+    }
+
+    let tasks: { [key: string]: Task[] } = { ...this.board.tasks };
+    const task: Task = {
+      title: this.title.value,
+      description: this.description.value,
+      sub_tasks: [...subtasks],
+      status: this.status.value,
+      id: this.taskService.generateRandomString(),
+    };
+
+    for (const key in tasks) {
+      if (task.status == key) {
+        tasks[key] = [...tasks[key], task];
+      }
+    }
+
+    this.store.dispatch(
+      fromBoardsActions.updateBoard({
+        board: {
+          ...this.board,
+          tasks: { ...tasks },
+        },
+      })
+    );
   }
 }

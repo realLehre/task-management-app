@@ -14,11 +14,11 @@ import { BoardsDialogComponent } from '../../boards-dialog/boards-dialog.compone
 })
 export class BTasksComponent implements OnInit {
   test: any = 6;
-  activeBoard: Board = {
+  activeBoard: Board | any = {
     name: '',
     columns: [],
     id: '',
-    tasks: [],
+    tasks: {},
   };
   showTasks: boolean = false;
 

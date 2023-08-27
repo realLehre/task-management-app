@@ -21,7 +21,7 @@ export const editBoard = createAction(
   props<{ board: Board }>()
 );
 
-export const addColumn = createAction(
+export const updateBoard = createAction(
   '[Boards Page] New Column',
   props<{ board: Board }>()
 );

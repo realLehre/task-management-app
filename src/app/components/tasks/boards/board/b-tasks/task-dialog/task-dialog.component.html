@@ -1,4 +1,5 @@
 <div class="task-dialog-container">
+  <!-- ** ADD TASK ** -->
   <div class="add-task" *ngIf="type == 'add_task' && isEdit == false">
     <div class="add-task-heading">
       {{ isEdit ? "Edit Task" : "Add New Task" }}
@@ -12,25 +13,39 @@
       >
         <div class="form-group">
           <label for="title">Title</label>
-          <input
-            formControlName="title"
-            name="title"
-            type="text"
-            placeholder="e.g. Take coffee break"
-          />
+          <div class="input-container">
+            <input
+              formControlName="title"
+              name="title"
+              type="text"
+              placeholder="e.g. Take coffee break"
+              [ngClass]="{ error: title.invalid && title.touched }"
+            />
+            <span class="input-error" *ngIf="title.invalid && title.touched"
+              >Can't be empty</span
+            >
+          </div>
         </div>
 
         <div class="form-group">
           <label for="description">Description</label>
-          <textarea
-            formControlName="description"
-            name="description"
-            id=""
-            cols="30"
-            rows="10"
-            placeholder="e.g. It’s always good to take a break. This 15 minute break will 
-recharge the batteries a little."
-          ></textarea>
+          <div class="input-container text_area">
+            <textarea
+              formControlName="description"
+              name="description"
+              id=""
+              cols="30"
+              rows="10"
+              placeholder="e.g. It’s always good to take a break. This 15 minute break will 
+              recharge the batteries a little."
+              [ngClass]="{ error: description.invalid && description.touched }"
+            ></textarea>
+            <span
+              class="input-error"
+              *ngIf="description.invalid && description.touched"
+              >Can't be empty</span
+            >
+          </div>
         </div>
 
         <div class="form-group sub-tasks" formArrayName="subtasks">
@@ -41,21 +56,34 @@ recharge the batteries a little."
             [formGroupName]="i"
           >
             <div class="sub-task">
-              <input
-                formControlName="subtask"
-                type="text"
-                placeholder="e.g. Make coffee"
-              />
+              <div class="input-container">
+                <input
+                  formControlName="subtask"
+                  type="text"
+                  placeholder="e.g. Make coffee"
+                  [ngClass]="{
+                    error: subTaskControl.invalid && subTaskControl.touched
+                  }"
+                />
+                <span
+                  class="input-error"
+                  *ngIf="subTaskControl.invalid && subTaskControl.touched"
+                  >Can't be empty</span
+                >
+              </div>
               <i class="fa-solid fa-xmark"></i>
             </div>
           </div>
-          <button type="button">+Add New Subtask</button>
+          <button type="button" (click)="addSubtask()">+Add New Subtask</button>
         </div>
 
         <div class="form-group select">
           <label for="status">Status</label>
           <mat-form-field>
-            <mat-select formControlName="status">
+            <mat-select
+              formControlName="status"
+              [ngClass]="{ error: status.invalid && status.touched }"
+            >
               <mat-option *ngFor="let column of boardColumns" [value]="column"
                 >{{ column }}
               </mat-option>

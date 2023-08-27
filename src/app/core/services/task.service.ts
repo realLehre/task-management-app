@@ -9,7 +9,7 @@ export class TaskService {
       'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz01234567';
 
     let randomString = '';
-    for (let d = 0; d < 10; d++) {
+    for (let d = 0; d < 20; d++) {
       randomString += randomChar.charAt(
         Math.floor(Math.random() * randomChar.length)
       );

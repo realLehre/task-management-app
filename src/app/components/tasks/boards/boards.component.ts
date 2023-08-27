@@ -15,6 +15,7 @@ import { ThemeService } from 'src/app/core/theme.service';
 import * as fromStore from '@store';
 import * as fromBoardsActions from '@boardsPageActions';
 import { Board } from 'src/app/shared/models/board.model';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-boards',
@@ -32,7 +33,9 @@ export class BoardsComponent implements OnInit {
     private taskService: TaskService,
     private dialog: MatDialog,
     private themeService: ThemeService,
-    private store: Store<fromStore.State>
+    private store: Store<fromStore.State>,
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -41,12 +44,19 @@ export class BoardsComponent implements OnInit {
       theme == 'dark' ? (this.isToggled = true) : (this.isToggled = false);
     }
 
+    const boardId = localStorage.getItem('board_id');
+
     this.store.select(fromStore.selectAllBoards).subscribe((data) => {
       this.boards = data;
-      if (this.boards.length > 0) {
-        this.store.dispatch(fromBoardsActions.selectBoard({ id: data[0].id }));
-      } else {
-        this.store.dispatch(fromBoardsActions.showNoBoard());
+
+      if (boardId) {
+        this.router.navigate(['tasks', boardId]);
+        this.store.dispatch(fromBoardsActions.selectBoard({ id: boardId }));
+      }
+
+      if (this.boards.length == 0) {
+        localStorage.removeItem('board_id');
+        this.router.navigate(['tasks', 'add-board']);
       }
     });
   }
@@ -64,6 +74,9 @@ export class BoardsComponent implements OnInit {
   }
 
   onSelectBoard(id: string) {
+    this.router.navigate(['tasks', id]);
+    localStorage.setItem('board_id', id);
+
     this.store.dispatch(fromBoardsActions.selectBoard({ id: id }));
   }
 

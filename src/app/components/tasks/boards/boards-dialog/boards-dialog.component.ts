@@ -7,6 +7,7 @@ import * as fromStore from 'src/app/store/app.reducer';
 import * as fromBoardsActions from '@boardsPageActions';
 import { TaskService } from 'src/app/core/services/task.service';
 import { Board } from 'src/app/shared/models/board.model';
+import { Router } from '@angular/router';
 
 interface boardForm {
   name: FormControl<string | null>;
@@ -20,7 +21,7 @@ interface boardForm {
 export class BoardsDialogComponent implements OnInit {
   type!: string;
   createBoardForm!: FormGroup;
-  board!: Board;
+  board!: any;
   editState: boolean = false;
   boardId!: string;
 
@@ -28,7 +29,8 @@ export class BoardsDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) private data: any,
     private store: Store<fromStore.State>,
     private dialog: MatDialog,
-    private taskService: TaskService
+    private taskService: TaskService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -98,30 +100,43 @@ export class BoardsDialogComponent implements OnInit {
     const { name, columns } = this.createBoardForm.value;
 
     let newColumns = [];
+    const tasks: any = {};
     for (const key in columns) {
       newColumns.push(columns[key].column.toLowerCase());
+      tasks[columns[key].column.toLowerCase()] = [];
     }
+
+    const generatedId = this.taskService.generateRandomString();
 
     if (this.editState == true) {
       this.store.dispatch(
-        fromBoardsActions.addColumn({
+        fromBoardsActions.updateBoard({
           board: {
             name: name,
             columns: newColumns,
             id: this.board?.id,
-            tasks: [],
+            tasks: { ...tasks },
           },
         })
       );
+
+      localStorage.setItem('board_id', this.board?.id);
+      this.router.navigate(['tasks', this.board?.id]);
     } else {
       this.store.dispatch(
         fromBoardsActions.createNewBoard({
           name: name,
           columns: newColumns,
-          id: this.taskService.generateRandomString(),
-          tasks: [],
+          id: generatedId,
+          tasks: { ...tasks },
         })
       );
+
+      this.router.navigate(['tasks', generatedId]);
+
+      localStorage.setItem('board_id', generatedId);
+
+      this.store.dispatch(fromBoardsActions.selectBoard({ id: generatedId }));
     }
 
     this.dialog.closeAll();
@@ -129,6 +144,14 @@ export class BoardsDialogComponent implements OnInit {
 
   onDeleteBoard() {
     this.store.dispatch(fromBoardsActions.deleteBoard({ id: this.boardId }));
+
+    this.store.select(fromStore.selectAllBoards).subscribe((boards) => {
+      this.store.dispatch(fromBoardsActions.selectBoard({ id: boards[0].id }));
+
+      this.router.navigate(['tasks', boards[0].id]);
+
+      localStorage.setItem('board_id', boards[0].id);
+    });
 
     this.dialog.closeAll();
   }
