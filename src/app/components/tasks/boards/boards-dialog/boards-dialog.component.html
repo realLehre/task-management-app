@@ -54,7 +54,10 @@
                 Can't be empty</span
               >
             </div>
-            <i class="fa-solid fa-xmark" (click)="removeColumn(i)"></i>
+            <i
+              class="fa-solid fa-xmark"
+              (click)="removeColumn(i, columnControl.value)"
+            ></i>
           </div>
         </div>
         <button type="button" (click)="addColumn()">+Add New Column</button>

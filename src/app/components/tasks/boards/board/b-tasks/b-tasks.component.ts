@@ -22,13 +22,6 @@ export class BTasksComponent implements OnInit {
     tasks: {},
   };
   showTasks: boolean = false;
-  testTask: Task = {
-    title: 'test',
-    description: 'test description',
-    sub_tasks: ['hffhf'],
-    status: 'doing',
-    id: 'testid',
-  };
 
   constructor(
     private store: Store<fromStore.State>,
@@ -38,8 +31,6 @@ export class BTasksComponent implements OnInit {
   ngOnInit(): void {
     this.store.select(fromStore.selectActiveBoard).subscribe((board) => {
       this.activeBoard = board ?? this.activeBoard;
-
-      console.log(this.activeBoard);
     });
   }
 

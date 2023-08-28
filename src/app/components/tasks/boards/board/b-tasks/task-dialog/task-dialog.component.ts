@@ -9,6 +9,7 @@ import * as fromBoardsActions from '@boardsPageActions';
 import { TaskService } from 'src/app/core/services/task.service';
 import { Board } from 'src/app/shared/models/board.model';
 import { Task } from 'src/app/shared/models/task.model';
+import { Router } from '@angular/router';
 
 interface TaskForm {
   title: FormControl<string | null>;
@@ -34,7 +35,8 @@ export class TaskDialogComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
     private store: Store<fromStore.State>,
-    private taskService: TaskService
+    private taskService: TaskService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -93,6 +95,11 @@ export class TaskDialogComponent implements OnInit {
     if (this.createTaskForm.invalid) {
       return;
     }
+    console.log(this.board.id);
+
+    this.router.navigate(['tasks', this.board.id]);
+
+    localStorage.setItem('board_id', this.board.id);
 
     let subtasks = [];
 

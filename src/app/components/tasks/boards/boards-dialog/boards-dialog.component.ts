@@ -24,6 +24,7 @@ export class BoardsDialogComponent implements OnInit {
   board!: any;
   editState: boolean = false;
   boardId!: string;
+  tasksStored!: any;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
@@ -70,6 +71,8 @@ export class BoardsDialogComponent implements OnInit {
         });
       }
     });
+
+    this.tasksStored = JSON.parse(localStorage.getItem('tasks') || '{}');
   }
 
   get name() {
@@ -88,8 +91,11 @@ export class BoardsDialogComponent implements OnInit {
     );
   }
 
-  removeColumn(index: number) {
+  removeColumn(index: number, taskKey: { column: string }) {
     this.columns.removeAt(index);
+
+    delete this.tasksStored[taskKey.column];
+    localStorage.setItem('tasks', JSON.stringify(this.tasksStored));
   }
 
   onSubmit() {
@@ -97,54 +103,32 @@ export class BoardsDialogComponent implements OnInit {
       return;
     }
     const { name, columns } = this.createBoardForm.value;
-    console.log(columns);
-
-    let tasksStored: any = JSON.parse(localStorage.getItem('tasks') || '{}');
-    console.log(tasksStored);
 
     let newColumns = [];
     const tasks: any = {};
     for (const key in columns) {
       newColumns.push(columns[key].column.toLowerCase());
 
-      if (tasksStored[columns[key].column]) {
-        if (tasksStored[columns[key].column].length > 0) {
-          tasks[columns[key]] = [...tasksStored[columns[key].column]];
-        } else {
-          tasks[columns[key].column.toLowerCase()] = [];
-        }
-      }
-      // tasks[columns[key].column.toLowerCase()] = [];
+      tasks[columns[key].column.toLowerCase()] = [];
     }
-    console.log(tasks);
 
     const generatedId = this.taskService.generateRandomString();
 
     if (this.editState == true) {
-      let tasks: any = JSON.parse(localStorage.getItem('tasks') || '{}');
-      let newTasks: any = {};
-      for (const key in tasks) {
-        newColumns.find((column) => {
-          if (column == key) {
-            newTasks[column] = [tasks[column]];
-          }
-        });
-      }
-      console.log(newColumns);
+      this.store.dispatch(
+        fromBoardsActions.updateBoard({
+          board: {
+            name: name,
+            columns: newColumns,
+            id: this.board?.id,
+            tasks: { ...tasks, ...this.tasksStored },
+          },
+        })
+      );
 
-      // this.store.dispatch(
-      //   fromBoardsActions.updateBoard({
-      //     board: {
-      //       name: name,
-      //       columns: newColumns,
-      //       id: this.board?.id,
-      //       tasks: { ...newTasks },
-      //     },
-      //   })
-      // );
-
-      localStorage.setItem('board_id', this.board?.id);
-      this.router.navigate(['tasks', this.board?.id]);
+      localStorage.setItem('board_id', this.board.id);
+      this.router.navigate(['tasks', this.board.id]);
+      console.log(this.board.id);
     } else {
       this.store.dispatch(
         fromBoardsActions.createNewBoard({

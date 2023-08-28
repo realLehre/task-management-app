@@ -44,10 +44,10 @@ export class BoardsComponent implements OnInit {
       theme == 'dark' ? (this.isToggled = true) : (this.isToggled = false);
     }
 
-    const boardId = localStorage.getItem('board_id');
-
     this.store.select(fromStore.selectAllBoards).subscribe((data) => {
       this.boards = data;
+      const boardId = localStorage.getItem('board_id');
+      console.log(boardId);
 
       if (boardId) {
         this.router.navigate(['tasks', boardId]);
