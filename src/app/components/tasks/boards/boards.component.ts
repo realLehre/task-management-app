@@ -47,10 +47,13 @@ export class BoardsComponent implements OnInit {
     this.store.select(fromStore.selectAllBoards).subscribe((data) => {
       this.boards = data;
       const boardId = localStorage.getItem('board_id');
-      console.log(boardId);
+      const boardName = localStorage.getItem('board_name');
 
       if (boardId) {
-        this.router.navigate(['tasks', boardId]);
+        this.router.navigate([], {
+          relativeTo: this.route,
+          queryParams: { board: boardName, board_Id: boardId },
+        });
         this.store.dispatch(fromBoardsActions.selectBoard({ id: boardId }));
       }
 
@@ -73,9 +76,13 @@ export class BoardsComponent implements OnInit {
     });
   }
 
-  onSelectBoard(id: string) {
-    this.router.navigate(['tasks', id]);
+  onSelectBoard(id: string, name: string) {
     localStorage.setItem('board_id', id);
+    localStorage.setItem('board_name', name);
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { board: name, board_Id: id },
+    });
 
     this.store.dispatch(fromBoardsActions.selectBoard({ id: id }));
   }

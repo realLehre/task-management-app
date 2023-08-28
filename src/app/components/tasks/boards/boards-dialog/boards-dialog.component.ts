@@ -7,7 +7,7 @@ import * as fromStore from 'src/app/store/app.reducer';
 import * as fromBoardsActions from '@boardsPageActions';
 import { TaskService } from 'src/app/core/services/task.service';
 import { Board } from 'src/app/shared/models/board.model';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 interface boardForm {
   name: FormControl<string | null>;
@@ -31,7 +31,8 @@ export class BoardsDialogComponent implements OnInit {
     private store: Store<fromStore.State>,
     private dialog: MatDialog,
     private taskService: TaskService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -127,8 +128,11 @@ export class BoardsDialogComponent implements OnInit {
       );
 
       localStorage.setItem('board_id', this.board.id);
-      this.router.navigate(['tasks', this.board.id]);
-      console.log(this.board.id);
+      localStorage.setItem('board_name', this.board.name);
+      this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: { board: this.board.name, board_Id: this.board.id },
+      });
     } else {
       this.store.dispatch(
         fromBoardsActions.createNewBoard({
@@ -139,10 +143,13 @@ export class BoardsDialogComponent implements OnInit {
         })
       );
 
-      this.router.navigate(['tasks', generatedId]);
+      localStorage.setItem('board_name', name);
 
       localStorage.setItem('board_id', generatedId);
-
+      this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: { board: name, board_Id: generatedId },
+      });
       this.store.dispatch(fromBoardsActions.selectBoard({ id: generatedId }));
     }
 

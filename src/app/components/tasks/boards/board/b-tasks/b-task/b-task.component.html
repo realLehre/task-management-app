@@ -1,5 +1,5 @@
 <div class="task-container">
-  <div class="task-main" *ngFor="let task of tasks">
+  <div class="task-main" *ngFor="let task of tasks" (click)="onViewTask(task)">
     <div class="task-main-title">
       {{ task.title }}
     </div>

@@ -9,7 +9,7 @@ import * as fromBoardsActions from '@boardsPageActions';
 import { TaskService } from 'src/app/core/services/task.service';
 import { Board } from 'src/app/shared/models/board.model';
 import { Task } from 'src/app/shared/models/task.model';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 interface TaskForm {
   title: FormControl<string | null>;
@@ -29,6 +29,7 @@ export class TaskDialogComponent implements OnInit {
   isEdit: boolean = false;
   board!: Board | any;
   boardColumns: string[] = [];
+  task!: Task;
 
   createTaskForm!: FormGroup;
 
@@ -36,12 +37,16 @@ export class TaskDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) private data: any,
     private store: Store<fromStore.State>,
     private taskService: TaskService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.type = this.data.type;
     this.isEdit = this.data.mode.isEdit;
+    this.task = this.data.selectedTask;
+
+    console.log(this.task);
 
     this.store.select(fromStore.selectActiveBoard).subscribe((board) => {
       this.boardColumns = board?.columns ?? [];
@@ -95,11 +100,13 @@ export class TaskDialogComponent implements OnInit {
     if (this.createTaskForm.invalid) {
       return;
     }
-    console.log(this.board.id);
-
-    this.router.navigate(['tasks', this.board.id]);
 
     localStorage.setItem('board_id', this.board.id);
+    localStorage.setItem('board_name', this.board.name);
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { board: this.board.name, board_Id: this.board.id },
+    });
 
     let subtasks = [];
 
