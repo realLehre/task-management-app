@@ -1,0 +1,12 @@
+<div
+  class="box-group checked"
+  (click)="toggleCheck(subtask)"
+  *ngFor="let subtask of subtasks; let i = index"
+>
+  <div class="check-input">
+    <input type="checkbox" [value]="i + 1" [checked]="checked" />
+    <span class="checkmark"></span>
+  </div>
+
+  <label [ngClass]="{ strikethrough: checked }">{{ subtask }}</label>
+</div>

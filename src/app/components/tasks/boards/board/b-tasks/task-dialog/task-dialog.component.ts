@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '@store';
@@ -38,15 +38,15 @@ export class TaskDialogComponent implements OnInit {
     private store: Store<fromStore.State>,
     private taskService: TaskService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
     this.type = this.data.type;
     this.isEdit = this.data.mode.isEdit;
     this.task = this.data.selectedTask;
-
-    console.log(this.task);
+    localStorage.setItem('prevStatus', this.task.status);
 
     this.store.select(fromStore.selectActiveBoard).subscribe((board) => {
       this.boardColumns = board?.columns ?? [];
@@ -66,6 +66,24 @@ export class TaskDialogComponent implements OnInit {
       ]),
       status: new FormControl(null, Validators.required),
     });
+
+    if (this.isEdit) {
+      this.title.setValue(this.task.title);
+      this.description.setValue(this.task.description);
+      this.status.setValue(this.task.status);
+      const subtasks = this.task.sub_tasks;
+      while (this.subtasks.length != 0) {
+        this.subtasks.removeAt(0);
+      }
+
+      subtasks.map((subtask) => {
+        this.subtasks.push(
+          new FormGroup({
+            subtask: new FormControl(subtask, Validators.required),
+          })
+        );
+      });
+    }
   }
 
   get title() {
@@ -84,8 +102,13 @@ export class TaskDialogComponent implements OnInit {
     return <FormControl>this.createTaskForm.get('status');
   }
 
-  toggleCheck() {
-    this.checked = !this.checked;
+  toggleCheck(index: any, e: any) {
+    console.log(index);
+    console.log(e.target);
+
+    e.target.classList.toggle('strikethrough');
+
+    // this.checked = !this.checked;
   }
 
   addSubtask() {
@@ -94,6 +117,18 @@ export class TaskDialogComponent implements OnInit {
         subtask: new FormControl('', Validators.required),
       })
     );
+  }
+
+  onEdit_Delete(action: string) {
+    const dialogRef = this.dialog.open(TaskDialogComponent, {
+      height: '900px',
+      width: '600px',
+      data: {
+        type: 'add_task',
+        mode: { isEdit: true },
+        selectedTask: this.task,
+      },
+    });
   }
 
   onSubmit() {
@@ -115,17 +150,49 @@ export class TaskDialogComponent implements OnInit {
     }
 
     let tasks: { [key: string]: Task[] } = { ...this.board.tasks };
-    const task: Task = {
-      title: this.title.value,
-      description: this.description.value,
-      sub_tasks: [...subtasks],
-      status: this.status.value,
-      id: this.taskService.generateRandomString(),
-    };
+    const prevStatus = localStorage.getItem('prevStatus');
+    let task: Task;
 
-    for (const key in tasks) {
-      if (task.status == key) {
-        tasks[key] = [...tasks[key], task];
+    if (this.isEdit) {
+      task = {
+        title: this.title.value,
+        description: this.description.value,
+        sub_tasks: [...subtasks],
+        status: this.status.value,
+        id: this.task.id,
+      };
+
+      if (prevStatus && prevStatus != this.status.value) {
+        tasks[prevStatus] = tasks[prevStatus].filter(
+          (task) => task.id != this.task.id
+        );
+      }
+      const index = tasks[this.status.value].findIndex((task) => {
+        return task.id == this.task.id;
+      });
+      console.log(index);
+
+      const newTask = task;
+      if (tasks[this.status.value].some((task) => task == newTask)) {
+        console.log(1);
+
+        return;
+      }
+
+      tasks[this.status.value] = [...tasks[this.status.value], task];
+    } else {
+      task = {
+        title: this.title.value,
+        description: this.description.value,
+        sub_tasks: [...subtasks],
+        status: this.status.value,
+        id: this.taskService.generateRandomString(),
+      };
+
+      for (const key in tasks) {
+        if (task.status == key) {
+          tasks[key] = [...tasks[key], task];
+        }
       }
     }
 

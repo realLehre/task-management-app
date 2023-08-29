@@ -139,3 +139,11 @@ export const selectActiveBoard = createSelector(
     }
   }
 );
+
+// export const selectActiveTask = createSelector(
+//   selectBoards,
+//   selectActiveBoardId,
+//   (boards, activeBoardId) => {
+//     boards.find
+//   }
+// )

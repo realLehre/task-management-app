@@ -1,6 +1,6 @@
 <div class="task-dialog-container">
   <!-- ** ADD TASK ** -->
-  <div class="add-task" *ngIf="type == 'add_task' && isEdit == false">
+  <div class="add-task" *ngIf="type == 'add_task'">
     <div class="add-task-heading">
       {{ isEdit ? "Edit Task" : "Add New Task" }}
     </div>
@@ -117,19 +117,19 @@
         Subtasks (2 of {{ task.sub_tasks.length }})
       </div>
       <div class="checks">
-        <div
+        <!-- <div
           class="box-group checked"
-          (click)="toggleCheck()"
+          (click)="toggleCheck(i, $event)"
           *ngFor="let subtask of task.sub_tasks; let i = index"
         >
           <div class="check-input">
             <input type="checkbox" [value]="i + 1" [checked]="checked" />
             <span class="checkmark"></span>
           </div>
-          <label for="packers" [ngClass]="{ strikethrough: checked }">{{
-            subtask
-          }}</label>
-        </div>
+
+          <label [ngClass]="{ strikethrough: checked }">{{ subtask }}</label>
+        </div> -->
+        <app-sub-task [subtasks]="task.sub_tasks"></app-sub-task>
       </div>
     </div>
 
@@ -149,7 +149,7 @@
 
   <div class="view-task-menu">
     <mat-menu #menu="matMenu">
-      <a class="edit_task">Edit Task</a>
+      <a class="edit_task" (click)="onEdit_Delete('edit')">Edit Task</a>
       <a class="delete_task">Delete Task</a>
     </mat-menu>
   </div>

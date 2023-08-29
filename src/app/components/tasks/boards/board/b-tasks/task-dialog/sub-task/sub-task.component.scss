@@ -1,0 +1,83 @@
+@import "config";
+
+.box-group {
+  position: relative;
+  background-color: var(--bgColorContentCheck);
+  border-radius: 4px;
+  padding: 12px 10px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  cursor: pointer;
+
+  .check-input {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+
+    & input {
+      border: none;
+      outline: none;
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      accent-color: $purple_dark;
+      visibility: hidden;
+
+      &:checked ~ .checkmark {
+        background: $purple_dark;
+
+        &:after {
+          display: block;
+        }
+      }
+    }
+
+    .checkmark {
+      position: absolute;
+      top: 50%;
+      left: 10px;
+      transform: translateY(-50%);
+      height: 20px;
+      width: 20px;
+      background-color: $white;
+      border-radius: 4px;
+      border: 1px solid rgba($grey-medium, 0.4);
+
+      &:after {
+        content: "";
+        position: absolute;
+        display: none;
+        left: 5px;
+        bottom: 3px;
+        width: 4px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 4px 4px 0;
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+      }
+    }
+  }
+
+  & label {
+    font-weight: 700;
+    width: 90%;
+    cursor: pointer;
+    color: var(--taskText);
+
+    &.strikethrough {
+      text-decoration: line-through;
+      color: $grey-medium;
+    }
+  }
+
+  &:not(:last-child) {
+    margin-bottom: 10px;
+  }
+
+  &:hover {
+    background: rgba($purple_dark, 0.4);
+  }
+}
