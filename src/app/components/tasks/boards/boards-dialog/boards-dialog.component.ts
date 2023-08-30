@@ -162,9 +162,12 @@ export class BoardsDialogComponent implements OnInit {
     this.store.select(fromStore.selectAllBoards).subscribe((boards) => {
       this.store.dispatch(fromBoardsActions.selectBoard({ id: boards[0].id }));
 
-      this.router.navigate(['tasks', boards[0].id]);
-
+      this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: { board: boards[0].name, board_Id: boards[0].id },
+      });
       localStorage.setItem('board_id', boards[0].id);
+      localStorage.setItem('board_name', boards[0].name);
     });
 
     this.dialog.closeAll();

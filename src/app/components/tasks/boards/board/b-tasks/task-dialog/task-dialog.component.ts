@@ -45,8 +45,10 @@ export class TaskDialogComponent implements OnInit {
   ngOnInit(): void {
     this.type = this.data.type;
     this.isEdit = this.data.mode.isEdit;
-    this.task = this.data.selectedTask;
-    localStorage.setItem('prevStatus', this.task.status);
+    if (this.data.selectedTask) {
+      this.task = this.data.selectedTask;
+      localStorage.setItem('prevStatus', this.task.status);
+    }
 
     this.store.select(fromStore.selectActiveBoard).subscribe((board) => {
       this.boardColumns = board?.columns ?? [];
@@ -173,9 +175,11 @@ export class TaskDialogComponent implements OnInit {
       console.log(index);
 
       const newTask = task;
-      if (tasks[this.status.value].some((task) => task == newTask)) {
-        console.log(1);
-
+      if (
+        tasks[this.status.value].some(
+          (task) => JSON.stringify(task) === JSON.stringify(newTask)
+        )
+      ) {
         return;
       }
 
