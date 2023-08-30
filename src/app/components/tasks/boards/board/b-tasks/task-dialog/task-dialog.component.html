@@ -71,7 +71,7 @@
                   >Can't be empty</span
                 >
               </div>
-              <i class="fa-solid fa-xmark"></i>
+              <i class="fa-solid fa-xmark" (click)="removeSubtask(i)"></i>
             </div>
           </div>
           <button type="button" (click)="addSubtask()">+Add New Subtask</button>

@@ -121,6 +121,10 @@ export class TaskDialogComponent implements OnInit {
     );
   }
 
+  removeSubtask(index: number) {
+    this.subtasks.removeAt(index);
+  }
+
   onEdit_Delete(action: string) {
     const dialogRef = this.dialog.open(TaskDialogComponent, {
       height: '900px',
