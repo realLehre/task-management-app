@@ -1,4 +1,5 @@
 import {
+  AfterViewChecked,
   Component,
   ElementRef,
   EventEmitter,
@@ -22,11 +23,12 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './boards.component.html',
   styleUrls: ['./boards.component.scss'],
 })
-export class BoardsComponent implements OnInit {
+export class BoardsComponent implements OnInit, AfterViewChecked {
   @Output() showSideBar = new EventEmitter<boolean>();
   currentMode: string | null = 'light';
   isToggled: boolean = false;
   boards: Board[] = [];
+  boardIdStored!: string;
 
   constructor(
     private renderer: Renderer2,
@@ -48,10 +50,10 @@ export class BoardsComponent implements OnInit {
       this.boards = data;
       const boardId = localStorage.getItem('board_id');
       const boardName = localStorage.getItem('board_name');
+      this.boardIdStored = boardId ?? this.boardIdStored;
 
       if (boardId) {
-        this.router.navigate([], {
-          relativeTo: this.route,
+        this.router.navigate(['boards'], {
           queryParams: { board: boardName, board_Id: boardId },
         });
         this.store.dispatch(fromBoardsActions.selectBoard({ id: boardId }));
@@ -59,9 +61,14 @@ export class BoardsComponent implements OnInit {
 
       if (this.boards.length == 0) {
         localStorage.removeItem('board_id');
-        this.router.navigate(['tasks', 'add-board']);
+        this.router.navigate(['boards', 'add-board']);
       }
     });
+  }
+
+  ngAfterViewChecked(): void {
+    const boardId = localStorage.getItem('board_id');
+    this.boardIdStored = boardId ?? this.boardIdStored;
   }
 
   hideSideBar() {
@@ -78,10 +85,6 @@ export class BoardsComponent implements OnInit {
   onSelectBoard(id: string, name: string) {
     localStorage.setItem('board_id', id);
     localStorage.setItem('board_name', name);
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: { board: name, board_Id: id },
-    });
 
     this.store.dispatch(fromBoardsActions.selectBoard({ id: id }));
   }

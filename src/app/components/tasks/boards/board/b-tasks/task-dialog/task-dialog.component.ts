@@ -164,8 +164,7 @@ export class TaskDialogComponent implements OnInit {
 
     localStorage.setItem('board_id', this.board.id);
     localStorage.setItem('board_name', this.board.name);
-    this.router.navigate([], {
-      relativeTo: this.route,
+    this.router.navigate(['boards'], {
       queryParams: { board: this.board.name, board_Id: this.board.id },
     });
 

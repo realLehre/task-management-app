@@ -6,11 +6,9 @@ i {
 .header-container {
   width: 100%;
   background: var(--bgColorHeaderBoardTask);
-  padding: 20px 0;
 }
 
 .header-main {
-  width: 95%;
   margin-inline: auto;
   display: flex;
   align-items: center;
@@ -18,7 +16,17 @@ i {
 }
 
 .logo {
-  flex: 18%;
+  height: 83px;
+  min-width: 210px;
+  padding-left: 30px;
+  border-right: 1px solid rgba(#979797, 0.4);
+  display: flex;
+  align-items: center;
+  transition: all 500ms ease;
+
+  &.widen {
+    min-width: 276px;
+  }
 
   & img {
     display: none;
@@ -35,7 +43,11 @@ i {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex: 70%;
+  // flex: 70%;
+  width: 100%;
+  padding-right: 30px;
+  padding-left: 30px;
+  overflow-x: auto;
 
   .header-text {
     font-size: $heading-XL;
@@ -59,6 +71,8 @@ i {
         font-size: $heading-M;
         font-weight: 500;
         cursor: pointer;
+        white-space: nowrap;
+        margin-left: 20px;
 
         &:hover {
           background: $purple_light;

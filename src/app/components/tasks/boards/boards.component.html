@@ -3,7 +3,14 @@
     <div class="boards-heading">ALL BOARDS ({{ boards.length }})</div>
     <div class="boards">
       <ul class="boards-list" *ngFor="let board of boards; let i = index">
-        <li class="board" (click)="onSelectBoard(board.id, board.name)">
+        <li
+          class="board"
+          [routerLink]="['boards']"
+          [queryParams]="{ board: board.name, board_id: board.id }"
+          routerLinkActive="active"
+          [ngClass]="{ active: board.id == boardIdStored }"
+          (click)="onSelectBoard(board.id, board.name)"
+        >
           <a>
             <div class="board-icon">
               <svg

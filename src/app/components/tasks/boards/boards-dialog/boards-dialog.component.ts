@@ -134,8 +134,7 @@ export class BoardsDialogComponent implements OnInit {
 
       localStorage.setItem('board_id', this.board.id);
       localStorage.setItem('board_name', this.board.name);
-      this.router.navigate([], {
-        relativeTo: this.route,
+      this.router.navigate(['boards'], {
         queryParams: { board: this.board.name, board_Id: this.board.id },
       });
     } else {
@@ -151,8 +150,7 @@ export class BoardsDialogComponent implements OnInit {
       localStorage.setItem('board_name', name);
 
       localStorage.setItem('board_id', generatedId);
-      this.router.navigate([], {
-        relativeTo: this.route,
+      this.router.navigate(['boards'], {
         queryParams: { board: name, board_Id: generatedId },
       });
       this.store.dispatch(fromBoardsActions.selectBoard({ id: generatedId }));
@@ -167,8 +165,7 @@ export class BoardsDialogComponent implements OnInit {
     this.store.select(fromStore.selectAllBoards).subscribe((boards) => {
       this.store.dispatch(fromBoardsActions.selectBoard({ id: boards[0].id }));
 
-      this.router.navigate([], {
-        relativeTo: this.route,
+      this.router.navigate(['boards'], {
         queryParams: { board: boards[0].name, board_Id: boards[0].id },
       });
       localStorage.setItem('board_id', boards[0].id);

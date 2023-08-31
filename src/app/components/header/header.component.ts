@@ -23,6 +23,7 @@ export class HeaderComponent implements OnInit, AfterViewChecked {
   themeState: string | null = 'light';
   logoSrc!: string;
   boardName!: string;
+  isDrawerOpened: boolean = false;
 
   constructor(
     private dialog: MatDialog,
@@ -41,6 +42,10 @@ export class HeaderComponent implements OnInit, AfterViewChecked {
     this.store.select(fromStore.selectActiveBoard).subscribe((board) => {
       this.boardName = board?.name ?? this.boardName;
     });
+
+    this.taskService.isDrawerOpened.subscribe(
+      (data) => (this.isDrawerOpened = data)
+    );
   }
 
   ngAfterViewChecked(): void {}

@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { MatDrawer, MatDrawerToggleResult } from '@angular/material/sidenav';
 import { ThemeService } from './core/theme.service';
+import { TaskService } from './core/services/task.service';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +19,7 @@ export class AppComponent implements OnInit, AfterViewChecked, AfterViewInit {
   isShowSideNav: boolean = false;
   @ViewChild('drawer', { static: false }) drawer!: MatDrawer;
 
-  constructor() {}
+  constructor(private taskService: TaskService) {}
 
   ngOnInit(): void {}
 
@@ -26,10 +27,12 @@ export class AppComponent implements OnInit, AfterViewChecked, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.drawer.opened = true;
+    this.taskService.isDrawerOpened.next(this.drawer.opened);
   }
 
   toggleSideNav() {
     this.isShowSideNav = !this.isShowSideNav;
     this.drawer.opened = !this.drawer.opened;
+    this.taskService.isDrawerOpened.next(this.drawer.opened);
   }
 }
