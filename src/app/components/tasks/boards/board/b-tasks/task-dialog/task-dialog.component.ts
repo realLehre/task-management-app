@@ -176,7 +176,6 @@ export class TaskDialogComponent implements OnInit {
       const index = tasks[this.status.value].findIndex((task) => {
         return task.id == this.task.id;
       });
-      console.log(index);
 
       const newTask = task;
       if (
@@ -187,7 +186,16 @@ export class TaskDialogComponent implements OnInit {
         return;
       }
 
-      tasks[this.status.value] = [...tasks[this.status.value], task];
+      if (this.status.value == prevStatus) {
+        tasks[this.status.value] = tasks[this.status.value].map((task) => {
+          if (task.id == newTask.id) {
+            return { ...task, ...newTask };
+          }
+          return task;
+        });
+      } else {
+        tasks[this.status.value] = [...tasks[this.status.value], task];
+      }
     } else {
       task = {
         title: this.title.value,
@@ -212,5 +220,7 @@ export class TaskDialogComponent implements OnInit {
         },
       })
     );
+
+    this.dialog.closeAll();
   }
 }
