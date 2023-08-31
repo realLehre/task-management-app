@@ -44,8 +44,7 @@ export class BTasksComponent implements OnInit {
 
   openModal(isAddColuimn: boolean) {
     const dialogRef = this.dialog.open(BoardsDialogComponent, {
-      height: '900px',
-      width: '600px',
+      panelClass: 'board_dialog',
       data: { mode: 'create', isAddColumn: isAddColuimn },
     });
   }

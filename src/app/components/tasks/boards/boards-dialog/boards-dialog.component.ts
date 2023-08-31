@@ -25,6 +25,7 @@ export class BoardsDialogComponent implements OnInit {
   editState: boolean = false;
   boardId!: string;
   tasksStored!: any;
+  showError: boolean = false;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
@@ -101,6 +102,10 @@ export class BoardsDialogComponent implements OnInit {
 
   onSubmit() {
     if (this.createBoardForm.invalid) {
+      this.showError = true;
+      setTimeout(() => {
+        this.showError = false;
+      }, 1500);
       return;
     }
     const { name, columns } = this.createBoardForm.value;

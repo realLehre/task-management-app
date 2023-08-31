@@ -1,6 +1,12 @@
 <div class="task-dialog-container">
+  <div class="form-error-alert" [ngClass]="{ showError: showError }">
+    Fields cannot be empty
+  </div>
   <!-- ** ADD TASK ** -->
-  <div class="add-task" *ngIf="type == 'add_task'">
+  <mat-dialog-content
+    class="mat-typography add-task"
+    *ngIf="type == 'add_task'"
+  >
     <div class="add-task-heading">
       {{ isEdit ? "Edit Task" : "Add New Task" }}
     </div>
@@ -19,7 +25,9 @@
               name="title"
               type="text"
               placeholder="e.g. Take coffee break"
-              [ngClass]="{ error: title.invalid && title.touched }"
+              [ngClass]="{
+                error: title.invalid && title.touched
+              }"
             />
             <span class="input-error" *ngIf="title.invalid && title.touched"
               >Can't be empty</span
@@ -38,7 +46,9 @@
               rows="10"
               placeholder="e.g. It’s always good to take a break. This 15 minute break will 
               recharge the batteries a little."
-              [ngClass]="{ error: description.invalid && description.touched }"
+              [ngClass]="{
+                error: description.invalid && description.touched
+              }"
             ></textarea>
             <span
               class="input-error"
@@ -96,11 +106,14 @@
         </button>
       </form>
     </div>
-  </div>
+  </mat-dialog-content>
 
   <!-- ** VIEW TASK ** -->
 
-  <div class="view-task" *ngIf="type == 'view_task' && isEdit == false">
+  <mat-dialog-content
+    class="view-task"
+    *ngIf="type == 'view_task' && isEdit == false"
+  >
     <div class="view-task-heading">
       <div class="task-heading">
         {{ task.title }}
@@ -145,27 +158,32 @@
         </mat-form-field>
       </div>
     </div>
-  </div>
+  </mat-dialog-content>
 
   <div class="view-task-menu">
     <mat-menu #menu="matMenu">
-      <a class="edit_task" (click)="onEdit_Delete('edit')">Edit Task</a>
-      <a class="delete_task">Delete Task</a>
+      <a class="edit_task" (click)="onEdit()">Edit Task</a>
+      <a class="delete_task" (click)="onDelete()">Delete Task</a>
     </mat-menu>
   </div>
 
   <!-- ** DELETE TASK ** -->
-  <div class="delete-task" *ngIf="type == 'delete_task' && isEdit == false">
+  <mat-dialog-content
+    class="delete-task"
+    *ngIf="type == 'delete_task' && isEdit == false"
+  >
     <div class="delete-task-heading">Delete this task?</div>
 
     <div class="delete-task-copy">
-      Are you sure you want to delete the < name of board> and it's subtasks?
-      This action will remove all columns and tasks and cannot be reversed.
+      Are you sure you want to delete the '<span class="delete-task-name">{{
+        task.title
+      }}</span
+      >' task and it's subtasks? This action cannot be reversed.
     </div>
 
     <div class="delete-task-actions">
-      <button id="delete">Delete</button>
-      <button id="cancel">Cancel</button>
+      <button id="delete" (click)="onDeleteTask()">Delete</button>
+      <button id="cancel" (click)="closeDialog()">Cancel</button>
     </div>
-  </div>
+  </mat-dialog-content>
 </div>

@@ -10,6 +10,7 @@ import { TaskService } from 'src/app/core/services/task.service';
 import { Board } from 'src/app/shared/models/board.model';
 import { Task } from 'src/app/shared/models/task.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 interface TaskForm {
   title: FormControl<string | null>;
@@ -30,6 +31,7 @@ export class TaskDialogComponent implements OnInit {
   board!: Board | any;
   boardColumns: string[] = [];
   task!: Task;
+  showError: boolean = false;
 
   createTaskForm!: FormGroup;
 
@@ -39,7 +41,8 @@ export class TaskDialogComponent implements OnInit {
     private taskService: TaskService,
     private router: Router,
     private route: ActivatedRoute,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -125,10 +128,11 @@ export class TaskDialogComponent implements OnInit {
     this.subtasks.removeAt(index);
   }
 
-  onEdit_Delete(action: string) {
+  onEdit() {
+    this.dialog.closeAll();
+
     const dialogRef = this.dialog.open(TaskDialogComponent, {
-      height: '900px',
-      width: '600px',
+      panelClass: 'add_view_task_dialog',
       data: {
         type: 'add_task',
         mode: { isEdit: true },
@@ -137,8 +141,24 @@ export class TaskDialogComponent implements OnInit {
     });
   }
 
+  onDelete() {
+    this.dialog.closeAll();
+    const dialogRef = this.dialog.open(TaskDialogComponent, {
+      panelClass: 'add_view_task_dialog',
+      data: {
+        type: 'delete_task',
+        mode: { isEdit: false },
+        selectedTask: this.task,
+      },
+    });
+  }
+
   onSubmit() {
     if (this.createTaskForm.invalid) {
+      this.showError = true;
+      setTimeout(() => {
+        this.showError = false;
+      }, 1500);
       return;
     }
 
@@ -221,6 +241,30 @@ export class TaskDialogComponent implements OnInit {
       })
     );
 
+    this.dialog.closeAll();
+  }
+
+  onDeleteTask() {
+    const taskStatus = this.task.status;
+    const tasks = { ...this.board.tasks };
+
+    tasks[taskStatus] = tasks[taskStatus].filter(
+      (task: Task) => task.id != this.task.id
+    );
+
+    this.store.dispatch(
+      fromBoardsActions.updateBoard({
+        board: {
+          ...this.board,
+          tasks: { ...tasks },
+        },
+      })
+    );
+
+    this.dialog.closeAll();
+  }
+
+  closeDialog() {
     this.dialog.closeAll();
   }
 }

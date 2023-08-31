@@ -57,3 +57,14 @@ li {
 a {
   text-decoration: none;
 }
+
+.add_view_task_dialog .mat-dialog-container {
+  padding: 0;
+  background-color: var(--dialogBg);
+  width: 600px;
+}
+.board_dialog .mat-dialog-container {
+  padding: 0;
+  background-color: var(--dialogBg);
+  width: 600px;
+}

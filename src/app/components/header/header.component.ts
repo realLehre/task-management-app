@@ -55,8 +55,7 @@ export class HeaderComponent implements OnInit, AfterViewChecked {
         break;
       case 'add_task':
         const dialogRef = this.dialog.open(TaskDialogComponent, {
-          height: '900px',
-          width: '600px',
+          panelClass: 'add_view_task_dialog',
           data: { type: 'add_task', mode: { isEdit: false } },
         });
     }
@@ -64,8 +63,7 @@ export class HeaderComponent implements OnInit, AfterViewChecked {
 
   openModal(component: any, mode: string, isAddColumn?: boolean) {
     const dialogRef = this.dialog.open(BoardsDialogComponent, {
-      height: '900px',
-      width: '600px',
+      panelClass: 'board_dialog',
       data: { mode: mode, isAddColumn: isAddColumn },
     });
   }

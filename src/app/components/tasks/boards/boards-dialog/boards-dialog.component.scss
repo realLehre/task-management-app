@@ -1,18 +1,30 @@
 @import "config";
 
-::ng-deep.mat-dialog-container {
-  padding: 0;
-}
-
 .boards-dialog-container {
+  position: relative;
   font-family: "Plus Jakarta Sans", sans-serif;
   width: 100%;
-  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   background: var(--dialogBg);
-  padding: 35px;
+  padding: 50px 10px;
+}
+
+.form-error-alert {
+  position: absolute;
+  top: 0;
+  background-color: $orange_dark;
+  color: $white;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 10px 25px;
+  transform: translateY(-100%);
+  transition: all 300ms ease-in-out;
+
+  &.showError {
+    transform: translateY(0);
+  }
 }
 
 // ** ADD BOARD **
@@ -136,6 +148,7 @@
 
 // ** DELETE BOARD **
 .delete-board {
+  width: 100%;
   &-heading {
     font-size: $heading-L;
     font-weight: 600;

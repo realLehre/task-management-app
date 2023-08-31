@@ -6,6 +6,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { MatMenuModule } from '@angular/material/menu';
     MatFormFieldModule,
     MatCheckboxModule,
     MatMenuModule,
+    MatSnackBarModule,
   ],
   exports: [
     MatSidenavModule,
@@ -23,6 +25,7 @@ import { MatMenuModule } from '@angular/material/menu';
     MatFormFieldModule,
     MatCheckboxModule,
     MatMenuModule,
+    MatSnackBarModule,
   ],
 })
 export class MaterialModule {}

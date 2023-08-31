@@ -70,8 +70,7 @@ export class BoardsComponent implements OnInit {
 
   onCreateNewBoard() {
     const dialogRef = this.dialog.open(BoardsDialogComponent, {
-      height: '900px',
-      width: '600px',
+      panelClass: 'board_dialog',
       data: { mode: 'create', isAddColumn: false },
     });
   }
