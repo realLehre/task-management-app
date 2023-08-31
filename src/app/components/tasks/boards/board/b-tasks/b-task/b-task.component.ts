@@ -21,6 +21,7 @@ export class BTaskComponent implements OnInit {
     this.taskSelected.emit(task);
     const dialogRef = this.dialog.open(TaskDialogComponent, {
       panelClass: 'add_view_task_dialog',
+      autoFocus: false,
       data: { type: 'view_task', mode: { isEdit: false }, selectedTask: task },
     });
   }

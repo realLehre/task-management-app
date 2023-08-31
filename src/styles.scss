@@ -68,3 +68,8 @@ a {
   background-color: var(--dialogBg);
   width: 600px;
 }
+.mobile_board_dialog .mat-dialog-container {
+  padding: 0;
+  background-color: var(--dialogBg);
+  width: 300px;
+}

@@ -13,6 +13,7 @@ import { TaskService } from 'src/app/core/services/task.service';
 import { ThemeService } from 'src/app/core/theme.service';
 import * as fromStore from '@store';
 import * as fromBoardsActions from '@boardsPageActions';
+import { MobileBoardsComponent } from '../tasks/boards/mobile-boards/mobile-boards.component';
 
 @Component({
   selector: 'app-header',
@@ -24,6 +25,7 @@ export class HeaderComponent implements OnInit, AfterViewChecked {
   logoSrc!: string;
   boardName!: string;
   isDrawerOpened: boolean = false;
+  isAngleUp: boolean = false;
 
   constructor(
     private dialog: MatDialog,
@@ -61,6 +63,7 @@ export class HeaderComponent implements OnInit, AfterViewChecked {
       case 'add_task':
         const dialogRef = this.dialog.open(TaskDialogComponent, {
           panelClass: 'add_view_task_dialog',
+          autoFocus: false,
           data: { type: 'add_task', mode: { isEdit: false } },
         });
     }
@@ -69,7 +72,24 @@ export class HeaderComponent implements OnInit, AfterViewChecked {
   openModal(component: any, mode: string, isAddColumn?: boolean) {
     const dialogRef = this.dialog.open(BoardsDialogComponent, {
       panelClass: 'board_dialog',
+      autoFocus: false,
       data: { mode: mode, isAddColumn: isAddColumn },
+    });
+  }
+
+  onOpenMobileMenu() {
+    this.isAngleUp = true;
+    console.log(this.isAngleUp);
+
+    const dialogRef = this.dialog.open(MobileBoardsComponent, {
+      panelClass: 'mobile_board_dialog',
+      position: { top: '100px' },
+      autoFocus: false,
+    });
+
+    dialogRef.afterClosed().subscribe((data) => {
+      // this.isAngleUp = data.isAngleUp;
+      console.log(data);
     });
   }
 }

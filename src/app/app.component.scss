@@ -65,3 +65,9 @@
     transform: translateY(-50%);
   }
 }
+
+@media (max-width: 550px) {
+  .sidenav {
+    display: none;
+  }
+}

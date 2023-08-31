@@ -7,11 +7,11 @@ import {
   Output,
   Renderer2,
 } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 
 import { TaskService } from 'src/app/core/services/task.service';
-import { BoardsDialogComponent } from './boards-dialog/boards-dialog.component';
+import { BoardsDialogComponent } from '../boards-dialog/boards-dialog.component';
 import { ThemeService } from 'src/app/core/theme.service';
 import * as fromStore from '@store';
 import * as fromBoardsActions from '@boardsPageActions';
@@ -19,12 +19,11 @@ import { Board } from 'src/app/shared/models/board.model';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-boards',
-  templateUrl: './boards.component.html',
-  styleUrls: ['./boards.component.scss'],
+  selector: 'app-mobile-boards',
+  templateUrl: './mobile-boards.component.html',
+  styleUrls: ['./mobile-boards.component.scss'],
 })
-export class BoardsComponent implements OnInit, AfterViewChecked {
-  @Output() showSideBar = new EventEmitter<boolean>();
+export class MobileBoardsComponent implements OnInit {
   currentMode: string | null = 'light';
   isToggled: boolean = false;
   boards: Board[] = [];
@@ -37,7 +36,8 @@ export class BoardsComponent implements OnInit, AfterViewChecked {
     private themeService: ThemeService,
     private store: Store<fromStore.State>,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public dialogRef: MatDialogRef<MobileBoardsComponent>
   ) {}
 
   ngOnInit(): void {
@@ -64,6 +64,7 @@ export class BoardsComponent implements OnInit, AfterViewChecked {
         this.router.navigate(['boards', 'add-board']);
       }
     });
+    this.dialogRef.close('false');
   }
 
   ngAfterViewChecked(): void {
@@ -71,14 +72,9 @@ export class BoardsComponent implements OnInit, AfterViewChecked {
     this.boardIdStored = boardId ?? this.boardIdStored;
   }
 
-  hideSideBar() {
-    this.showSideBar.emit(false);
-  }
-
   onCreateNewBoard() {
     const dialogRef = this.dialog.open(BoardsDialogComponent, {
       panelClass: 'board_dialog',
-      autoFocus: false,
       data: { mode: 'create', isAddColumn: false },
     });
   }
@@ -86,6 +82,7 @@ export class BoardsComponent implements OnInit, AfterViewChecked {
   onSelectBoard(id: string, name: string) {
     localStorage.setItem('board_id', id);
     localStorage.setItem('board_name', name);
+
     this.store.dispatch(fromBoardsActions.selectBoard({ id: id }));
   }
 

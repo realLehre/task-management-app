@@ -19,6 +19,7 @@ import { MaterialModule } from 'src/app/material.module';
 import { BoardsDialogComponent } from './boards/boards-dialog/boards-dialog.component';
 import * as fromStore from 'src/app/store/app.reducer';
 import { SubTaskComponent } from './boards/board/b-tasks/task-dialog/sub-task/sub-task.component';
+import { MobileBoardsComponent } from './boards/mobile-boards/mobile-boards.component';
 
 const reducers = {
   boards: fromStore.getBoardsState,
@@ -53,6 +54,7 @@ const metaReducers: Array<MetaReducer<fromStore.State, any>> = [
     TaskDialogComponent,
     BoardsDialogComponent,
     SubTaskComponent,
+    MobileBoardsComponent,
   ],
   exports: [
     BoardsComponent,

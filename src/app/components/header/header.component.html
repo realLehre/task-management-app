@@ -11,14 +11,24 @@
         alt=""
         [ngClass]="{ dark: themeState == 'light' }"
       />
+      <img src="../../../assets/logo-icon.png" class="mobile-logo" alt="" />
     </div>
 
     <div class="header-content">
-      <div class="header-text">{{ boardName }}</div>
+      <div class="header-text" (click)="onOpenMobileMenu()">
+        <span class="header-text-main">{{ boardName }} </span
+        ><i
+          class="fa fa-angle-down"
+          [ngStyle]="{ transform: isAngleUp ? 'rotate(180deg)' : 'rotate(0)' }"
+        ></i>
+      </div>
 
       <div class="header-actions">
         <div class="header-add-task">
-          <button (click)="onEditBoard_Task('add_task')">+ Add New Task</button>
+          <button (click)="onEditBoard_Task('add_task')">
+            <span class="desktop-plus">+ Add New Task</span>
+            <span class="mobile-plus"><i class="fab fa-plus"></i></span>
+          </button>
         </div>
 
         <div class="header-extra">

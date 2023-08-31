@@ -133,6 +133,7 @@ export class TaskDialogComponent implements OnInit {
 
     const dialogRef = this.dialog.open(TaskDialogComponent, {
       panelClass: 'add_view_task_dialog',
+      autoFocus: false,
       data: {
         type: 'add_task',
         mode: { isEdit: true },
@@ -145,6 +146,7 @@ export class TaskDialogComponent implements OnInit {
     this.dialog.closeAll();
     const dialogRef = this.dialog.open(TaskDialogComponent, {
       panelClass: 'add_view_task_dialog',
+      autoFocus: false,
       data: {
         type: 'delete_task',
         mode: { isEdit: false },
