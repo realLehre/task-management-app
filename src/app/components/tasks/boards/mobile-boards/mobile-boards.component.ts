@@ -61,7 +61,8 @@ export class MobileBoardsComponent implements OnInit {
 
       if (this.boards.length == 0) {
         localStorage.removeItem('board_id');
-        this.router.navigate(['boards', 'add-board']);
+        localStorage.removeItem('board_name');
+        this.router.navigate(['boards'], { fragment: 'add-board' });
       }
     });
     this.dialogRef.afterClosed().subscribe((data) => {

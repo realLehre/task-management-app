@@ -23,7 +23,8 @@ import { MobileBoardsComponent } from '../tasks/boards/mobile-boards/mobile-boar
 export class HeaderComponent implements OnInit, AfterViewChecked {
   themeState: string | null = 'light';
   logoSrc!: string;
-  boardName!: string;
+  boardName: string | undefined;
+  mobileBoardName: string | undefined;
   isDrawerOpened: boolean = false;
   isAngleUp: boolean = false;
 
@@ -42,7 +43,9 @@ export class HeaderComponent implements OnInit, AfterViewChecked {
     });
 
     this.store.select(fromStore.selectActiveBoard).subscribe((board) => {
-      this.boardName = board?.name ?? this.boardName;
+      this.boardName = board?.name != '' ? board?.name : 'Add board';
+      this.mobileBoardName =
+        board?.name != '' ? board?.name : 'Click to add board';
     });
 
     this.taskService.isDrawerOpened.subscribe(
