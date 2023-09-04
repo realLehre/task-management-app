@@ -32,6 +32,7 @@ export class BTasksComponent implements OnInit {
     this.store.select(fromStore.selectActiveBoard).subscribe((board) => {
       this.activeBoard = board ?? this.activeBoard;
     });
+    console.log(this.activeBoard);
   }
 
   onAddBoard_Column(type: string) {

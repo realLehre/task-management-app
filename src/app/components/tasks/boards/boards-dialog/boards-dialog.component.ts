@@ -160,16 +160,22 @@ export class BoardsDialogComponent implements OnInit {
   }
 
   onDeleteBoard() {
-    this.store.dispatch(fromBoardsActions.deleteBoard({ id: this.boardId }));
+    if (this.board.id) {
+      this.store.dispatch(fromBoardsActions.deleteBoard({ id: this.boardId }));
+    }
 
     this.store.select(fromStore.selectAllBoards).subscribe((boards) => {
-      this.store.dispatch(fromBoardsActions.selectBoard({ id: boards[0].id }));
+      if (boards.length > 0) {
+        this.store.dispatch(
+          fromBoardsActions.selectBoard({ id: boards[0].id })
+        );
 
-      this.router.navigate(['boards'], {
-        queryParams: { board: boards[0].name, board_Id: boards[0].id },
-      });
-      localStorage.setItem('board_id', boards[0].id);
-      localStorage.setItem('board_name', boards[0].name);
+        this.router.navigate(['boards'], {
+          queryParams: { board: boards[0].name, board_Id: boards[0].id },
+        });
+        localStorage.setItem('board_id', boards[0].id);
+        localStorage.setItem('board_name', boards[0].name);
+      }
     });
 
     this.dialog.closeAll();

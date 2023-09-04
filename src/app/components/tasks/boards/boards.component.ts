@@ -48,6 +48,7 @@ export class BoardsComponent implements OnInit, AfterViewChecked {
 
     this.store.select(fromStore.selectAllBoards).subscribe((data) => {
       this.boards = data;
+
       const boardId = localStorage.getItem('board_id');
       const boardName = localStorage.getItem('board_name');
       this.boardIdStored = boardId ?? this.boardIdStored;
@@ -61,7 +62,8 @@ export class BoardsComponent implements OnInit, AfterViewChecked {
 
       if (this.boards.length == 0) {
         localStorage.removeItem('board_id');
-        this.router.navigate(['boards', 'add-board']);
+        localStorage.removeItem('board_name');
+        this.router.navigate(['boards'], { fragment: 'add-board' });
       }
     });
   }
