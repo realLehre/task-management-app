@@ -15,9 +15,14 @@
     </div>
 
     <div class="header-content">
-      <div class="header-text" (click)="onOpenMobileMenu()">
-        <span class="header-text-main">{{ boardName }} </span
-        ><i
+      <div class="header-text">
+        {{ boardName }}
+      </div>
+      <div class="header-text-mobile" (click)="onOpenMobileMenu()">
+        <div class="header-text-mobile-main">
+          {{ boardName }}
+        </div>
+        <i
           class="fa fa-angle-down"
           [ngStyle]="{ transform: isAngleUp ? 'rotate(180deg)' : 'rotate(0)' }"
         ></i>

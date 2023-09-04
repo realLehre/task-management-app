@@ -204,6 +204,7 @@ export class TaskDialogComponent implements OnInit {
           (task) => JSON.stringify(task) === JSON.stringify(newTask)
         )
       ) {
+        this.dialog.closeAll();
         return;
       }
 

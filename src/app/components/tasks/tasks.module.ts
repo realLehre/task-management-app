@@ -20,6 +20,7 @@ import { BoardsDialogComponent } from './boards/boards-dialog/boards-dialog.comp
 import * as fromStore from 'src/app/store/app.reducer';
 import { SubTaskComponent } from './boards/board/b-tasks/task-dialog/sub-task/sub-task.component';
 import { MobileBoardsComponent } from './boards/mobile-boards/mobile-boards.component';
+import { ShortenBoardName } from 'src/app/shared/pipes/shorten-boardname.pipe';
 
 const reducers = {
   boards: fromStore.getBoardsState,
@@ -55,6 +56,7 @@ const metaReducers: Array<MetaReducer<fromStore.State, any>> = [
     BoardsDialogComponent,
     SubTaskComponent,
     MobileBoardsComponent,
+    ShortenBoardName,
   ],
   exports: [
     BoardsComponent,
@@ -63,6 +65,7 @@ const metaReducers: Array<MetaReducer<fromStore.State, any>> = [
     BTaskComponent,
     TaskDialogComponent,
     BoardsDialogComponent,
+    ShortenBoardName,
   ],
 })
 export class TasksModule {}

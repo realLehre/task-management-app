@@ -51,27 +51,30 @@ i {
   width: 100%;
   padding-right: 30px;
   padding-left: 30px;
-  overflow-x: auto;
 
   .header-text {
+    display: inline-block;
     font-size: $heading-XL;
     font-weight: 500;
     color: var(--textHeaderColor);
     text-transform: capitalize;
+    flex: 1;
     white-space: nowrap;
+    width: 200px;
+    height: 40px;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    transform: translateY(8px);
+  }
 
-    & i {
-      display: none;
-      transition: all 300ms;
-      &.roll {
-        transform: rotate(180deg);
-      }
-    }
+  & .header-text-mobile {
+    display: none;
   }
 
   & .header-actions {
     display: flex;
     align-items: center;
+    // white-space: nowrap;
 
     & .header-add-task {
       margin-right: 20px;
@@ -84,7 +87,6 @@ i {
         font-size: $heading-M;
         font-weight: 500;
         cursor: pointer;
-        white-space: nowrap;
         margin-left: 20px;
 
         &:hover {
@@ -166,7 +168,12 @@ i {
     padding-left: 20px;
     overflow: hidden;
 
-    .header-text {
+    & .header-text {
+      display: none;
+    }
+
+    & .header-text-mobile {
+      display: inline-block;
       font-size: $heading-XL;
       font-weight: 500;
       color: var(--textHeaderColor);
