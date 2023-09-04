@@ -173,7 +173,8 @@ i {
     }
 
     & .header-text-mobile {
-      display: inline-block;
+      display: flex;
+      align-items: center;
       font-size: $heading-XL;
       font-weight: 500;
       color: var(--textHeaderColor);
@@ -181,46 +182,25 @@ i {
       cursor: pointer;
       overflow: hidden;
       width: 80%;
+      height: 40px;
+      transform: translateY(8px);
 
       &-main {
         display: inline-block;
         max-width: 80%;
-        overflow-x: auto;
-        overflow-y: hidden;
-
-        // &::-webkit-scrollbar {
-        //   position: relative;
-        //   height: 8px;
-        //   cursor: pointer;
-        //   z-index: 12;
-        // }
-
-        // /* Track */
-        // &::-webkit-scrollbar-track {
-        //   box-shadow: inset 0 0 1px grey;
-        //   border-radius: 10px;
-        //   cursor: pointer;
-        // }
-
-        // /* Handle */
-        // &::-webkit-scrollbar-thumb {
-        //   background: rgb(85, 85, 85);
-        //   border-radius: 10px;
-        //   cursor: pointer;
-        // }
-
-        // /* Handle on hover */
-        // &::-webkit-scrollbar-thumb:hover {
-        //   background: grey;
-        // }
+        overflow-x: hidden;
+        height: 100%;
+        white-space: nowrap;
+        text-overflow: ellipsis;
       }
 
       & i {
-        display: inline;
+        display: inline-block;
         color: var(--textHeaderColor);
         margin-left: 10px;
         font-size: 15px;
         transition: all 300ms;
+        margin-bottom: 10px;
         &.roll {
           transform: rotate(180deg);
           color: red;

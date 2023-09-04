@@ -48,6 +48,10 @@ export class HeaderComponent implements OnInit, AfterViewChecked {
     this.taskService.isDrawerOpened.subscribe(
       (data) => (this.isDrawerOpened = data)
     );
+
+    this.taskService.isBoardMenuOpened.subscribe(
+      (status) => (this.isAngleUp = status)
+    );
   }
 
   ngAfterViewChecked(): void {}
@@ -78,8 +82,7 @@ export class HeaderComponent implements OnInit, AfterViewChecked {
   }
 
   onOpenMobileMenu() {
-    this.isAngleUp = true;
-    console.log(this.isAngleUp);
+    this.isAngleUp = !this.isAngleUp;
 
     const dialogRef = this.dialog.open(MobileBoardsComponent, {
       panelClass: 'mobile_board_dialog',
@@ -87,9 +90,9 @@ export class HeaderComponent implements OnInit, AfterViewChecked {
       autoFocus: false,
     });
 
-    dialogRef.afterClosed().subscribe((data) => {
-      // this.isAngleUp = data.isAngleUp;
-      console.log(data);
-    });
+    // dialogRef.afterClosed().subscribe((data) => {
+    //   // this.isAngleUp = data.isAngleUp;
+    //   console.log(data);
+    // });
   }
 }

@@ -64,7 +64,9 @@ export class MobileBoardsComponent implements OnInit {
         this.router.navigate(['boards', 'add-board']);
       }
     });
-    this.dialogRef.close('false');
+    this.dialogRef.afterClosed().subscribe((data) => {
+      this.taskService.isBoardMenuOpened.next(false);
+    });
   }
 
   ngAfterViewChecked(): void {
@@ -77,13 +79,14 @@ export class MobileBoardsComponent implements OnInit {
       panelClass: 'board_dialog',
       data: { mode: 'create', isAddColumn: false },
     });
+    this.dialogRef.close();
   }
 
   onSelectBoard(id: string, name: string) {
     localStorage.setItem('board_id', id);
     localStorage.setItem('board_name', name);
-
     this.store.dispatch(fromBoardsActions.selectBoard({ id: id }));
+    this.dialog.closeAll();
   }
 
   toggleMode() {

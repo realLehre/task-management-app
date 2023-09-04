@@ -58,18 +58,22 @@ a {
   text-decoration: none;
 }
 
-.add_view_task_dialog .mat-dialog-container {
-  padding: 0;
-  background-color: var(--dialogBg);
-  width: 600px;
+.add_view_task_dialog,
+.board_dialog,
+.mobile_board_dialog {
+  & .mat-dialog-container {
+    padding: 0;
+    background-color: var(--dialogBg);
+    width: 600px;
+  }
 }
-.board_dialog .mat-dialog-container {
-  padding: 0;
-  background-color: var(--dialogBg);
-  width: 600px;
-}
-.mobile_board_dialog .mat-dialog-container {
-  padding: 0;
-  background-color: var(--dialogBg);
-  width: 300px;
+
+@media (max-width: 550px) {
+  .add_view_task_dialog,
+  .board_dialog,
+  .mobile_board_dialog {
+    & .mat-dialog-container {
+      width: 100vw;
+    }
+  }
 }

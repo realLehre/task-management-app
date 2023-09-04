@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class TaskService {
   isDrawerOpened = new Subject<boolean>();
+  isBoardMenuOpened = new Subject<boolean>();
   constructor() {}
 
   generateRandomString() {
