@@ -31,6 +31,7 @@ export class TaskDialogComponent implements OnInit {
   board!: Board | any;
   boardColumns: string[] = [];
   task!: Task;
+  subTasks: Array<{ id: string; done: boolean; subtask: string }> = [];
   showError: boolean = false;
 
   createTaskForm!: FormGroup;
@@ -50,7 +51,12 @@ export class TaskDialogComponent implements OnInit {
     this.isEdit = this.data.mode.isEdit;
     if (this.data.selectedTask) {
       this.task = this.data.selectedTask;
+      localStorage.setItem('task', JSON.stringify(this.task));
       localStorage.setItem('prevStatus', this.task.status);
+
+      this.task.sub_tasks.map((subtask) => {
+        this.subTasks.push(subtask);
+      });
     }
 
     this.store.select(fromStore.selectActiveBoard).subscribe((board) => {
@@ -107,11 +113,17 @@ export class TaskDialogComponent implements OnInit {
     return <FormControl>this.createTaskForm.get('status');
   }
 
-  toggleCheck(index: any, e: any) {
-    console.log(index);
-    console.log(e.target);
+  toggleCheck(id: string) {
+    this.task.sub_tasks = this.task.sub_tasks.map((subtask) => {
+      if (subtask.id == id) {
+        const newSubtask = { ...subtask };
 
-    e.target.classList.toggle('strikethrough');
+        newSubtask['done'] = true;
+
+        subtask = { ...subtask, ...newSubtask };
+      }
+    });
+    console.log(this.task.sub_tasks);
 
     // this.checked = !this.checked;
   }
@@ -164,6 +176,8 @@ export class TaskDialogComponent implements OnInit {
       return;
     }
 
+    const taskStored: Task = JSON.parse(localStorage.getItem('task') || '{}');
+
     localStorage.setItem('board_id', this.board.id);
     localStorage.setItem('board_name', this.board.name);
     this.router.navigate(['boards'], {
@@ -173,7 +187,11 @@ export class TaskDialogComponent implements OnInit {
     let subtasks = [];
 
     for (const key in this.subtasks.value) {
-      subtasks.push(this.subtasks.value[key].subtask);
+      subtasks.push({
+        id: this.taskService.generateRandomString(),
+        done: false,
+        subtask: this.subtasks.value[key].subtask,
+      });
     }
 
     let tasks: { [key: string]: Task[] } = { ...this.board.tasks };
@@ -184,8 +202,9 @@ export class TaskDialogComponent implements OnInit {
       task = {
         title: this.title.value,
         description: this.description.value,
-        sub_tasks: [...subtasks],
+        sub_tasks: [...taskStored.sub_tasks],
         status: this.status.value,
+        completed_sub_tasks: [...taskStored.completed_sub_tasks],
         id: this.task.id,
       };
 
@@ -224,6 +243,7 @@ export class TaskDialogComponent implements OnInit {
         description: this.description.value,
         sub_tasks: [...subtasks],
         status: this.status.value,
+        completed_sub_tasks: [],
         id: this.taskService.generateRandomString(),
       };
 

@@ -130,19 +130,25 @@
         Subtasks (2 of {{ task.sub_tasks.length }})
       </div>
       <div class="checks">
-        <!-- <div
+        <div
           class="box-group checked"
-          (click)="toggleCheck(i, $event)"
-          *ngFor="let subtask of task.sub_tasks; let i = index"
+          (click)="toggleCheck(subtask.id)"
+          *ngFor="let subtask of subTasks; let i = index"
         >
           <div class="check-input">
-            <input type="checkbox" [value]="i + 1" [checked]="checked" />
+            <input
+              type="checkbox"
+              [value]="i + 1"
+              [checked]="subtask.done == true"
+            />
             <span class="checkmark"></span>
           </div>
 
-          <label [ngClass]="{ strikethrough: checked }">{{ subtask }}</label>
-        </div> -->
-        <app-sub-task [subtasks]="task.sub_tasks"></app-sub-task>
+          <label [ngClass]="{ strikethrough: subtask.done == true }">{{
+            subtask.subtask
+          }}</label>
+        </div>
+        <!-- <app-sub-task [subtasks]="task.sub_tasks"></app-sub-task> -->
       </div>
     </div>
 
