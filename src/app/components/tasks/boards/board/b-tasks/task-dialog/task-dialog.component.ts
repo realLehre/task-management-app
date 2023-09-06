@@ -32,6 +32,7 @@ export class TaskDialogComponent implements OnInit {
   boardColumns: string[] = [];
   task!: Task;
   subTasks: Array<{ id: string; done: boolean; subtask: string }> = [];
+  completedSubtasks: Array<{ id: string; done: boolean; subtask: string }> = [];
   showError: boolean = false;
 
   createTaskForm!: FormGroup;
@@ -54,9 +55,8 @@ export class TaskDialogComponent implements OnInit {
       localStorage.setItem('task', JSON.stringify(this.task));
       localStorage.setItem('prevStatus', this.task.status);
 
-      this.task.sub_tasks.map((subtask) => {
-        this.subTasks.push(subtask);
-      });
+      this.subTasks = [...this.task.sub_tasks];
+      this.completedSubtasks = [...this.task.completed_sub_tasks];
     }
 
     this.store.select(fromStore.selectActiveBoard).subscribe((board) => {
@@ -114,18 +114,50 @@ export class TaskDialogComponent implements OnInit {
   }
 
   toggleCheck(id: string) {
-    this.task.sub_tasks = this.task.sub_tasks.map((subtask) => {
+    let subtasks = [...this.task.sub_tasks];
+    let completedSubtasks = [...this.completedSubtasks];
+
+    this.subTasks = this.subTasks.map((subtask) => {
+      const newSubtask = { ...subtask };
       if (subtask.id == id) {
-        const newSubtask = { ...subtask };
-
-        newSubtask['done'] = true;
-
-        subtask = { ...subtask, ...newSubtask };
+        newSubtask['done'] = !newSubtask['done'];
+        if (newSubtask.done == true) {
+          completedSubtasks.push(newSubtask);
+        } else {
+          completedSubtasks = this.completedSubtasks.filter(
+            (subtask) => subtask.id !== newSubtask.id
+          );
+        }
       }
+      return newSubtask;
     });
-    console.log(this.task.sub_tasks);
 
-    // this.checked = !this.checked;
+    const newTask = {
+      ...this.task,
+      completed_sub_tasks: completedSubtasks,
+      sub_tasks: this.subTasks,
+    };
+
+    let boardTasks = { ...this.board.tasks };
+    let tasksToUpdate = this.board.tasks[this.task.status];
+
+    tasksToUpdate = tasksToUpdate.map((task: Task) => {
+      if (task.id == this.task.id) {
+        return newTask;
+      }
+      return task;
+    });
+
+    boardTasks[this.task.status] = [...tasksToUpdate];
+
+    this.store.dispatch(
+      fromBoardsActions.updateBoard({
+        board: {
+          ...this.board,
+          tasks: { ...boardTasks },
+        },
+      })
+    );
   }
 
   addSubtask() {
