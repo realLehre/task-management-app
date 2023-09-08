@@ -1,11 +1,22 @@
-<div class="task-container">
-  <div class="task-main" *ngFor="let task of tasks" (click)="onViewTask(task)">
+<div
+  class="task-container"
+  cdkDropList
+  [cdkDropListData]="tasks"
+  (cdkDropListDropped)="drop($event)"
+>
+  <div
+    class="task-main"
+    *ngFor="let task of tasks"
+    (click)="onViewTask(task)"
+    cdkDrag
+  >
     <div class="task-main-title">
       {{ task.title }}
     </div>
 
     <div class="task-main-sub-task">
-      2 of {{ task.sub_tasks.length }} subtasks
+      {{ task.completed_sub_tasks.length }} of
+      {{ task.sub_tasks.length }} subtasks
     </div>
   </div>
 </div>

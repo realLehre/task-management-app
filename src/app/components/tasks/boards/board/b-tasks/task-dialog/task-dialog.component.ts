@@ -11,6 +11,7 @@ import { Board } from 'src/app/shared/models/board.model';
 import { Task } from 'src/app/shared/models/task.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { take } from 'rxjs/operators';
 
 interface TaskForm {
   title: FormControl<string | null>;
@@ -82,7 +83,10 @@ export class TaskDialogComponent implements OnInit {
       this.title.setValue(this.task.title);
       this.description.setValue(this.task.description);
       this.status.setValue(this.task.status);
-      const subtasks = this.task.sub_tasks;
+      const subtasks: string[] = [];
+      this.task.sub_tasks.map((subtask) => {
+        subtasks.push(subtask.subtask);
+      });
       while (this.subtasks.length != 0) {
         this.subtasks.removeAt(0);
       }
@@ -95,6 +99,10 @@ export class TaskDialogComponent implements OnInit {
         );
       });
     }
+
+    this.subtasks.valueChanges.pipe(take(1)).subscribe((data) => {
+      console.log(data);
+    });
   }
 
   get title() {
@@ -122,9 +130,9 @@ export class TaskDialogComponent implements OnInit {
       if (subtask.id == id) {
         newSubtask['done'] = !newSubtask['done'];
         if (newSubtask.done == true) {
-          completedSubtasks.push(newSubtask);
+          this.completedSubtasks = [...this.completedSubtasks, newSubtask];
         } else {
-          completedSubtasks = this.completedSubtasks.filter(
+          this.completedSubtasks = this.completedSubtasks.filter(
             (subtask) => subtask.id !== newSubtask.id
           );
         }
@@ -134,9 +142,10 @@ export class TaskDialogComponent implements OnInit {
 
     const newTask = {
       ...this.task,
-      completed_sub_tasks: completedSubtasks,
+      completed_sub_tasks: this.completedSubtasks,
       sub_tasks: this.subTasks,
     };
+    console.log(this.completedSubtasks, this.subTasks);
 
     let boardTasks = { ...this.board.tasks };
     let tasksToUpdate = this.board.tasks[this.task.status];
@@ -210,21 +219,62 @@ export class TaskDialogComponent implements OnInit {
 
     const taskStored: Task = JSON.parse(localStorage.getItem('task') || '{}');
 
-    localStorage.setItem('board_id', this.board.id);
-    localStorage.setItem('board_name', this.board.name);
-    this.router.navigate(['boards'], {
-      queryParams: { board: this.board.name, board_Id: this.board.id },
-    });
+    // localStorage.setItem('board_id', this.board.id);
+    // localStorage.setItem('board_name', this.board.name);
+    // this.router.navigate(['boards'], {
+    //   queryParams: { board: this.board.name, board_Id: this.board.id },
+    // });
 
-    let subtasks = [];
+    let subtasks: Array<{ id: string; done: boolean; subtask: string }> = [];
+
+    let newSubtask: { id: string; done: boolean; subtask: string };
 
     for (const key in this.subtasks.value) {
-      subtasks.push({
+      newSubtask = {
         id: this.taskService.generateRandomString(),
         done: false,
         subtask: this.subtasks.value[key].subtask,
+      };
+      taskStored.sub_tasks.forEach((subtask) => {
+        if (subtask.subtask == this.subtasks.value[key].subtask) {
+          newSubtask['id'] = subtask.id;
+          newSubtask['done'] = subtask.done;
+        }
       });
+      // if (subtasks.some((subtaskT) => subtaskT.subtask == newSubtask.subtask)) {
+      //   return;
+      // }
+      subtasks.push(newSubtask);
+      // taskStored.sub_tasks.forEach((subtask) => {
+      //   if (this.subtasks.value[key].subtask == subtask.subtask) {
+      //     for (let d = 0; d < taskStored.sub_tasks.length; d++) {
+      //       newSubtask = { ...taskStored.sub_tasks[d] };
+      //       if (
+      //         subtasks.some(
+      //           (subtaskT) => subtaskT.subtask == newSubtask.subtask
+      //         )
+      //       ) {
+      //         return;
+      //       }
+      //       subtasks.push(newSubtask);
+      //     }
+      //   } else {
+      //     newSubtask = {
+      //       id: this.taskService.generateRandomString(),
+      //       done: false,
+      //       subtask: this.subtasks.value[key].subtask,
+      //     };
+      //   }
+      //   if (
+      //     subtasks.some((subtaskT) => subtaskT.subtask == newSubtask.subtask)
+      //   ) {
+      //     return;
+      //   }
+      //   subtasks.push(newSubtask);
+      // });
     }
+
+    console.log(subtasks);
 
     let tasks: { [key: string]: Task[] } = { ...this.board.tasks };
     const prevStatus = localStorage.getItem('prevStatus');
@@ -239,6 +289,7 @@ export class TaskDialogComponent implements OnInit {
         completed_sub_tasks: [...taskStored.completed_sub_tasks],
         id: this.task.id,
       };
+      console.log(task);
 
       if (prevStatus && prevStatus != this.status.value) {
         tasks[prevStatus] = tasks[prevStatus].filter(

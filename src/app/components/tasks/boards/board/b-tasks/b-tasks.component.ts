@@ -7,6 +7,12 @@ import { switchMap } from 'rxjs';
 import { Board } from 'src/app/shared/models/board.model';
 import { BoardsDialogComponent } from '../../boards-dialog/boards-dialog.component';
 import { Task } from 'src/app/shared/models/task.model';
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  transferArrayItem,
+} from '@angular/cdk/drag-drop';
+import { TaskDialogComponent } from './task-dialog/task-dialog.component';
 
 @Component({
   selector: 'app-b-tasks',
@@ -21,6 +27,7 @@ export class BTasksComponent implements OnInit {
     id: '',
     tasks: {},
   };
+  tasks: { [key: string]: Task[] } | any;
   showTasks: boolean = false;
 
   constructor(
@@ -30,8 +37,31 @@ export class BTasksComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.select(fromStore.selectActiveBoard).subscribe((board) => {
-      this.activeBoard = board ?? this.activeBoard;
+      this.activeBoard = { ...board };
+      const tasks = { ...this.activeBoard.tasks };
+
+      this.tasks = JSON.parse(JSON.stringify(tasks));
+
+      console.log(this.activeBoard);
     });
+  }
+
+  drop(event: CdkDragDrop<Task[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+      console.log(this.tasks);
+    }
   }
 
   onAddBoard_Column(type: string) {
@@ -40,6 +70,14 @@ export class BTasksComponent implements OnInit {
     } else if (type == 'board') {
       this.openModal(false);
     }
+  }
+
+  onViewTask(task: Task) {
+    const dialogRef = this.dialog.open(TaskDialogComponent, {
+      panelClass: 'add_view_task_dialog',
+      autoFocus: false,
+      data: { type: 'view_task', mode: { isEdit: false }, selectedTask: task },
+    });
   }
 
   openModal(isAddColuimn: boolean) {

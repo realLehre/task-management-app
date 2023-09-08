@@ -1,4 +1,4 @@
-<div class="tasks-container">
+<div class="tasks-container" cdkDropListGroup>
   <div class="tasks-main" *ngIf="activeBoard.columns.length > 0">
     <div
       class="tasks-main-group"
@@ -8,10 +8,35 @@
         <div class="tasks-group-heading">
           <span class="icon" [ngClass]="{ purple: (i + 1) % 2 == 0 }"></span
           >{{ column.toUpperCase() }}
+          <span class="tasks-count"
+            >({{ activeBoard.tasks[column].length }})</span
+          >
         </div>
 
         <div class="tasks">
-          <app-b-task [tasks]="activeBoard.tasks[column]"></app-b-task>
+          <app-b-task [tasks]="tasks[column]"></app-b-task>
+          <!-- <div
+            class="task-container"
+            cdkDropList
+            [cdkDropListData]="tasks[column]"
+            (cdkDropListDropped)="drop($event)"
+          >
+            <div
+              class="task-main"
+              *ngFor="let task of tasks[column]"
+              (click)="onViewTask(task)"
+              cdkDrag
+            >
+              <div class="task-main-title">
+                {{ task.title }}
+              </div>
+
+              <div class="task-main-sub-task">
+                {{ task.completed_sub_tasks.length }} of
+                {{ task.sub_tasks.length }} subtasks
+              </div>
+            </div>
+          </div> -->
         </div>
       </div>
     </div>

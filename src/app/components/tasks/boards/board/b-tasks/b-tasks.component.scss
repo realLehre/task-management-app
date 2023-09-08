@@ -43,7 +43,15 @@
         background-color: $purple_dark;
       }
     }
+
+    & .tasks-count {
+      margin-left: 5px;
+    }
   }
+}
+
+.tasks {
+  height: 200px;
 }
 
 .new-column {

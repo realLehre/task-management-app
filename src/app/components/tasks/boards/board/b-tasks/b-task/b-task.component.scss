@@ -1,5 +1,9 @@
 @import "config";
 
+.task-container {
+  min-height: 500px;
+}
+
 .task-main {
   width: 280px;
   background: var(--bgColorHeaderBoardTask);

@@ -3,6 +3,11 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { Task } from 'src/app/shared/models/task.model';
 import { TaskDialogComponent } from '../task-dialog/task-dialog.component';
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  transferArrayItem,
+} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-b-task',
@@ -24,5 +29,22 @@ export class BTaskComponent implements OnInit {
       autoFocus: false,
       data: { type: 'view_task', mode: { isEdit: false }, selectedTask: task },
     });
+  }
+
+  drop(event: CdkDragDrop<Task[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    }
   }
 }

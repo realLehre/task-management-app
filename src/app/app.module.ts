@@ -41,7 +41,20 @@ const metaReducers: Array<MetaReducer<fromStore.State, any>> = [
     MaterialModule,
     TasksModule,
     BrowserAnimationsModule,
-    StoreModule.forRoot(fromApp.appReducer, { metaReducers }),
+    StoreModule.forRoot(fromApp.appReducer, {
+      metaReducers,
+      // runtimeChecks: {
+      //   // strictStateImmutability and strictActionImmutability are enabled by default
+      //   strictStateSerializability: true,
+      //   strictActionSerializability: true,
+      //   strictActionWithinNgZone: true,
+      //   strictActionTypeUniqueness: true,
+      //   // if you want to change complexe objects and that we have. We need to disable these settings
+      //   // change strictStateImmutability, strictActionImmutability
+      //   strictStateImmutability: false, // set this to false
+      //   strictActionImmutability: true,
+      // },
+    }),
     StoreDevtoolsModule.instrument({
       name: 'Kanban Task Management App',
       logOnly: environment.production,
