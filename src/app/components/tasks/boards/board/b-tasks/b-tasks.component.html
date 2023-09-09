@@ -14,29 +14,10 @@
         </div>
 
         <div class="tasks">
-          <app-b-task [tasks]="tasks[column]"></app-b-task>
-          <!-- <div
-            class="task-container"
-            cdkDropList
-            [cdkDropListData]="tasks[column]"
-            (cdkDropListDropped)="drop($event)"
-          >
-            <div
-              class="task-main"
-              *ngFor="let task of tasks[column]"
-              (click)="onViewTask(task)"
-              cdkDrag
-            >
-              <div class="task-main-title">
-                {{ task.title }}
-              </div>
-
-              <div class="task-main-sub-task">
-                {{ task.completed_sub_tasks.length }} of
-                {{ task.sub_tasks.length }} subtasks
-              </div>
-            </div>
-          </div> -->
+          <app-b-task
+            [tasks]="tasks[column]"
+            [columnName]="activeBoard.columns"
+          ></app-b-task>
         </div>
       </div>
     </div>

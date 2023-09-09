@@ -4,6 +4,14 @@
   min-height: 500px;
 }
 
+.task-main-container {
+  // min-height: 500px;
+
+  &:not(:last-child) {
+    margin-bottom: 20px;
+  }
+}
+
 .task-main {
   width: 280px;
   background: var(--bgColorHeaderBoardTask);
@@ -39,4 +47,11 @@
   &:not(:last-child) {
     margin-bottom: 20px;
   }
+}
+
+.example-custom-placeholder {
+  background: #ccc;
+  border: dotted 3px #999;
+  min-height: 100px;
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }

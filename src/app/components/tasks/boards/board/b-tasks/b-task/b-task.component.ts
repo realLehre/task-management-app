@@ -16,11 +16,14 @@ import {
 })
 export class BTaskComponent implements OnInit {
   @Input() tasks: Task[] = [];
+  @Input() columnName: string[] = [];
   @Output() taskSelected = new EventEmitter<Task>();
 
   constructor(private dialog: MatDialog) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.columnName);
+  }
 
   onViewTask(task: Task) {
     this.taskSelected.emit(task);
@@ -45,6 +48,11 @@ export class BTaskComponent implements OnInit {
         event.previousIndex,
         event.currentIndex
       );
+
+      console.log(event.container);
+      const item = event.container.data[event.currentIndex];
+      // item['status'] =
+      console.log(item);
     }
   }
 }
