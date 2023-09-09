@@ -61,8 +61,11 @@ export class HeaderComponent implements OnInit, AfterViewChecked {
 
   onEditBoard_Task(type: string) {
     switch (type) {
-      case 'board':
+      case 'edit_board':
         this.openModal(BoardsDialogComponent, 'create', true);
+        break;
+      case 'add_board':
+        this.openModal(BoardsDialogComponent, 'create', false);
         break;
       case 'delete_board':
         this.openModal(BoardsDialogComponent, 'delete', false);
@@ -92,10 +95,5 @@ export class HeaderComponent implements OnInit, AfterViewChecked {
       position: { top: '100px' },
       autoFocus: false,
     });
-
-    // dialogRef.afterClosed().subscribe((data) => {
-    //   // this.isAngleUp = data.isAngleUp;
-    //   console.log(data);
-    // });
   }
 }

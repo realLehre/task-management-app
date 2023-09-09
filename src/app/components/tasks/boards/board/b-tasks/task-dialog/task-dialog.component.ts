@@ -235,43 +235,8 @@ export class TaskDialogComponent implements OnInit {
         done: false,
         subtask: this.subtasks.value[key].subtask,
       };
-      taskStored.sub_tasks.forEach((subtask) => {
-        if (subtask.subtask == this.subtasks.value[key].subtask) {
-          newSubtask['id'] = subtask.id;
-          newSubtask['done'] = subtask.done;
-        }
-      });
-      // if (subtasks.some((subtaskT) => subtaskT.subtask == newSubtask.subtask)) {
-      //   return;
-      // }
+
       subtasks.push(newSubtask);
-      // taskStored.sub_tasks.forEach((subtask) => {
-      //   if (this.subtasks.value[key].subtask == subtask.subtask) {
-      //     for (let d = 0; d < taskStored.sub_tasks.length; d++) {
-      //       newSubtask = { ...taskStored.sub_tasks[d] };
-      //       if (
-      //         subtasks.some(
-      //           (subtaskT) => subtaskT.subtask == newSubtask.subtask
-      //         )
-      //       ) {
-      //         return;
-      //       }
-      //       subtasks.push(newSubtask);
-      //     }
-      //   } else {
-      //     newSubtask = {
-      //       id: this.taskService.generateRandomString(),
-      //       done: false,
-      //       subtask: this.subtasks.value[key].subtask,
-      //     };
-      //   }
-      //   if (
-      //     subtasks.some((subtaskT) => subtaskT.subtask == newSubtask.subtask)
-      //   ) {
-      //     return;
-      //   }
-      //   subtasks.push(newSubtask);
-      // });
     }
 
     console.log(subtasks);

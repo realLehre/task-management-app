@@ -30,7 +30,13 @@
 
       <div class="header-actions">
         <div class="header-add-task">
-          <button (click)="onEditBoard_Task('add_task')">
+          <button
+            (click)="
+              onEditBoard_Task(
+                boardName == 'Add board' ? 'add_board' : 'add_task'
+              )
+            "
+          >
             <span class="desktop-plus">+ Add New Task</span>
             <span class="mobile-plus"><i class="fab fa-plus"></i></span>
           </button>
@@ -44,10 +50,22 @@
 
           <div class="board-menu">
             <mat-menu #board_menu="matMenu">
-              <a class="edit_board" (click)="onEditBoard_Task('board')"
+              <a
+                class="edit_board"
+                (click)="
+                  onEditBoard_Task(
+                    boardName == 'Add board' ? 'add_board' : 'edit_board'
+                  )
+                "
                 >Edit Board</a
               >
-              <a class="delete_board" (click)="onEditBoard_Task('delete_board')"
+              <a
+                class="delete_board"
+                (click)="
+                  onEditBoard_Task(
+                    boardName == 'Add board' ? 'add_board' : 'delete_board'
+                  )
+                "
                 >Delete Board</a
               >
             </mat-menu>
