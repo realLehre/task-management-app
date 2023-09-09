@@ -60,12 +60,24 @@ export class BTaskComponent implements OnInit {
         event.previousIndex,
         event.currentIndex
       );
-      const id = event.container.id;
-      const index = +id.slice(-1);
-
-      const item = { ...event.container.data[event.currentIndex] };
-      item['status'] = this.columnName[index];
     }
+
+    const id = event.container.id;
+    const index = +id.slice(-1);
+
+    const newTask = { ...event.container.data[event.currentIndex] };
+    newTask['status'] = this.columnName[index];
+
+    let newColumnTasks: any[] = [...this.allTasks[this.columnName[index]]];
+
+    newColumnTasks = newColumnTasks.map((task) => {
+      if (task.id == newTask.id) {
+        task['status'] = this.columnName[index];
+      }
+      return task;
+    });
+
+    this.allTasks[this.columnName[index]] = newColumnTasks;
 
     this.store.select(fromStore.selectActiveBoard).subscribe((board) => {
       this.board = { ...board };

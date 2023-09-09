@@ -41,27 +41,7 @@ export class BTasksComponent implements OnInit {
       const tasks = { ...this.activeBoard.tasks };
 
       this.tasks = JSON.parse(JSON.stringify(tasks));
-
-      console.log(this.activeBoard);
     });
-  }
-
-  drop(event: CdkDragDrop<Task[]>) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-      console.log(this.tasks);
-    }
   }
 
   onAddBoard_Column(type: string) {
