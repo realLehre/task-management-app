@@ -1,13 +1,17 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-
-import { Task } from 'src/app/shared/models/task.model';
-import { TaskDialogComponent } from '../task-dialog/task-dialog.component';
 import {
   CdkDragDrop,
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
+import { Store } from '@ngrx/store';
+
+import { Task } from 'src/app/shared/models/task.model';
+import { TaskDialogComponent } from '../task-dialog/task-dialog.component';
+import * as fromStore from '@store';
+import * as fromBoardsActions from '@boardsPageActions';
+import { Board } from 'src/app/shared/models/board.model';
 
 @Component({
   selector: 'app-b-task',
@@ -16,14 +20,22 @@ import {
 })
 export class BTaskComponent implements OnInit {
   @Input() tasks: Task[] = [];
+  @Input() allTasks!: { [key: string]: Task[] };
   @Input() columnName: string[] = [];
+  board: Board | any = {
+    name: '',
+    columns: [],
+    id: '',
+    tasks: {},
+  };
   @Output() taskSelected = new EventEmitter<Task>();
 
-  constructor(private dialog: MatDialog) {}
+  constructor(
+    private dialog: MatDialog,
+    private store: Store<fromStore.State>
+  ) {}
 
-  ngOnInit(): void {
-    console.log(this.columnName);
-  }
+  ngOnInit(): void {}
 
   onViewTask(task: Task) {
     this.taskSelected.emit(task);
@@ -48,11 +60,24 @@ export class BTaskComponent implements OnInit {
         event.previousIndex,
         event.currentIndex
       );
+      const id = event.container.id;
+      const index = +id.slice(-1);
 
-      console.log(event.container);
-      const item = event.container.data[event.currentIndex];
-      // item['status'] =
-      console.log(item);
+      const item = { ...event.container.data[event.currentIndex] };
+      item['status'] = this.columnName[index];
     }
+
+    this.store.select(fromStore.selectActiveBoard).subscribe((board) => {
+      this.board = { ...board };
+    });
+
+    this.store.dispatch(
+      fromBoardsActions.updateBoard({
+        board: {
+          ...this.board,
+          tasks: { ...this.allTasks },
+        },
+      })
+    );
   }
 }
