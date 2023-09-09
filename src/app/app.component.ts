@@ -23,13 +23,15 @@ export class AppComponent implements OnInit, AfterViewChecked, AfterViewInit {
   constructor(private taskService: TaskService) {}
 
   ngOnInit(): void {
-    const sideNavStatus = JSON.parse(
-      localStorage.getItem('sideNavOpened') || ''
-    );
-    if (sideNavStatus != undefined) {
-      this.sideNavOpened = sideNavStatus;
+    if (localStorage.getItem('sideNavOpened')) {
+      const sideNavStatus = JSON.parse(
+        localStorage.getItem('sideNavOpened') || ''
+      );
+      if (sideNavStatus != undefined) {
+        this.sideNavOpened = sideNavStatus;
+      }
+      this.isShowSideNav = this.sideNavOpened;
     }
-    this.isShowSideNav = this.sideNavOpened;
   }
 
   ngAfterViewChecked(): void {}
