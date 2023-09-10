@@ -34,7 +34,12 @@ export class TaskDialogComponent implements OnInit {
   task!: Task;
   subTasks: Array<{ id: string; done: boolean; subtask: string }> = [];
   completedSubtasks: Array<{ id: string; done: boolean; subtask: string }> = [];
+  storedSubtasks!: Array<{ id: string; done: boolean; subtask: string }> | any;
+  storedCompletedSubtasks!:
+    | Array<{ id: string; done: boolean; subtask: string }>
+    | any;
   showError: boolean = false;
+  boardTasks?: { [key: string]: Task[] };
 
   createTaskForm!: FormGroup;
 
@@ -60,14 +65,22 @@ export class TaskDialogComponent implements OnInit {
       this.completedSubtasks = [...this.task.completed_sub_tasks];
     }
 
+    this.storedSubtasks = JSON.parse(
+      localStorage.getItem('task') || '{}'
+    ).sub_tasks;
+    this.storedCompletedSubtasks = JSON.parse(
+      localStorage.getItem('task') || '{}'
+    ).completed_sub_tasks;
+
     this.store.select(fromStore.selectActiveBoard).subscribe((board) => {
       this.boardColumns = board?.columns ?? [];
       this.board = board ?? this.board;
+      this.boardTasks = { ...this.board.tasks };
     });
 
     this.createTaskForm = new FormGroup<TaskForm>({
       title: new FormControl(null, Validators.required),
-      description: new FormControl(null, Validators.required),
+      description: new FormControl(null),
       subtasks: new FormArray([
         new FormGroup({
           subtask: new FormControl('', Validators.required),
@@ -99,10 +112,6 @@ export class TaskDialogComponent implements OnInit {
         );
       });
     }
-
-    this.subtasks.valueChanges.pipe(take(1)).subscribe((data) => {
-      console.log(data);
-    });
   }
 
   get title() {
@@ -122,9 +131,6 @@ export class TaskDialogComponent implements OnInit {
   }
 
   toggleCheck(id: string) {
-    let subtasks = [...this.task.sub_tasks];
-    let completedSubtasks = [...this.completedSubtasks];
-
     this.subTasks = this.subTasks.map((subtask) => {
       const newSubtask = { ...subtask };
       if (subtask.id == id) {
@@ -145,7 +151,6 @@ export class TaskDialogComponent implements OnInit {
       completed_sub_tasks: this.completedSubtasks,
       sub_tasks: this.subTasks,
     };
-    console.log(this.completedSubtasks, this.subTasks);
 
     let boardTasks = { ...this.board.tasks };
     let tasksToUpdate = this.board.tasks[this.task.status];
@@ -179,6 +184,43 @@ export class TaskDialogComponent implements OnInit {
 
   removeSubtask(index: number) {
     this.subtasks.removeAt(index);
+
+    this.storedSubtasks = this.storedSubtasks.filter(
+      (task: any, storedIndex: number) => {
+        if (storedIndex != index) {
+          return task;
+        }
+        return;
+      }
+    );
+
+    this.storedCompletedSubtasks = this.storedCompletedSubtasks.filter(
+      (subtask: any) => {
+        if (
+          this.storedSubtasks.some(
+            (storedSubtask: any) => storedSubtask.id == subtask.id
+          )
+        ) {
+          return subtask;
+        }
+      }
+    );
+
+    let boardTasks = { ...this.board.tasks };
+    let tasksToUpdate = boardTasks[this.task.status];
+    const newTask = {
+      ...this.task,
+      completed_sub_tasks: this.storedCompletedSubtasks,
+      sub_tasks: this.storedSubtasks,
+    };
+    tasksToUpdate = tasksToUpdate.map((task: Task) => {
+      if (task.id == this.task.id) {
+        task = newTask;
+      }
+      return task;
+    });
+    boardTasks[this.task.status] = [...tasksToUpdate];
+    this.boardTasks = boardTasks;
   }
 
   onEdit() {
@@ -219,12 +261,6 @@ export class TaskDialogComponent implements OnInit {
 
     const taskStored: Task = JSON.parse(localStorage.getItem('task') || '{}');
 
-    // localStorage.setItem('board_id', this.board.id);
-    // localStorage.setItem('board_name', this.board.name);
-    // this.router.navigate(['boards'], {
-    //   queryParams: { board: this.board.name, board_Id: this.board.id },
-    // });
-
     let subtasks: Array<{ id: string; done: boolean; subtask: string }> = [];
 
     let newSubtask: { id: string; done: boolean; subtask: string };
@@ -239,22 +275,37 @@ export class TaskDialogComponent implements OnInit {
       subtasks.push(newSubtask);
     }
 
-    console.log(subtasks);
-
     let tasks: { [key: string]: Task[] } = { ...this.board.tasks };
     const prevStatus = localStorage.getItem('prevStatus');
     let task: Task;
 
     if (this.isEdit) {
+      const newStoredSubtasks: any[] = [];
+      for (let d = 0; d < this.storedSubtasks.length; d++) {
+        let newSubtask = {
+          ...this.storedSubtasks[d],
+          subtask: subtasks[d].subtask,
+        };
+        newStoredSubtasks.push(newSubtask);
+      }
+
+      subtasks = subtasks.filter((subtask, index) => {
+        if (index >= this.storedSubtasks.length) {
+          return subtask;
+        }
+        return;
+      });
+
+      subtasks = [...newStoredSubtasks, ...subtasks];
+
       task = {
         title: this.title.value,
         description: this.description.value,
-        sub_tasks: [...taskStored.sub_tasks],
+        sub_tasks: [...subtasks],
         status: this.status.value,
-        completed_sub_tasks: [...taskStored.completed_sub_tasks],
+        completed_sub_tasks: [...this.storedCompletedSubtasks],
         id: this.task.id,
       };
-      console.log(task);
 
       if (prevStatus && prevStatus != this.status.value) {
         tasks[prevStatus] = tasks[prevStatus].filter(
