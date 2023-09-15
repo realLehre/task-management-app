@@ -1,0 +1,92 @@
+<div class="sign-in-container">
+  <div class="sign-in-main">
+    <div class="sign-in-main-content">
+      <div class="sign-in-logo">
+        <img src="../../../../assets/logo-light.png" alt="" />
+      </div>
+      <p class="sign-in-heading" [class.show]="massError || errorMessage != ''">
+        Sign in
+      </p>
+
+      <div class="error-message">
+        <p [class.show]="errorMessage != '' || massError">
+          {{ errorMessage != "" ? errorMessage : "Fields cannot be empty" }}
+        </p>
+      </div>
+
+      <div class="sign-in-loader" *ngIf="isLoading" [class.grow]="isLoading">
+        <span class="loader"></span>
+      </div>
+
+      <form
+        class="sign-in-form"
+        [formGroup]="signInForm"
+        (ngSubmit)="onSignIn()"
+      >
+        <div class="form-group">
+          <input
+            type="email"
+            placeholder="Email"
+            [formControlName]="'email'"
+            [ngClass]="{
+              'input-error': email.touched && email.invalid
+            }"
+          />
+          <div
+            class="input-icon"
+            [ngClass]="{ 'input-error': email.touched && email.invalid }"
+          >
+            <i class="fa-solid fa-envelope"></i>
+          </div>
+        </div>
+        <p class="error name-error" *ngIf="email.touched && email.invalid">
+          Email cannot be empty
+        </p>
+
+        <div class="form-group">
+          <input
+            type="password"
+            placeholder="Password"
+            [formControlName]="'password'"
+            [ngClass]="{
+              'input-error': password.touched && password.invalid
+            }"
+          />
+          <div
+            class="input-icon"
+            [ngClass]="{
+              'input-error': password.touched && password.invalid
+            }"
+          >
+            <i class="fa-solid fa-key"></i>
+          </div>
+        </div>
+        <p
+          class="error name-error"
+          *ngIf="password.touched && password.invalid"
+        >
+          Password cannot be empty
+        </p>
+        <button class="sign-in-btn" type="submit">Sign In</button>
+      </form>
+
+      <div class="forgot">
+        <a>Forgot password?</a>
+      </div>
+
+      <p class="or">OR</p>
+
+      <div class="sign-in-google" (click)="onSignInWithGoogle()">
+        <button>
+          <i class="fab fa-google"></i>
+          <span>Continue with Google </span>
+        </button>
+      </div>
+
+      <div class="have-account">
+        Don't have an account?
+        <a [routerLink]="['/', 'sign-up']"> Sign up</a>
+      </div>
+    </div>
+  </div>
+</div>

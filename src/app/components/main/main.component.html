@@ -1,0 +1,21 @@
+<div class="main-container">
+  <div class="app-header">
+    <app-header></app-header>
+  </div>
+
+  <div class="drawer-container">
+    <mat-drawer-container class="drawer-container-main">
+      <mat-drawer #drawer class="sidenav" mode="side">
+        <app-boards (showSideBar)="toggleSideNav()"></app-boards>
+      </mat-drawer>
+
+      <div class="sidenav-content">
+        <app-b-tasks></app-b-tasks>
+      </div>
+    </mat-drawer-container>
+  </div>
+
+  <div class="sideBar-toggler" *ngIf="isShowSideNav" (click)="toggleSideNav()">
+    <img src="../assets/eye.png" alt="" />
+  </div>
+</div>

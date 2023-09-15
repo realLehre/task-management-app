@@ -54,9 +54,9 @@ export class BoardsComponent implements OnInit, AfterViewChecked {
       this.boardIdStored = boardId ?? this.boardIdStored;
 
       if (boardId) {
-        this.router.navigate(['boards'], {
-          queryParams: { board: boardName, board_Id: boardId },
-        });
+        // this.router.navigate(['boards'], {
+        //   queryParams: { board: boardName, board_Id: boardId },
+        // });
         this.store.dispatch(fromBoardsActions.selectBoard({ id: boardId }));
       }
 

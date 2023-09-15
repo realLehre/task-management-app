@@ -7,13 +7,13 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 
-import { TaskDialogComponent } from '../tasks/boards/board/b-tasks/task-dialog/task-dialog.component';
-import { BoardsDialogComponent } from '../tasks/boards/boards-dialog/boards-dialog.component';
+import { TaskDialogComponent } from '../../main/tasks/boards/board/b-tasks/task-dialog/task-dialog.component';
+import { BoardsDialogComponent } from '../../main/tasks/boards/boards-dialog/boards-dialog.component';
 import { TaskService } from 'src/app/core/services/task.service';
 import { ThemeService } from 'src/app/core/theme.service';
 import * as fromStore from '@store';
 import * as fromBoardsActions from '@boardsPageActions';
-import { MobileBoardsComponent } from '../tasks/boards/mobile-boards/mobile-boards.component';
+import { MobileBoardsComponent } from '../../main/tasks/boards/mobile-boards/mobile-boards.component';
 
 @Component({
   selector: 'app-header',

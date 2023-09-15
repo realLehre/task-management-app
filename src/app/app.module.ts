@@ -5,8 +5,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TasksModule } from './components/tasks/tasks.module';
-import { HeaderComponent } from './components/header/header.component';
+import { TasksModule } from './components/main/tasks/tasks.module';
+import { HeaderComponent } from './components/main/header/header.component';
 import { MaterialModule } from './material.module';
 import { DialogComponent } from './shared/dialog/dialog.component';
 import * as fromApp from './store/app.reducer';
@@ -15,6 +15,8 @@ import { environment } from 'src/environments/environment';
 
 import * as fromStore from 'src/app/store/app.reducer';
 import { localStorageSync } from 'ngrx-store-localstorage';
+import { AuthModule } from './components/auth/auth.module';
+import { MainModule } from './components/main/main.module';
 
 const reducers = {
   boards: fromStore.getBoardsState,
@@ -34,26 +36,16 @@ const metaReducers: Array<MetaReducer<fromStore.State, any>> = [
 ];
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, DialogComponent],
+  declarations: [AppComponent, DialogComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     MaterialModule,
-    TasksModule,
     BrowserAnimationsModule,
+    MainModule,
+    AuthModule,
     StoreModule.forRoot(fromApp.appReducer, {
       metaReducers,
-      // runtimeChecks: {
-      //   // strictStateImmutability and strictActionImmutability are enabled by default
-      //   strictStateSerializability: true,
-      //   strictActionSerializability: true,
-      //   strictActionWithinNgZone: true,
-      //   strictActionTypeUniqueness: true,
-      //   // if you want to change complexe objects and that we have. We need to disable these settings
-      //   // change strictStateImmutability, strictActionImmutability
-      //   strictStateImmutability: false, // set this to false
-      //   strictActionImmutability: true,
-      // },
     }),
     StoreDevtoolsModule.instrument({
       name: 'Kanban Task Management App',

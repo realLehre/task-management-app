@@ -11,7 +11,6 @@ import { Board } from 'src/app/shared/models/board.model';
 import { Task } from 'src/app/shared/models/task.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { take } from 'rxjs/operators';
 
 interface TaskForm {
   title: FormControl<string | null>;

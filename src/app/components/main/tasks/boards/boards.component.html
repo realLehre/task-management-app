@@ -5,7 +5,7 @@
       <ul class="boards-list" *ngFor="let board of boards; let i = index">
         <li
           class="board"
-          [routerLink]="['boards']"
+          [routerLink]="['/', 'boards']"
           [queryParams]="{ board: board.name, board_id: board.id }"
           routerLinkActive="active"
           [ngClass]="{ active: board.id == boardIdStored }"

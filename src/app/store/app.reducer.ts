@@ -4,8 +4,8 @@ import {
   createSelector,
 } from '@ngrx/store';
 
-import * as fromBoards from '../components/tasks/boards/boards-store/boards.reducer';
-import * as fromTasks from '../components/tasks/boards/board/b-tasks/tasks-store/tasks.reducer';
+import * as fromBoards from '../components/main/tasks/boards/boards-store/boards.reducer';
+import * as fromTasks from '../components/main/tasks/boards/board/b-tasks/tasks-store/tasks.reducer';
 
 export interface State {
   boards: fromBoards.State;
