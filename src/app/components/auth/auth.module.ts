@@ -6,6 +6,8 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { AuthRoutingModule } from './auth-routing.module';
 import { MaterialModule } from 'src/app/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { EffectsModule } from '@ngrx/effects';
+import { AuthEffects } from './auth-store/auth.effects';
 
 @NgModule({
   imports: [
@@ -13,6 +15,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     MaterialModule,
     ReactiveFormsModule,
+    EffectsModule.forFeature([AuthEffects]),
   ],
   declarations: [LoginComponent, SignUpComponent],
   exports: [],

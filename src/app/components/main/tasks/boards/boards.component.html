@@ -72,6 +72,17 @@
       <img src="../../../../assets/dark-icon.png" alt="" />
     </div>
 
+    <div class="user">
+      Hello,
+      <span class="user-name" [mat-menu-trigger-for]="logout"
+        >{{ displayName }} <i class="fa fa-angle-down"></i
+      ></span>
+    </div>
+
+    <mat-menu #logout id="logout-menu">
+      <button class="logout-button" (click)="onLogout()">Logout</button>
+    </mat-menu>
+
     <div class="sidebar-toggler" (click)="hideSideBar()">
       <img src="../../../../assets/eye-slash.1.png" alt="" />
       Hide Sidebar

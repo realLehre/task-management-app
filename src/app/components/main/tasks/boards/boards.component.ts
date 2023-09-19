@@ -29,6 +29,7 @@ export class BoardsComponent implements OnInit, AfterViewChecked {
   isToggled: boolean = false;
   boards: Board[] = [];
   boardIdStored!: string;
+  displayName!: string;
 
   constructor(
     private renderer: Renderer2,
@@ -66,6 +67,10 @@ export class BoardsComponent implements OnInit, AfterViewChecked {
         this.router.navigate(['boards'], { fragment: 'add-board' });
       }
     });
+
+    this.displayName = JSON.parse(
+      localStorage.getItem('user')!
+    ).user.displayName;
   }
 
   ngAfterViewChecked(): void {
@@ -95,4 +100,6 @@ export class BoardsComponent implements OnInit, AfterViewChecked {
     this.isToggled = !this.isToggled;
     this.themeService.toggleTheme();
   }
+
+  onLogout() {}
 }

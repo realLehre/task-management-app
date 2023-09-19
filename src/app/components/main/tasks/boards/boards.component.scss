@@ -142,6 +142,33 @@
   }
 }
 
+.user {
+  width: 80%;
+  color: $grey-medium;
+  margin-inline: auto;
+  margin-top: 20px;
+  font-size: $heading-M;
+
+  &-name {
+    color: $purple_dark;
+    font-weight: 600;
+    cursor: pointer;
+
+    &:hover {
+      color: $purple_light;
+    }
+  }
+}
+
+.logout-button {
+  border: none;
+  background: transparent;
+  color: $orange_dark;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: $heading-M;
+}
+
 .sidebar-toggler {
   width: 90%;
   font-size: $heading-M;

@@ -1,6 +1,8 @@
 import { createAction, props } from '@ngrx/store';
 import { Board } from 'src/app/shared/models/board.model';
 
+export const getAllBoards = createAction('[Boards HTTP] Get All Boards');
+
 export const createNewBoard = createAction(
   '[Boards Page] Create New Board',
   props<Board>()

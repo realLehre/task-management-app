@@ -27,6 +27,7 @@ export class MobileBoardsComponent implements OnInit {
   currentMode: string | null = 'light';
   isToggled: boolean = false;
   boards: Board[] = [];
+  displayName!: string;
   boardIdStored!: string;
 
   constructor(
@@ -68,6 +69,10 @@ export class MobileBoardsComponent implements OnInit {
     this.dialogRef.afterClosed().subscribe((data) => {
       this.taskService.isBoardMenuOpened.next(false);
     });
+
+    this.displayName = JSON.parse(
+      localStorage.getItem('user')!
+    ).user.displayName;
   }
 
   ngAfterViewChecked(): void {
@@ -94,4 +99,6 @@ export class MobileBoardsComponent implements OnInit {
     this.isToggled = !this.isToggled;
     this.themeService.toggleTheme();
   }
+
+  onLogout() {}
 }

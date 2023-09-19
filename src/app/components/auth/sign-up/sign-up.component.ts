@@ -1,6 +1,10 @@
 import { AfterViewChecked, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
+import * as fromStore from '@store';
+import * as fromAuthActions from '@authPageActions';
+import { Store } from '@ngrx/store';
+
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
@@ -17,7 +21,7 @@ export class SignUpComponent implements OnInit {
   errorMessage: string = '';
   posterUrl: string = '';
 
-  constructor() {}
+  constructor(private store: Store<fromStore.State>) {}
 
   ngOnInit(): void {
     this.signUpForm = new FormGroup({
@@ -88,7 +92,23 @@ export class SignUpComponent implements OnInit {
     }
   }
 
-  onSubmit() {}
+  onSubmit() {
+    if (this.signUpForm.invalid) {
+      return;
+    }
 
-  onSignInWithGoogle() {}
+    const { ...credentials } = this.signUpForm.value;
+    console.log(credentials);
+
+    this.store.dispatch(
+      fromAuthActions.SignUp({
+        email: credentials.email,
+        password: credentials.password,
+      })
+    );
+  }
+
+  onSignInWithGoogle() {
+    this.store.dispatch(fromAuthActions.googleAuth());
+  }
 }

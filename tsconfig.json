@@ -24,9 +24,13 @@
       "@boardsPageActions": [
         "src/app/components/main/tasks/boards/boards-store/boards.actions.ts"
       ],
+      "@boardsHttpActions": [
+        "src/app/components/main/tasks/boards/boards-store/boards-http.actions.ts"
+      ],
       "@tasksPageActions": [
         "src/app/components/main/tasks/boards/board/b-tasks/tasks-store/tasks.actions.ts"
-      ]
+      ],
+      "@authPageActions": ["src/app/components/auth/auth-store/auth.actions.ts"]
     }
   },
   "angularCompilerOptions": {

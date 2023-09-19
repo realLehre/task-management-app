@@ -71,5 +71,13 @@
 
       <img src="../../../../assets/dark-icon.png" alt="" />
     </div>
+
+    <div class="user">
+      Hello, <span class="user-name">{{ displayName }} </span>
+    </div>
+
+    <mat-menu #logout id="logout-menu">
+      <button class="logout-button" (click)="onLogout()">Logout</button>
+    </mat-menu>
   </div>
 </div>
