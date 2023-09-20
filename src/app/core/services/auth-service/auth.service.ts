@@ -19,6 +19,10 @@ import { Observable, defer, from, map } from 'rxjs';
 export class AuthService {
   constructor(private auth: Auth) {}
 
+  getUser() {
+    return JSON.parse(localStorage.getItem('user')!);
+  }
+
   signUp(email: string, password: string): Observable<UserCredential> {
     return defer(() => {
       return from(createUserWithEmailAndPassword(this.auth, email, password));

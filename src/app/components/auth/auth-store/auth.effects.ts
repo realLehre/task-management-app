@@ -1,6 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, concatMap, map, take, tap } from 'rxjs/operators';
+import {
+  catchError,
+  concatMap,
+  map,
+  mergeMap,
+  take,
+  tap,
+} from 'rxjs/operators';
 import { of } from 'rxjs';
 
 import { AuthService } from 'src/app/core/services/auth-service/auth.service';
@@ -68,17 +75,29 @@ export class AuthEffects {
     )
   );
 
-  signUpSuccess$ = createEffect(() =>
-    this.actions.pipe(
-      ofType(fromAuthActions.SignUpSuccess),
-      take(1),
-      tap((res) => {
-        localStorage.setItem('user', JSON.stringify(res.user));
-        this.router.navigate(['/', 'boards']);
-        console.log(res.user);
-      }),
-      map((res) => fromBoardsHttpActions.boardsPageLoaded())
-    )
+  signUpSuccess$ = createEffect(
+    () =>
+      this.actions.pipe(
+        ofType(fromAuthActions.SignUpSuccess),
+        take(1),
+        tap((res) => {
+          localStorage.setItem('user', JSON.stringify(res.user));
+          this.router.navigate(['/', 'boards']);
+          console.log(res.user);
+          fromBoardsHttpActions.boardsPageLoaded();
+        })
+        // map((res) => fromBoardsHttpActions.boardsPageLoaded())
+      ),
+    { dispatch: false }
+  );
+
+  logout$ = createEffect(
+    () =>
+      this.actions.pipe(
+        ofType(fromAuthActions.Logout),
+        tap(() => localStorage.removeItem('user'))
+      ),
+    { dispatch: false }
   );
 
   getErrorMessage(err: any) {

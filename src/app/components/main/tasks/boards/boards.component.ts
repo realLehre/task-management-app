@@ -9,14 +9,15 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { TaskService } from 'src/app/core/services/task.service';
 import { BoardsDialogComponent } from './boards-dialog/boards-dialog.component';
 import { ThemeService } from 'src/app/core/theme.service';
 import * as fromStore from '@store';
 import * as fromBoardsActions from '@boardsPageActions';
+import * as fromAuthActions from '@authPageActions';
 import { Board } from 'src/app/shared/models/board.model';
-import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-boards',
@@ -101,5 +102,8 @@ export class BoardsComponent implements OnInit, AfterViewChecked {
     this.themeService.toggleTheme();
   }
 
-  onLogout() {}
+  onLogout() {
+    this.store.dispatch(fromAuthActions.Logout());
+    this.router.navigate(['/', 'auth', 'sign-in']);
+  }
 }

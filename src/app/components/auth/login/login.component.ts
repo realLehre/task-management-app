@@ -30,9 +30,6 @@ export class LoginComponent implements OnInit {
       ),
       password: new FormControl('', Validators.compose([Validators.required])),
     });
-    console.log(1);
-
-    this.router.navigate(['', 'auth', 'login']);
   }
 
   get email() {
