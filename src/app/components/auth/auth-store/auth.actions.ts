@@ -3,7 +3,7 @@ import { UserCredential } from '@angular/fire/auth';
 
 import { User } from 'src/app/shared/models/user.model';
 
-export const googleAuth = createAction('AUTH GOOGLE] Google Auth');
+export const googleAuth = createAction('[AUTH GOOGLE] Google Auth');
 
 export const SignUp = createAction(
   '[AUTH SIGNUP] SignUp',

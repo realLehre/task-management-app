@@ -15,9 +15,20 @@ import {
 } from '@angular/fire/compat/firestore';
 import { Observable, defer, from, map } from 'rxjs';
 
+import * as fromStore from '@store';
+import * as fromAuthActions from '@authPageActions';
+import { Store } from '@ngrx/store';
+import { Router } from '@angular/router';
+
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  constructor(private auth: Auth) {}
+  logOutTimeout!: any;
+
+  constructor(
+    private auth: Auth,
+    private store: Store<fromStore.State>,
+    private router: Router
+  ) {}
 
   getUser() {
     return JSON.parse(localStorage.getItem('user')!);
@@ -33,5 +44,15 @@ export class AuthService {
     return defer(() => {
       return from(signInWithPopup(this.auth, new GoogleAuthProvider()));
     });
+  }
+
+  autoLogout(tokenExpirTime: number) {
+    this.logOutTimeout = setTimeout(() => {
+      this.store.dispatch(fromAuthActions.Logout());
+
+      if (this.logOutTimeout) {
+        clearTimeout(this.logOutTimeout);
+      }
+    }, tokenExpirTime);
   }
 }

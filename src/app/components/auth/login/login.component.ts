@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+
+import * as fromStore from '@store';
+import * as fromAuthActions from '@authPageActions';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +20,7 @@ export class LoginComponent implements OnInit {
   errorMessage: string = '';
   posterUrl: string = '';
 
-  constructor(private router: Router) {}
+  constructor(private store: Store<fromStore.State>) {}
 
   ngOnInit(): void {
     this.signInForm = new FormGroup({
@@ -42,5 +45,7 @@ export class LoginComponent implements OnInit {
 
   onSignIn() {}
 
-  onSignInWithGoogle() {}
+  onSignInWithGoogle() {
+    this.store.dispatch(fromAuthActions.googleAuth());
+  }
 }

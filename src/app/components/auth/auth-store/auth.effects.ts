@@ -84,7 +84,18 @@ export class AuthEffects {
           localStorage.setItem('user', JSON.stringify(res.user));
           this.router.navigate(['/', 'boards']);
           console.log(res.user);
-          fromBoardsHttpActions.boardsPageLoaded();
+          //   fromBoardsHttpActions.boardsPageLoaded();
+
+          const user: any = res.user.user;
+          const expirationTimeStored: number =
+            user['stsTokenManager'].expirationTime;
+
+          if (expirationTimeStored != null) {
+            const expirationTime = new Date(+expirationTimeStored).getTime();
+            const currentTime = new Date().getTime();
+            const expirationDuration = expirationTime - currentTime;
+            this.authService.autoLogout(expirationDuration);
+          }
         })
         // map((res) => fromBoardsHttpActions.boardsPageLoaded())
       ),
@@ -95,7 +106,10 @@ export class AuthEffects {
     () =>
       this.actions.pipe(
         ofType(fromAuthActions.Logout),
-        tap(() => localStorage.removeItem('user'))
+        tap(() => {
+          localStorage.removeItem('user');
+          this.router.navigate(['/', 'auth', 'sign-in']);
+        })
       ),
     { dispatch: false }
   );

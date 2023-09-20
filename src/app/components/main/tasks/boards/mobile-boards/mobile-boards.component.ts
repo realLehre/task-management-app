@@ -103,6 +103,5 @@ export class MobileBoardsComponent implements OnInit {
 
   onLogout() {
     this.store.dispatch(fromAuthActions.Logout());
-    this.router.navigate(['/', 'auth', 'sign-in']);
   }
 }

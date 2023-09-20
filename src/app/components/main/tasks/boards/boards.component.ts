@@ -50,15 +50,16 @@ export class BoardsComponent implements OnInit, AfterViewChecked {
 
     this.store.select(fromStore.selectAllBoards).subscribe((data) => {
       this.boards = data;
+      console.log(this.boards);
 
       const boardId = localStorage.getItem('board_id');
       const boardName = localStorage.getItem('board_name');
       this.boardIdStored = boardId ?? this.boardIdStored;
 
       if (boardId) {
-        // this.router.navigate(['boards'], {
-        //   queryParams: { board: boardName, board_Id: boardId },
-        // });
+        this.router.navigate(['boards'], {
+          queryParams: { board: boardName, board_Id: boardId },
+        });
         this.store.dispatch(fromBoardsActions.selectBoard({ id: boardId }));
       }
 
@@ -104,6 +105,5 @@ export class BoardsComponent implements OnInit, AfterViewChecked {
 
   onLogout() {
     this.store.dispatch(fromAuthActions.Logout());
-    this.router.navigate(['/', 'auth', 'sign-in']);
   }
 }
