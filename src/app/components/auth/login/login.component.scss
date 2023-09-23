@@ -139,7 +139,8 @@
   & .sign-in-btn {
     width: 100%;
     position: relative;
-    padding: 15px 0;
+    padding: 0;
+    height: 50px;
     border-radius: 2px;
     border: none;
     color: $white;
@@ -148,6 +149,9 @@
     font-weight: 600;
     cursor: pointer;
     transition: all 100ms ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     &:hover {
       background: $purple_light;
@@ -276,5 +280,25 @@
 
   .sign-in-main-content {
     width: 100%;
+  }
+}
+
+.login-btn-loader {
+  width: 20px;
+  height: 20px;
+  border: 3px solid #fff;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }

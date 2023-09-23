@@ -42,6 +42,7 @@ export class AuthEffects {
     this.actions.pipe(
       ofType(fromAuthActions.Login),
       concatMap((action) => {
+        this.authService.isAuthLoading.next(true);
         return this.authService.login(action.email, action.password).pipe(
           tap((res) => {
             this.taskService.setUserData(res);
@@ -68,6 +69,8 @@ export class AuthEffects {
     this.actions.pipe(
       ofType(fromAuthActions.SignUp),
       concatMap((action) => {
+        this.authService.isAuthLoading.next(true);
+
         return this.authService
           .signUp(action.name, action.email, action.password)
           .pipe(
@@ -132,6 +135,8 @@ export class AuthEffects {
       this.actions.pipe(
         ofType(fromAuthActions.SignUpSuccess),
         tap((res) => {
+          this.authService.isAuthLoading.next(false);
+
           localStorage.setItem('user', JSON.stringify(res.user));
           this.router.navigate(['/', 'boards']);
           console.log(res.user);
@@ -156,6 +161,8 @@ export class AuthEffects {
       this.actions.pipe(
         ofType(fromAuthActions.LoginSuccess),
         tap((res) => {
+          this.authService.isAuthLoading.next(false);
+
           localStorage.setItem('user', JSON.stringify(res.user));
           this.router.navigate(['/', 'boards']);
           console.log(res.user);
@@ -173,6 +180,17 @@ export class AuthEffects {
           // }
         })
         // map((res) => fromBoardsHttpActions.boardsPageLoaded())
+      ),
+    { dispatch: false }
+  );
+
+  loginFailure$ = createEffect(
+    () =>
+      this.actions.pipe(
+        ofType(fromAuthActions.LoginFailure),
+        tap(() => {
+          this.authService.isAuthLoading.next(false);
+        })
       ),
     { dispatch: false }
   );

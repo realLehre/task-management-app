@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 
 import * as fromStore from '@store';
 import * as fromAuthActions from '@authPageActions';
+import { AuthService } from 'src/app/core/services/auth-service/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -16,11 +17,14 @@ export class LoginComponent implements OnInit {
   show: boolean = false;
   massError: boolean = false;
   returnUrl!: string;
-  isLoading: boolean = false;
+  isAuthLoading: boolean = false;
   errorMessage: string = '';
   posterUrl: string = '';
 
-  constructor(private store: Store<fromStore.State>) {}
+  constructor(
+    private store: Store<fromStore.State>,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.signInForm = new FormGroup({
@@ -33,6 +37,10 @@ export class LoginComponent implements OnInit {
       ),
       password: new FormControl('', Validators.compose([Validators.required])),
     });
+
+    this.authService.isAuthLoading.subscribe(
+      (status) => (this.isAuthLoading = status)
+    );
   }
 
   get email() {

@@ -13,7 +13,7 @@ import {
   AngularFirestore,
   AngularFirestoreCollection,
 } from '@angular/fire/compat/firestore';
-import { Observable, defer, from, map } from 'rxjs';
+import { Observable, Subject, defer, from, map } from 'rxjs';
 
 import * as fromStore from '@store';
 import * as fromAuthActions from '@authPageActions';
@@ -23,6 +23,7 @@ import { Router } from '@angular/router';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   logOutTimeout!: any;
+  isAuthLoading = new Subject<boolean>();
 
   constructor(
     private auth: Auth,

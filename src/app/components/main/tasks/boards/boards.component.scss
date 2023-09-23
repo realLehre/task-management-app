@@ -143,11 +143,12 @@
 }
 
 .user {
-  width: 80%;
+  width: 90%;
   color: $grey-medium;
   margin-inline: auto;
   margin-top: 20px;
   font-size: $heading-M;
+  word-wrap: break-word;
 
   &-name {
     color: $purple_dark;

@@ -14,10 +14,6 @@
         </p>
       </div>
 
-      <div class="sign-in-loader" *ngIf="isLoading" [class.grow]="isLoading">
-        <span class="loader"></span>
-      </div>
-
       <form
         class="sign-in-form"
         [formGroup]="signInForm"
@@ -67,7 +63,10 @@
         >
           Password cannot be empty
         </p>
-        <button class="sign-in-btn" type="submit">Sign In</button>
+        <button class="sign-in-btn" type="submit">
+          <span class="login-btn-text" *ngIf="!isAuthLoading"> Sign In </span
+          ><span class="login-btn-loader" *ngIf="isAuthLoading"></span>
+        </button>
       </form>
 
       <div class="forgot">
