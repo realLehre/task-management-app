@@ -34,9 +34,19 @@ export class AuthService {
     return JSON.parse(localStorage.getItem('user')!);
   }
 
-  signUp(email: string, password: string): Observable<UserCredential> {
+  signUp(
+    name: string,
+    email: string,
+    password: string
+  ): Observable<UserCredential> {
     return defer(() => {
       return from(createUserWithEmailAndPassword(this.auth, email, password));
+    });
+  }
+
+  login(email: string, password: string) {
+    return defer(() => {
+      return from(signInWithEmailAndPassword(this.auth, email, password));
     });
   }
 

@@ -1,11 +1,11 @@
 import { createReducer, createSelector, on } from '@ngrx/store';
 import { UserCredential } from '@angular/fire/auth';
 
-import { User } from 'src/app/shared/models/user.model';
+import { AuthUser, User } from 'src/app/shared/models/user.model';
 import * as fromAuthActions from '@authPageActions';
 
 export interface AuthState {
-  user: UserCredential | null;
+  user: AuthUser | null;
   isAuthenticated: boolean;
   errorMessage: string | null;
 }

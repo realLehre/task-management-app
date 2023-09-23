@@ -50,7 +50,6 @@ export class BoardsComponent implements OnInit, AfterViewChecked {
 
     this.store.select(fromStore.selectAllBoards).subscribe((data) => {
       this.boards = data;
-      console.log(this.boards);
 
       const boardId = localStorage.getItem('board_id');
       const boardName = localStorage.getItem('board_name');
@@ -70,9 +69,7 @@ export class BoardsComponent implements OnInit, AfterViewChecked {
       }
     });
 
-    this.displayName = JSON.parse(
-      localStorage.getItem('user')!
-    ).user.displayName;
+    this.displayName = JSON.parse(localStorage.getItem('user')!).displayName;
   }
 
   ngAfterViewChecked(): void {

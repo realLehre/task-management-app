@@ -102,6 +102,7 @@ export class SignUpComponent implements OnInit {
 
     this.store.dispatch(
       fromAuthActions.SignUp({
+        name: credentials.name,
         email: credentials.email,
         password: credentials.password,
       })

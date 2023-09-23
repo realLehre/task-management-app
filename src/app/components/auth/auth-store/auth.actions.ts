@@ -1,18 +1,18 @@
 import { createAction, props } from '@ngrx/store';
 import { UserCredential } from '@angular/fire/auth';
 
-import { User } from 'src/app/shared/models/user.model';
+import { AuthUser, User } from 'src/app/shared/models/user.model';
 
 export const googleAuth = createAction('[AUTH GOOGLE] Google Auth');
 
 export const SignUp = createAction(
   '[AUTH SIGNUP] SignUp',
-  props<{ email: string; password: string }>()
+  props<{ name: string; email: string; password: string }>()
 );
 
 export const SignUpSuccess = createAction(
   '[AUTH SIGNUP] SignUp Success',
-  props<{ user: UserCredential }>()
+  props<{ user: AuthUser }>()
 );
 
 export const SignUpFailure = createAction(
@@ -22,12 +22,12 @@ export const SignUpFailure = createAction(
 
 export const Login = createAction(
   '[AUTH LOGIN] Login',
-  props<{ user: User }>()
+  props<{ email: string; password: string }>()
 );
 
 export const LoginSuccess = createAction(
   '[AUTH LOGIN] Login Success',
-  props<{ user: UserCredential }>()
+  props<{ user: AuthUser }>()
 );
 
 export const LoginFailure = createAction(

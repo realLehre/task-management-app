@@ -5,3 +5,10 @@ export interface User {
   name: string | null;
   boards: Board[];
 }
+
+export interface AuthUser {
+  email: string;
+  displayName: string;
+  expirationTime: number;
+  uid: string;
+}

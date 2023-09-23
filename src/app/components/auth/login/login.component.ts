@@ -43,7 +43,18 @@ export class LoginComponent implements OnInit {
     return this.signInForm.controls['password'];
   }
 
-  onSignIn() {}
+  onSignIn() {
+    if (this.signInForm.invalid) {
+      return;
+    }
+
+    this.store.dispatch(
+      fromAuthActions.Login({
+        email: this.email.value,
+        password: this.password.value,
+      })
+    );
+  }
 
   onSignInWithGoogle() {
     this.store.dispatch(fromAuthActions.googleAuth());
