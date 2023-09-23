@@ -184,6 +184,17 @@ export class AuthEffects {
     { dispatch: false }
   );
 
+  signUpFailure$ = createEffect(
+    () =>
+      this.actions.pipe(
+        ofType(fromAuthActions.SignUpFailure),
+        tap(() => {
+          this.authService.isAuthLoading.next(false);
+        })
+      ),
+    { dispatch: false }
+  );
+
   loginFailure$ = createEffect(
     () =>
       this.actions.pipe(
@@ -229,6 +240,9 @@ export class AuthEffects {
       }
       case 'auth/user-not-found': {
         return 'User not found';
+      }
+      case 'auth/invalid-login-credentials': {
+        return 'Invalid login credentials';
       }
       default: {
         return 'An error occured, try again later';

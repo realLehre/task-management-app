@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
   massError: boolean = false;
   returnUrl!: string;
   isAuthLoading: boolean = false;
-  errorMessage: string = '';
+  errorMessage!: string | null;
   posterUrl: string = '';
 
   constructor(
@@ -41,6 +41,14 @@ export class LoginComponent implements OnInit {
     this.authService.isAuthLoading.subscribe(
       (status) => (this.isAuthLoading = status)
     );
+
+    this.store.select(fromStore.getErrorMessage).subscribe((err) => {
+      this.errorMessage = err;
+    });
+    setTimeout(() => {
+      this.errorMessage = null;
+      console.log(1);
+    }, 10000);
   }
 
   get email() {

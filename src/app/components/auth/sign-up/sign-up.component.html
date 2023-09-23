@@ -6,8 +6,10 @@
       </div>
       <p class="sign-up-heading">Sign up</p>
 
-      <div class="error-message" [class.show]="errorMessage != ''">
-        {{ errorMessage }}
+      <div class="error-message" [ngClass]="{ showerror: errorMessage }">
+        <p>
+          {{ errorMessage }}
+        </p>
       </div>
 
       <div class="sign-up-loader" *ngIf="isLoading" [class.grow]="isLoading">
@@ -125,9 +127,11 @@
         <button
           class="sign-up-btn"
           type="submit"
-          [disabled]="signUpForm.invalid || !passwordMatch"
+          [disabled]="isAuthLoading || !passwordMatch"
+          [ngClass]="{ invalid: signUpForm.invalid || !passwordMatch }"
         >
-          Sign Up
+          <span class="login-btn-text" *ngIf="!isAuthLoading"> Sign Up </span
+          ><span class="login-btn-loader" *ngIf="isAuthLoading"></span>
         </button>
       </form>
 

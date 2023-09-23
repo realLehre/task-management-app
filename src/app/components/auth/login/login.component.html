@@ -4,13 +4,11 @@
       <div class="sign-in-logo">
         <img src="../../../../assets/logo-light.png" alt="" />
       </div>
-      <p class="sign-in-heading" [class.show]="massError || errorMessage != ''">
-        Sign in
-      </p>
+      <p class="sign-in-heading">Sign In</p>
 
-      <div class="error-message">
-        <p [class.show]="errorMessage != '' || massError">
-          {{ errorMessage != "" ? errorMessage : "Fields cannot be empty" }}
+      <div class="error-message" [ngClass]="{ showerror: errorMessage }">
+        <p>
+          {{ errorMessage }}
         </p>
       </div>
 
@@ -63,7 +61,12 @@
         >
           Password cannot be empty
         </p>
-        <button class="sign-in-btn" type="submit">
+        <button
+          class="sign-in-btn"
+          type="submit"
+          [disabled]="isAuthLoading"
+          [ngClass]="{ invalid: signInForm.invalid }"
+        >
           <span class="login-btn-text" *ngIf="!isAuthLoading"> Sign In </span
           ><span class="login-btn-loader" *ngIf="isAuthLoading"></span>
         </button>

@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import * as fromStore from '@store';
 import * as fromAuthActions from '@authPageActions';
 import { Store } from '@ngrx/store';
+import { AuthService } from 'src/app/core/services/auth-service/auth.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -18,10 +19,14 @@ export class SignUpComponent implements OnInit {
   tellEmailHint: boolean = false;
   passwordMatch: boolean = false;
   isLoading: boolean = false;
-  errorMessage: string = '';
+  isAuthLoading: boolean = false;
+  errorMessage!: string | null;
   posterUrl: string = '';
 
-  constructor(private store: Store<fromStore.State>) {}
+  constructor(
+    private store: Store<fromStore.State>,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.signUpForm = new FormGroup({
@@ -39,6 +44,20 @@ export class SignUpComponent implements OnInit {
         ),
       ]),
       confirmPassword: new FormControl('', Validators.required),
+    });
+
+    this.authService.isAuthLoading.subscribe(
+      (status) => (this.isAuthLoading = status)
+    );
+
+    this.store.select(fromStore.getErrorMessage).subscribe((err) => {
+      this.errorMessage = err;
+      console.log(this.errorMessage, err);
+
+      setTimeout(() => {
+        this.errorMessage = null;
+      }, 2000);
+      console.log(this.errorMessage);
     });
   }
 
