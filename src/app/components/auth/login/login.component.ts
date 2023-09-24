@@ -44,11 +44,11 @@ export class LoginComponent implements OnInit {
 
     this.store.select(fromStore.getErrorMessage).subscribe((err) => {
       this.errorMessage = err;
+      setTimeout(() => {
+        this.errorMessage = null;
+        console.log(1);
+      }, 2000);
     });
-    setTimeout(() => {
-      this.errorMessage = null;
-      console.log(1);
-    }, 10000);
   }
 
   get email() {
