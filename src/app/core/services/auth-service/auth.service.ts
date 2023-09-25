@@ -24,6 +24,8 @@ import { Router } from '@angular/router';
 export class AuthService {
   logOutTimeout!: any;
   isAuthLoading = new Subject<boolean>();
+  errorMessage = new Subject<{ errorMessage: string }>();
+  isAutoLoggedOut = new Subject<boolean>();
 
   constructor(
     private auth: Auth,
@@ -32,7 +34,7 @@ export class AuthService {
   ) {}
 
   getUser() {
-    return JSON.parse(localStorage.getItem('user')!);
+    return JSON.parse(localStorage.getItem('kanbanUser')!);
   }
 
   signUp(
@@ -60,6 +62,7 @@ export class AuthService {
   autoLogout(tokenExpirTime: number) {
     this.logOutTimeout = setTimeout(() => {
       this.store.dispatch(fromAuthActions.Logout());
+      this.isAutoLoggedOut.next(true);
 
       if (this.logOutTimeout) {
         clearTimeout(this.logOutTimeout);

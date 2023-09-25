@@ -50,14 +50,12 @@ export class SignUpComponent implements OnInit {
       (status) => (this.isAuthLoading = status)
     );
 
-    this.store.select(fromStore.getErrorMessage).subscribe((err) => {
-      this.errorMessage = err;
-      console.log(this.errorMessage, err);
+    this.authService.errorMessage.subscribe((message) => {
+      this.errorMessage = message.errorMessage;
 
       setTimeout(() => {
         this.errorMessage = null;
       }, 2000);
-      console.log(this.errorMessage);
     });
   }
 

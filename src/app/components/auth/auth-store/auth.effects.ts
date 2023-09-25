@@ -49,7 +49,6 @@ export class AuthEffects {
         return this.authService.login(action.email, action.password).pipe(
           tap((res) => {
             this.taskService.setUserData(res);
-            console.log(res);
           }),
           map((res) => {
             const user: AuthUser = this.getUserDetails(res);
@@ -57,17 +56,14 @@ export class AuthEffects {
           }),
           catchError((err) => {
             console.log(err);
-            this.store.dispatch(
+            this.authService.errorMessage.next({
+              errorMessage: this.getErrorMessage(err.code),
+            });
+            return of(
               fromAuthActions.LoginFailure({
                 errorMessage: this.getErrorMessage(err.code),
               })
             );
-            // return of(
-            //   fromAuthActions.LoginFailure({
-            //     errorMessage: this.getErrorMessage(err.code),
-            //   })
-            // );
-            return of();
           })
         );
       })
@@ -102,6 +98,9 @@ export class AuthEffects {
             }),
             catchError((err) => {
               console.log(err);
+              this.authService.errorMessage.next({
+                errorMessage: this.getErrorMessage(err.code),
+              });
               return of(
                 fromAuthActions.SignUpFailure({
                   errorMessage: this.getErrorMessage(err.code),
@@ -146,19 +145,12 @@ export class AuthEffects {
         tap((res) => {
           this.authService.isAuthLoading.next(false);
 
-          localStorage.setItem('user', JSON.stringify(res.user));
+          localStorage.setItem('kanbanUser', JSON.stringify(res.user));
           this.router.navigate(['/', 'boards']);
           console.log(res.user);
           //   fromBoardsHttpActions.boardsPageLoaded();
 
-          const expirationTimeStored: number = res.user.expirationTime;
-
-          if (expirationTimeStored != null) {
-            const expirationTime = new Date(+expirationTimeStored).getTime();
-            const currentTime = new Date().getTime();
-            const expirationDuration = expirationTime - currentTime;
-            this.authService.autoLogout(expirationDuration);
-          }
+          this.autoLogout(res);
         })
         // map((res) => fromBoardsHttpActions.boardsPageLoaded())
       ),
@@ -172,21 +164,12 @@ export class AuthEffects {
         tap((res) => {
           this.authService.isAuthLoading.next(false);
 
-          localStorage.setItem('user', JSON.stringify(res.user));
+          localStorage.setItem('kanbanUser', JSON.stringify(res.user));
           this.router.navigate(['/', 'boards']);
           console.log(res.user);
           //   fromBoardsHttpActions.boardsPageLoaded();
 
-          // const user: any = res.user.user;
-          // const expirationTimeStored: number =
-          //   user['stsTokenManager'].expirationTime;
-
-          // if (expirationTimeStored != null) {
-          //   const expirationTime = new Date(+expirationTimeStored).getTime();
-          //   const currentTime = new Date().getTime();
-          //   const expirationDuration = expirationTime - currentTime;
-          //   this.authService.autoLogout(expirationDuration);
-          // }
+          this.autoLogout(res);
         })
         // map((res) => fromBoardsHttpActions.boardsPageLoaded())
       ),
@@ -208,7 +191,7 @@ export class AuthEffects {
     () =>
       this.actions.pipe(
         ofType(fromAuthActions.LoginFailure),
-        tap(() => {
+        tap((err) => {
           this.authService.isAuthLoading.next(false);
         })
       ),
@@ -220,12 +203,23 @@ export class AuthEffects {
       this.actions.pipe(
         ofType(fromAuthActions.Logout),
         tap(() => {
-          localStorage.removeItem('user');
+          localStorage.removeItem('kanbanUser');
           this.router.navigate(['/', 'auth', 'sign-in']);
         })
       ),
     { dispatch: false }
   );
+
+  autoLogout(res: { user: AuthUser }) {
+    const expirationTimeStored: number = res.user.expirationTime;
+
+    if (expirationTimeStored != null) {
+      const expirationTime = new Date(+expirationTimeStored).getTime();
+      const currentTime = new Date().getTime();
+      const expirationDuration = expirationTime - currentTime;
+      this.authService.autoLogout(expirationDuration);
+    }
+  }
 
   getUserDetails(res: UserCredential) {
     const getUser: any = res.user;

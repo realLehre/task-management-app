@@ -8,6 +8,7 @@ import { MaterialModule } from 'src/app/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './auth-store/auth.effects';
+import { SessionExpiredComponent } from './session-expired/session-expired.component';
 
 @NgModule({
   imports: [
@@ -17,7 +18,7 @@ import { AuthEffects } from './auth-store/auth.effects';
     ReactiveFormsModule,
     EffectsModule.forFeature([AuthEffects]),
   ],
-  declarations: [LoginComponent, SignUpComponent],
+  declarations: [LoginComponent, SignUpComponent, SessionExpiredComponent],
   exports: [],
 })
 export class AuthModule {}

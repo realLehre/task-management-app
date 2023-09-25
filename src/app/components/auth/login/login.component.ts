@@ -6,6 +6,8 @@ import { Store } from '@ngrx/store';
 import * as fromStore from '@store';
 import * as fromAuthActions from '@authPageActions';
 import { AuthService } from 'src/app/core/services/auth-service/auth.service';
+import { MatDialog } from '@angular/material/dialog';
+import { SessionExpiredComponent } from '../session-expired/session-expired.component';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +25,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private store: Store<fromStore.State>,
-    private authService: AuthService
+    private authService: AuthService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -42,12 +45,21 @@ export class LoginComponent implements OnInit {
       (status) => (this.isAuthLoading = status)
     );
 
-    this.store.select(fromStore.getErrorMessage).subscribe((err) => {
-      this.errorMessage = err;
+    this.authService.errorMessage.subscribe((message) => {
+      this.errorMessage = message.errorMessage;
+
       setTimeout(() => {
         this.errorMessage = null;
-        console.log(1);
       }, 2000);
+    });
+
+    this.authService.isAutoLoggedOut.subscribe((status) => {
+      if (status) {
+        const dialogRef = this.dialog.open(SessionExpiredComponent, {
+          panelClass: 'session_dialog',
+          autoFocus: false,
+        });
+      }
     });
   }
 

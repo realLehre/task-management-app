@@ -60,7 +60,8 @@ a {
 
 .add_view_task_dialog,
 .board_dialog,
-.mobile_board_dialog {
+.mobile_board_dialog,
+.session_dialog {
   & .mat-dialog-container {
     padding: 0;
     background-color: var(--dialogBg);

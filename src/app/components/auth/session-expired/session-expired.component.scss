@@ -1,0 +1,29 @@
+@import "config";
+
+.session-expired {
+  background-color: $purple_dark;
+  padding: 50px 30px;
+  text-align: center;
+  color: $white;
+
+  &-heading {
+    font-size: $heading-XL;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  &-copy {
+    margin: 20px 0;
+    font-size: $heading-L;
+  }
+
+  & button {
+    width: 100px;
+    @include button($white, $purple_dark, $heading-L);
+
+    &:hover {
+      background: $light;
+      color: $purple_light;
+    }
+  }
+}

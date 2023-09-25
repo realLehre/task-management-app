@@ -69,7 +69,9 @@ export class BoardsComponent implements OnInit, AfterViewChecked {
       }
     });
 
-    this.displayName = JSON.parse(localStorage.getItem('user')!).displayName;
+    this.displayName = JSON.parse(
+      localStorage.getItem('kanbanUser')!
+    ).displayName;
   }
 
   ngAfterViewChecked(): void {
