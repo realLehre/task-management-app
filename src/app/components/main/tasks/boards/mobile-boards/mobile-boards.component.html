@@ -72,8 +72,11 @@
       <img src="../../../../assets/dark-icon.png" alt="" />
     </div>
 
-    <div class="user">
-      Hello, <span class="user-name">{{ displayName }} </span>
+    <div class="user" [mat-menu-trigger-for]="logout">
+      Hello,
+      <span class="user-name"
+        >{{ displayName }} <i class="fa fa-angle-down"></i
+      ></span>
     </div>
 
     <mat-menu #logout id="logout-menu">
