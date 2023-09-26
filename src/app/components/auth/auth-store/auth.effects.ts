@@ -87,7 +87,7 @@ export class AuthEffects {
               if (currentUser !== null) {
                 updateProfile(currentUser, {
                   displayName: action.name,
-                }).then((res) => console.log(res));
+                });
               }
 
               const user: AuthUser = this.getUserDetails(res);
@@ -123,7 +123,7 @@ export class AuthEffects {
           map((res) => {
             const user: AuthUser = this.getUserDetails(res);
 
-            return fromAuthActions.SignUpSuccess({ user: user });
+            return fromAuthActions.LoginSuccess({ user: user });
           }),
           catchError((err) => {
             console.log(err);
