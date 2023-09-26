@@ -152,6 +152,7 @@
     color: $purple_dark;
     font-weight: 600;
     cursor: pointer;
+    text-transform: capitalize;
 
     &:hover {
       color: $purple_light;

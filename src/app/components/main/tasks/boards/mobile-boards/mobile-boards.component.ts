@@ -72,8 +72,8 @@ export class MobileBoardsComponent implements OnInit {
     });
 
     this.displayName = JSON.parse(
-      localStorage.getItem('user')!
-    ).user.displayName;
+      localStorage.getItem('kanbanUser')!
+    ).displayName;
   }
 
   ngAfterViewChecked(): void {
