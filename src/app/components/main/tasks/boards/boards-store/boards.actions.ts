@@ -5,7 +5,7 @@ export const getAllBoards = createAction('[Boards HTTP] Get All Boards');
 
 export const createNewBoard = createAction(
   '[Boards Page] Create New Board',
-  props<Board>()
+  props<{ board: Board }>()
 );
 
 export const selectBoard = createAction(

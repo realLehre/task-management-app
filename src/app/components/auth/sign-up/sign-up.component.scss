@@ -136,6 +136,8 @@
     width: 100%;
     position: relative;
     padding: 15px 0;
+    height: 50px;
+
     border-radius: 2px;
     border: none;
     color: $white;
@@ -244,50 +246,6 @@
   }
 }
 
-.loader {
-  width: 82px;
-  height: 18px;
-  position: relative;
-}
-.loader::before,
-.loader::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%, 10%);
-  top: 0;
-  background: red;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  animation: jump 0.5s ease-in infinite alternate;
-}
-
-.loader::after {
-  background: #0000;
-  color: #fff;
-  top: 100%;
-  box-shadow: 32px -20px, -32px -20px;
-  animation: split 0.5s ease-out infinite alternate;
-}
-
-@keyframes split {
-  0% {
-    box-shadow: 8px -20px, -8px -20px;
-  }
-  100% {
-    box-shadow: 32px -20px, -32px -20px;
-  }
-}
-@keyframes jump {
-  0% {
-    transform: translate(-50%, -150%);
-  }
-  100% {
-    transform: translate(-50%, 10%);
-  }
-}
-
 @media (max-width: 530px) {
   .sign-up-main {
     width: 90%;
@@ -295,5 +253,25 @@
 
   .sign-up-main-content {
     width: 100%;
+  }
+}
+
+.login-btn-loader {
+  width: 20px;
+  height: 20px;
+  border: 3px solid #fff;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }

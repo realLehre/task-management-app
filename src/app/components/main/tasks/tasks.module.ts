@@ -21,6 +21,8 @@ import * as fromStore from 'src/app/store/app.reducer';
 import { SubTaskComponent } from './boards/board/b-tasks/task-dialog/sub-task/sub-task.component';
 import { MobileBoardsComponent } from './boards/mobile-boards/mobile-boards.component';
 import { ShortenBoardName } from 'src/app/shared/pipes/shorten-boardname.pipe';
+import { EffectsModule } from '@ngrx/effects';
+import { BoardsEffects } from './boards/boards-store/boards.effects';
 
 const reducers = {
   boards: fromStore.getBoardsState,
@@ -46,6 +48,7 @@ const metaReducers: Array<MetaReducer<fromStore.State, any>> = [
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
+    EffectsModule.forFeature([BoardsEffects]),
   ],
   declarations: [
     BoardsComponent,
@@ -66,6 +69,7 @@ const metaReducers: Array<MetaReducer<fromStore.State, any>> = [
     TaskDialogComponent,
     BoardsDialogComponent,
     ShortenBoardName,
+    EffectsModule,
   ],
 })
 export class TasksModule {}

@@ -47,9 +47,7 @@ export class AuthEffects {
       concatMap((action) => {
         this.authService.isAuthLoading.next(true);
         return this.authService.login(action.email, action.password).pipe(
-          tap((res) => {
-            this.taskService.setUserData(res);
-          }),
+          tap((res) => {}),
           map((res) => {
             const user: AuthUser = this.getUserDetails(res);
             return fromAuthActions.LoginSuccess({ user: user });
@@ -79,9 +77,7 @@ export class AuthEffects {
         return this.authService
           .signUp(action.name, action.email, action.password)
           .pipe(
-            tap((res) => {
-              this.taskService.setUserData(res);
-            }),
+            tap((res) => {}),
             map((res) => {
               const currentUser = this.auth.currentUser;
               if (currentUser !== null) {
@@ -118,7 +114,8 @@ export class AuthEffects {
       concatMap(() => {
         return this.authService.signInWithGoogle().pipe(
           tap((res) => {
-            this.taskService.setUserData(res);
+            const user: AuthUser = this.getUserDetails(res);
+            this.taskService.setUserData(user);
           }),
           map((res) => {
             const user: AuthUser = this.getUserDetails(res);
@@ -143,6 +140,8 @@ export class AuthEffects {
       this.actions.pipe(
         ofType(fromAuthActions.SignUpSuccess),
         tap((res) => {
+          this.taskService.setUserData(res.user);
+
           this.authService.isAuthLoading.next(false);
 
           localStorage.setItem('kanbanUser', JSON.stringify(res.user));

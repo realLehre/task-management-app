@@ -21,6 +21,8 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { AuthEffects } from './components/auth/auth-store/auth.effects';
+import { BoardsEffects } from './components/main/tasks/boards/boards-store/boards.effects';
 
 const reducers = {
   boards: fromStore.getBoardsState,

@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 
 import * as fromStore from 'src/app/store/app.reducer';
 import * as fromBoardsActions from '@boardsPageActions';
+import * as fromBoardsHttpActions from '@boardsHttpActions';
 import { TaskService } from 'src/app/core/services/task.service';
 import { Board } from 'src/app/shared/models/board.model';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -26,6 +27,7 @@ export class BoardsDialogComponent implements OnInit {
   boardId!: string;
   tasksStored!: any;
   showError: boolean = false;
+  isSubmitting: boolean = false;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
@@ -75,6 +77,11 @@ export class BoardsDialogComponent implements OnInit {
     });
 
     this.tasksStored = JSON.parse(localStorage.getItem('tasks') || '{}');
+
+    this.taskService.isSubmitting.subscribe((status) => {
+      this.isSubmitting = status;
+      console.log(status);
+    });
   }
 
   get name() {
@@ -132,31 +139,44 @@ export class BoardsDialogComponent implements OnInit {
         })
       );
 
-      localStorage.setItem('board_id', this.board.id);
-      localStorage.setItem('board_name', this.board.name);
-      this.router.navigate(['boards'], {
-        queryParams: { board: this.board.name, board_Id: this.board.id },
+      this.taskService.isSubmitting.subscribe((status) => {
+        if (!status) {
+          localStorage.setItem('board_id', this.board.id);
+          localStorage.setItem('board_name', this.board.name);
+          this.router.navigate(['boards'], {
+            queryParams: { board: this.board.name, board_Id: this.board.id },
+          });
+
+          this.dialog.closeAll();
+        }
       });
     } else {
       this.store.dispatch(
-        fromBoardsActions.createNewBoard({
-          name: name,
-          columns: newColumns,
-          id: generatedId,
-          tasks: { ...tasks },
+        fromBoardsHttpActions.createBoard({
+          board: {
+            name: name,
+            columns: newColumns,
+            id: generatedId,
+            tasks: { ...tasks },
+          },
         })
       );
 
-      localStorage.setItem('board_name', name);
+      this.taskService.isSubmitting.subscribe((status) => {
+        if (!status) {
+          localStorage.setItem('board_name', name);
+          localStorage.setItem('board_id', generatedId);
+          this.router.navigate(['boards'], {
+            queryParams: { board: name, board_Id: generatedId },
+          });
+          this.store.dispatch(
+            fromBoardsActions.selectBoard({ id: generatedId })
+          );
 
-      localStorage.setItem('board_id', generatedId);
-      this.router.navigate(['boards'], {
-        queryParams: { board: name, board_Id: generatedId },
+          this.dialog.closeAll();
+        }
       });
-      this.store.dispatch(fromBoardsActions.selectBoard({ id: generatedId }));
     }
-
-    this.dialog.closeAll();
   }
 
   onDeleteBoard() {

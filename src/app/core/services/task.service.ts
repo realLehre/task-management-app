@@ -1,20 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Subject, map } from 'rxjs';
-import {
-  Auth,
-  signInWithPopup,
-  GoogleAuthProvider,
-  createUserWithEmailAndPassword,
-  signOut,
-  signInWithEmailAndPassword,
-  updateProfile,
-  UserCredential,
-} from '@angular/fire/auth';
+import { Subject, defer, from } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
+import { Auth } from '@angular/fire/auth';
 import {
   AngularFirestore,
   AngularFirestoreCollection,
 } from '@angular/fire/compat/firestore';
-import { User } from 'src/app/shared/models/user.model';
+import { FieldValue, arrayUnion } from 'firebase/firestore';
+
+import { AuthUser, User } from 'src/app/shared/models/user.model';
+import { Board } from 'src/app/shared/models/board.model';
 
 @Injectable({ providedIn: 'root' })
 export class TaskService {
@@ -22,12 +17,15 @@ export class TaskService {
   isBoardMenuOpened = new Subject<boolean>();
   usersDatabase: AngularFirestoreCollection<User>;
   userIds: string[] = [];
-  authResponse!: UserCredential;
+  authResponse!: AuthUser;
+  isSubmitting = new Subject<boolean>();
 
   constructor(private auth: Auth, private db: AngularFirestore) {
     this.usersDatabase = this.db.collection('users');
 
-    this.authResponse = JSON.parse(localStorage.getItem('user')!);
+    this.authResponse = JSON.parse(localStorage.getItem('kanbanUser')!);
+
+    // this.createBoard({ name: 'test', columns: ['test'], id: 'test' });
   }
 
   generateRandomString() {
@@ -43,14 +41,14 @@ export class TaskService {
     return randomString;
   }
 
-  setUserData(res: UserCredential) {
-    if (this.userIds.some((uid) => uid == res.user.uid)) {
+  setUserData(res: AuthUser) {
+    if (this.userIds.some((uid) => uid == res.uid)) {
       return;
     }
 
-    return this.usersDatabase.doc(res.user.uid).set({
-      name: res.user.displayName,
-      email: res.user.email,
+    return this.usersDatabase.doc(res.uid).set({
+      name: res.displayName,
+      email: res.email,
       boards: [],
     });
   }
@@ -65,6 +63,25 @@ export class TaskService {
   }
 
   getBoards() {
-    return this.usersDatabase.doc(this.authResponse.user.uid).get();
+    return this.usersDatabase.doc(this.authResponse.uid).get();
+  }
+
+  createBoard(board: Board) {
+    const user = this.usersDatabase.doc(this.authResponse.uid);
+    let boards: Board[] = [];
+
+    return defer(() => {
+      return from(
+        user.get().pipe(
+          map((data) => {
+            boards = data.data()?.boards!;
+            this.usersDatabase.doc(this.authResponse.uid).update({
+              boards: [...boards, board],
+            });
+            return board;
+          })
+        )
+      );
+    });
   }
 }

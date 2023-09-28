@@ -46,9 +46,10 @@ export class SignUpComponent implements OnInit {
       confirmPassword: new FormControl('', Validators.required),
     });
 
-    this.authService.isAuthLoading.subscribe(
-      (status) => (this.isAuthLoading = status)
-    );
+    this.authService.isAuthLoading.subscribe((status) => {
+      this.isAuthLoading = status;
+      console.log(status);
+    });
 
     this.authService.errorMessage.subscribe((message) => {
       this.errorMessage = message.errorMessage;

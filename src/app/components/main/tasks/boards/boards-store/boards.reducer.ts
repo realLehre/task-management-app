@@ -71,7 +71,7 @@ export const boardsReducer = createReducer(
     return {
       ...state,
       activeBoard: null,
-      boards: createBoard(state.boards, action),
+      boards: createBoard(state.boards, action.board),
     };
   }),
 

@@ -66,8 +66,17 @@
         <button type="button" (click)="addColumn()">+Add New Column</button>
       </div>
 
-      <button type="submit" class="submit-btn">
-        {{ editState ? "Save Changes" : "Create New Board" }}
+      <button
+        type="submit"
+        class="submit-btn"
+        [ngClass]="{ disabled: createBoardForm.invalid }"
+        [disabled]="isSubmitting"
+      >
+        <span class="btn-texts" *ngIf="!isSubmitting">
+          {{ editState ? "Save Changes" : "Create New Board" }}
+        </span>
+
+        <span class="loader" *ngIf="isSubmitting"></span>
       </button>
     </form>
   </mat-dialog-content>

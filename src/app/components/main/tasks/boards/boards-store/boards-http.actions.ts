@@ -10,6 +10,16 @@ export const getAllBoards = createAction(
   props<{ boards: Board[] }>()
 );
 
+export const createBoard = createAction(
+  '[Boards HTTP] Create Board',
+  props<{ board: Board }>()
+);
+
+export const createBoardSuccess = createAction(
+  '[Boards HTTP] Create Board Sucess',
+  props<{ board: Board }>()
+);
+
 export const updateBoards = createAction(
   '[Boards HTTP] Update Boards',
   props<{ boards: Board[] }>()
