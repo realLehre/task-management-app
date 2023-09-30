@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject, defer, from } from 'rxjs';
+import { BehaviorSubject, Subject, defer, from } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { Auth } from '@angular/fire/auth';
 import {
@@ -19,7 +19,7 @@ export class TaskService {
   userIds: string[] = [];
   authResponse!: AuthUser;
   isSubmitting = new Subject<boolean>();
-  isLoadingBoards = new Subject<boolean>();
+  isLoadingBoards = new BehaviorSubject<boolean>(false);
 
   constructor(private auth: Auth, private db: AngularFirestore) {
     this.usersDatabase = this.db.collection('users');
