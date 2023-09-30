@@ -1,4 +1,11 @@
 <div class="boards-container">
+  <div class="loader">
+    <ngx-skeleton-loader
+      count="1"
+      [appearance]="'line'"
+      [theme]="{ height: '50px' }"
+    ></ngx-skeleton-loader>
+  </div>
   <div class="boards-main">
     <div class="boards-heading">
       ALL BOARDS ({{ boards ? boards.length : 0 }})

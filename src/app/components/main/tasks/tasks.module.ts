@@ -8,6 +8,7 @@ import {
   StoreModule,
 } from '@ngrx/store';
 import { localStorageSync } from 'ngrx-store-localstorage';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 import { BoardsComponent } from './boards/boards.component';
 import { BoardComponent } from './boards/board/board.component';
@@ -49,6 +50,7 @@ const metaReducers: Array<MetaReducer<fromStore.State, any>> = [
     FormsModule,
     ReactiveFormsModule,
     EffectsModule.forFeature([BoardsEffects]),
+    NgxSkeletonLoaderModule,
   ],
   declarations: [
     BoardsComponent,
