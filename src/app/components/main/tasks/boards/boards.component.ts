@@ -51,32 +51,28 @@ export class BoardsComponent implements OnInit, AfterViewChecked {
 
     this.store.dispatch(fromBoardsHttpActions.boardsPageLoaded());
 
-    this.store.select(fromStore.selectAllBoards).subscribe((data) => {
-      this.boards = data;
-      console.log(data);
+    this.taskService.isLoadingBoards.subscribe((status) => {
+      if (status == false) {
+        this.store.select(fromStore.selectAllBoards).subscribe((data) => {
+          this.boards = data;
 
-      const boardId = localStorage.getItem('board_id');
-      const boardName = localStorage.getItem('board_name');
-      this.boardIdStored = boardId ?? this.boardIdStored;
+          console.log(data);
+          const boardId = localStorage.getItem('board_id');
+          const boardName = localStorage.getItem('board_name');
+          this.boardIdStored = boardId ?? this.boardIdStored;
 
-      if (boardId) {
-        // this.router.navigate(['boards'], {
-        //   queryParams: { board: boardName, board_Id: boardId },
-        // });
-        // this.store.dispatch(fromBoardsActions.selectBoard({ id: boardId }));
-        this.onSelectBoard(boardId, boardName!);
-      } else {
-        // this.router.navigate(['boards'], {
-        //   queryParams: { board: data[0].name, board_Id: data[0].id },
-        // });
-        // this.store.dispatch(fromBoardsActions.selectBoard({ id: data[0].id }));
-        this.onSelectBoard(data[0].id, data[0].name);
-      }
+          if (boardId) {
+            this.onSelectBoard(boardId, boardName!);
+          } else {
+            this.onSelectBoard(data[0].id, data[0].name);
+          }
 
-      if (this.boards.length == 0) {
-        localStorage.removeItem('board_id');
-        localStorage.removeItem('board_name');
-        this.router.navigate(['boards'], { fragment: 'add-board' });
+          if (this.boards.length == 0) {
+            localStorage.removeItem('board_id');
+            localStorage.removeItem('board_name');
+            this.router.navigate(['boards'], { fragment: 'add-board' });
+          }
+        });
       }
     });
 
@@ -105,6 +101,9 @@ export class BoardsComponent implements OnInit, AfterViewChecked {
   onSelectBoard(id: string, name: string) {
     localStorage.setItem('board_id', id);
     localStorage.setItem('board_name', name);
+    this.router.navigate(['boards'], {
+      queryParams: { board: name, board_Id: id },
+    });
     this.store.dispatch(fromBoardsActions.selectBoard({ id: id }));
   }
 

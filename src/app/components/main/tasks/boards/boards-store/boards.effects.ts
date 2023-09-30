@@ -1,5 +1,12 @@
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, concatMap, map, mergeMap } from 'rxjs/operators';
+import {
+  catchError,
+  concatMap,
+  map,
+  mergeMap,
+  take,
+  tap,
+} from 'rxjs/operators';
 import {
   AngularFirestore,
   AngularFirestoreCollection,
@@ -27,8 +34,12 @@ export class BoardsEffects {
     this.actions.pipe(
       ofType(fromBoardsHttpActions.boardsPageLoaded),
       mergeMap(() => {
+        this.taskService.isLoadingBoards.next(true);
         return this.taskService.getBoards().pipe(
-          map((data) => fromBoardsActions.loadBoards({ boards: data! })),
+          map((data) => {
+            return fromBoardsActions.loadBoards({ boards: data! });
+          }),
+
           catchError((err) => {
             console.log(err);
             return of();
@@ -55,5 +66,17 @@ export class BoardsEffects {
         );
       })
     )
+  );
+
+  loadSucess$ = createEffect(
+    () =>
+      this.actions.pipe(
+        ofType(fromBoardsActions.loadBoards),
+        take(1),
+        tap((data) => {
+          this.taskService.isLoadingBoards.next(false);
+        })
+      ),
+    { dispatch: false }
   );
 }

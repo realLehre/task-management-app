@@ -19,6 +19,7 @@ export class TaskService {
   userIds: string[] = [];
   authResponse!: AuthUser;
   isSubmitting = new Subject<boolean>();
+  isLoadingBoards = new Subject<boolean>();
 
   constructor(private auth: Auth, private db: AngularFirestore) {
     this.usersDatabase = this.db.collection('users');

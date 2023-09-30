@@ -24,22 +24,22 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AuthEffects } from './components/auth/auth-store/auth.effects';
 import { BoardsEffects } from './components/main/tasks/boards/boards-store/boards.effects';
 
-const reducers = {
-  boards: fromStore.getBoardsState,
-};
+// const reducers = {
+//   boards: fromStore.getBoardsState,
+// };
 
-function localStorageSyncReducer(
-  reducer: ActionReducer<fromStore.State>
-): ActionReducer<fromStore.State> {
-  return localStorageSync({
-    keys: [{ boards: ['boards'] }],
-    rehydrate: true,
-  })(reducer);
-}
+// function localStorageSyncReducer(
+//   reducer: ActionReducer<fromStore.State>
+// ): ActionReducer<fromStore.State> {
+//   return localStorageSync({
+//     keys: [{ boards: ['boards'] }],
+//     rehydrate: true,
+//   })(reducer);
+// }
 
-const metaReducers: Array<MetaReducer<fromStore.State, any>> = [
-  localStorageSyncReducer,
-];
+// const metaReducers: Array<MetaReducer<fromStore.State, any>> = [
+//   localStorageSyncReducer,
+// ];
 
 @NgModule({
   declarations: [AppComponent, DialogComponent],
@@ -51,9 +51,7 @@ const metaReducers: Array<MetaReducer<fromStore.State, any>> = [
     HttpClientModule,
     MainModule,
     AuthModule,
-    StoreModule.forRoot(fromApp.appReducer, {
-      metaReducers,
-    }),
+    StoreModule.forRoot(fromApp.appReducer, {}),
     StoreDevtoolsModule.instrument({
       name: 'Kanban Task Management App',
       logOnly: environment.production,
