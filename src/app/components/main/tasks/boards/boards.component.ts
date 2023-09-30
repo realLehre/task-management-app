@@ -29,7 +29,7 @@ export class BoardsComponent implements OnInit, AfterViewChecked {
   @Output() showSideBar = new EventEmitter<boolean>();
   currentMode: string | null = 'light';
   isToggled: boolean = false;
-  boards: Board[] = [];
+  boards!: Board[];
   boardIdStored!: string;
   displayName!: string;
 
@@ -49,15 +49,10 @@ export class BoardsComponent implements OnInit, AfterViewChecked {
       theme == 'dark' ? (this.isToggled = true) : (this.isToggled = false);
     }
 
-    // this.store.dispatch(fromBoardsHttpActions.boardsPageLoaded());
-
     this.taskService.isLoadingBoards.subscribe((status) => {
       if (status == false) {
         this.store.select(fromStore.selectAllBoards).subscribe((data) => {
           this.boards = data;
-
-          console.log(data);
-          console.log(this.boards);
 
           const boardId = localStorage.getItem('board_id');
           const boardName = localStorage.getItem('board_name');

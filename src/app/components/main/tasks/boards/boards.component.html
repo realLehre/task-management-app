@@ -1,6 +1,8 @@
 <div class="boards-container">
   <div class="boards-main">
-    <div class="boards-heading">ALL BOARDS ({{ boards.length }})</div>
+    <div class="boards-heading">
+      ALL BOARDS ({{ boards ? boards.length : 0 }})
+    </div>
     <div class="boards">
       <ul class="boards-list" *ngFor="let board of boards; let i = index">
         <li

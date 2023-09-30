@@ -65,14 +65,10 @@ export class TaskService {
   }
 
   getBoards() {
-    const uid = JSON.parse(localStorage.getItem('kanbanUser')!).uid;
-
-    this.usersDatabase
-      .doc(uid)
-      .get()
-      .subscribe((data) => {
-        console.log(data.data()?.boards);
-      });
+    let uid;
+    if (localStorage.getItem('kanbanUser')) {
+      uid = JSON.parse(localStorage.getItem('kanbanUser')!).uid;
+    }
     return this.usersDatabase
       .doc(uid)
       .get()

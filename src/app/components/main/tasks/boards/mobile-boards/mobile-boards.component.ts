@@ -48,23 +48,27 @@ export class MobileBoardsComponent implements OnInit {
       theme == 'dark' ? (this.isToggled = true) : (this.isToggled = false);
     }
 
-    this.store.select(fromStore.selectAllBoards).subscribe((data) => {
-      this.boards = data;
-      const boardId = localStorage.getItem('board_id');
-      const boardName = localStorage.getItem('board_name');
-      this.boardIdStored = boardId ?? this.boardIdStored;
+    this.taskService.isLoadingBoards.subscribe((status) => {
+      if (status == false) {
+        this.store.select(fromStore.selectAllBoards).subscribe((data) => {
+          this.boards = data;
 
-      if (boardId) {
-        this.router.navigate(['boards'], {
-          queryParams: { board: boardName, board_Id: boardId },
+          const boardId = localStorage.getItem('board_id');
+          const boardName = localStorage.getItem('board_name');
+          this.boardIdStored = boardId ?? this.boardIdStored;
+
+          if (boardId) {
+            this.onSelectBoard(boardId, boardName!);
+          } else {
+            this.onSelectBoard(data[0].id, data[0].name);
+          }
+
+          if (this.boards.length == 0) {
+            localStorage.removeItem('board_id');
+            localStorage.removeItem('board_name');
+            this.router.navigate(['boards'], { fragment: 'add-board' });
+          }
         });
-        this.store.dispatch(fromBoardsActions.selectBoard({ id: boardId }));
-      }
-
-      if (this.boards.length == 0) {
-        localStorage.removeItem('board_id');
-        localStorage.removeItem('board_name');
-        this.router.navigate(['boards'], { fragment: 'add-board' });
       }
     });
     this.dialogRef.afterClosed().subscribe((data) => {
@@ -92,6 +96,9 @@ export class MobileBoardsComponent implements OnInit {
   onSelectBoard(id: string, name: string) {
     localStorage.setItem('board_id', id);
     localStorage.setItem('board_name', name);
+    this.router.navigate(['boards'], {
+      queryParams: { board: name, board_Id: id },
+    });
     this.store.dispatch(fromBoardsActions.selectBoard({ id: id }));
     this.dialog.closeAll();
   }
