@@ -25,7 +25,8 @@ export class TaskService {
 
     this.authResponse = JSON.parse(localStorage.getItem('kanbanUser')!);
 
-    // this.createBoard({ name: 'test', columns: ['test'], id: 'test' });
+    this.getUsersUid();
+    console.log(this.userIds);
   }
 
   generateRandomString() {
@@ -41,6 +42,15 @@ export class TaskService {
     return randomString;
   }
 
+  // get user ids (document id in firestore collection)
+  getUsersUid() {
+    this.usersDatabase.get().subscribe((data) => {
+      data.docs.forEach((doc) => {
+        this.userIds.push(doc.id);
+      });
+    });
+  }
+
   setUserData(res: AuthUser) {
     if (this.userIds.some((uid) => uid == res.uid)) {
       return;
@@ -53,21 +63,14 @@ export class TaskService {
     });
   }
 
-  // get user ids (document id in firestore collection)
-  getUsersUid() {
-    this.usersDatabase.get().subscribe((data) => {
-      data.docs.forEach((doc) => {
-        this.userIds.push(doc.id);
-      });
-    });
-  }
-
   getBoards() {
     return this.usersDatabase.doc(this.authResponse.uid).get();
   }
 
   createBoard(board: Board) {
-    const user = this.usersDatabase.doc(this.authResponse.uid);
+    const uid = JSON.parse(localStorage.getItem('kanbanUser')!).uid;
+
+    const user = this.usersDatabase.doc(uid);
     let boards: Board[] = [];
 
     return defer(() => {
@@ -75,7 +78,7 @@ export class TaskService {
         user.get().pipe(
           map((data) => {
             boards = data.data()?.boards!;
-            this.usersDatabase.doc(this.authResponse.uid).update({
+            this.usersDatabase.doc(uid).update({
               boards: [...boards, board],
             });
             return board;
