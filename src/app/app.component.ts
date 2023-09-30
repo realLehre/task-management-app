@@ -30,6 +30,10 @@ export class AppComponent implements OnInit {
       }
       this.isShowSideNav = this.sideNavOpened;
     }
+
+    this.store.select(fromStore.getBoardsState).subscribe((data) => {
+      console.log(data);
+    });
   }
 
   toggleSideNav() {

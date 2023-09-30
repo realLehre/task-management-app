@@ -80,7 +80,6 @@ export class BoardsDialogComponent implements OnInit {
 
     this.taskService.isSubmitting.subscribe((status) => {
       this.isSubmitting = status;
-      console.log(status);
     });
   }
 

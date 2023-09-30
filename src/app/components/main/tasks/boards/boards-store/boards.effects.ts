@@ -28,11 +28,7 @@ export class BoardsEffects {
       ofType(fromBoardsHttpActions.boardsPageLoaded),
       mergeMap(() => {
         return this.taskService.getBoards().pipe(
-          map((data) =>
-            fromBoardsHttpActions.getAllBoards({
-              boards: data.data()?.boards!,
-            })
-          ),
+          map((data) => fromBoardsActions.loadBoards({ boards: data! })),
           catchError((err) => {
             console.log(err);
             return of();

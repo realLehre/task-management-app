@@ -3,6 +3,11 @@ import { Board } from 'src/app/shared/models/board.model';
 
 export const getAllBoards = createAction('[Boards HTTP] Get All Boards');
 
+export const loadBoards = createAction(
+  '[Boards Page] Load Boards',
+  props<{ boards: Board[] }>()
+);
+
 export const createNewBoard = createAction(
   '[Boards Page] Create New Board',
   props<{ board: Board }>()

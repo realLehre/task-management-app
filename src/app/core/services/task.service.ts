@@ -26,7 +26,7 @@ export class TaskService {
     this.authResponse = JSON.parse(localStorage.getItem('kanbanUser')!);
 
     this.getUsersUid();
-    console.log(this.userIds);
+    this.getBoards();
   }
 
   generateRandomString() {
@@ -64,7 +64,22 @@ export class TaskService {
   }
 
   getBoards() {
-    return this.usersDatabase.doc(this.authResponse.uid).get();
+    const uid = JSON.parse(localStorage.getItem('kanbanUser')!).uid;
+
+    this.usersDatabase
+      .doc(uid)
+      .get()
+      .subscribe((data) => {
+        console.log(data.data()?.boards);
+      });
+    return this.usersDatabase
+      .doc(uid)
+      .get()
+      .pipe(
+        map((data) => {
+          return data.data()?.boards;
+        })
+      );
   }
 
   createBoard(board: Board) {

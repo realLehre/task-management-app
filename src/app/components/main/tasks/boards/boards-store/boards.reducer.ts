@@ -67,6 +67,12 @@ export const initialState: State = {
 
 export const boardsReducer = createReducer(
   initialState,
+  on(BoardsPageActions.loadBoards, (state, action) => {
+    return {
+      ...state,
+      boards: action.boards,
+    };
+  }),
   on(BoardsPageActions.createNewBoard, (state, action) => {
     return {
       ...state,

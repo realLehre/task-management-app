@@ -16,6 +16,7 @@ import { BoardsDialogComponent } from './boards-dialog/boards-dialog.component';
 import { ThemeService } from 'src/app/core/theme.service';
 import * as fromStore from '@store';
 import * as fromBoardsActions from '@boardsPageActions';
+import * as fromBoardsHttpActions from '@boardsHttpActions';
 import * as fromAuthActions from '@authPageActions';
 import { Board } from 'src/app/shared/models/board.model';
 
@@ -48,18 +49,28 @@ export class BoardsComponent implements OnInit, AfterViewChecked {
       theme == 'dark' ? (this.isToggled = true) : (this.isToggled = false);
     }
 
+    this.store.dispatch(fromBoardsHttpActions.boardsPageLoaded());
+
     this.store.select(fromStore.selectAllBoards).subscribe((data) => {
       this.boards = data;
+      console.log(data);
 
       const boardId = localStorage.getItem('board_id');
       const boardName = localStorage.getItem('board_name');
       this.boardIdStored = boardId ?? this.boardIdStored;
 
       if (boardId) {
-        this.router.navigate(['boards'], {
-          queryParams: { board: boardName, board_Id: boardId },
-        });
-        this.store.dispatch(fromBoardsActions.selectBoard({ id: boardId }));
+        // this.router.navigate(['boards'], {
+        //   queryParams: { board: boardName, board_Id: boardId },
+        // });
+        // this.store.dispatch(fromBoardsActions.selectBoard({ id: boardId }));
+        this.onSelectBoard(boardId, boardName!);
+      } else {
+        // this.router.navigate(['boards'], {
+        //   queryParams: { board: data[0].name, board_Id: data[0].id },
+        // });
+        // this.store.dispatch(fromBoardsActions.selectBoard({ id: data[0].id }));
+        this.onSelectBoard(data[0].id, data[0].name);
       }
 
       if (this.boards.length == 0) {

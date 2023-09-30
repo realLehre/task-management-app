@@ -38,7 +38,6 @@ export class BTasksComponent implements OnInit {
   ngOnInit(): void {
     this.store.select(fromStore.selectActiveBoard).subscribe((board) => {
       this.activeBoard = { ...board };
-
       const tasks = structuredClone(this.activeBoard.tasks);
       this.tasks = tasks;
       // this.tasks = JSON.parse(JSON.stringify(tasks));
