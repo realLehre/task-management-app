@@ -29,9 +29,11 @@ export class BoardsComponent implements OnInit, AfterViewChecked {
   @Output() showSideBar = new EventEmitter<boolean>();
   currentMode: string | null = 'light';
   isToggled: boolean = false;
+  isFetching: boolean = false;
   boards!: Board[];
   boardIdStored!: string;
   displayName!: string;
+  theme!: string;
 
   constructor(
     private renderer: Renderer2,
@@ -44,12 +46,16 @@ export class BoardsComponent implements OnInit, AfterViewChecked {
   ) {}
 
   ngOnInit(): void {
-    const theme = localStorage.getItem('theme');
+    const theme = localStorage.getItem('theme')!;
+    this.theme = theme;
     if (theme) {
       theme == 'dark' ? (this.isToggled = true) : (this.isToggled = false);
     }
 
     this.taskService.isLoadingBoards.subscribe((status) => {
+      this.isFetching = status;
+      console.log(status);
+
       if (status == false) {
         this.store.select(fromStore.selectAllBoards).subscribe((data) => {
           this.boards = data;
@@ -58,16 +64,16 @@ export class BoardsComponent implements OnInit, AfterViewChecked {
           const boardName = localStorage.getItem('board_name');
           this.boardIdStored = boardId ?? this.boardIdStored;
 
-          if (boardId) {
-            this.onSelectBoard(boardId, boardName!);
-          } else {
-            this.onSelectBoard(data[0].id, data[0].name);
-          }
-
           if (this.boards.length == 0) {
             localStorage.removeItem('board_id');
             localStorage.removeItem('board_name');
             this.router.navigate(['boards'], { fragment: 'add-board' });
+          }
+
+          if (boardId) {
+            this.onSelectBoard(boardId, boardName!);
+          } else {
+            this.onSelectBoard(data[0].id, data[0].name);
           }
         });
       }

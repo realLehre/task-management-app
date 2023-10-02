@@ -16,11 +16,33 @@
 
     <div class="header-content">
       <div class="header-text">
-        {{ boardName }}
+        <div class="name-loader" *ngIf="isFetching">
+          <ngx-skeleton-loader
+            count="1"
+            [theme]="{
+              height: '20px',
+              'background-color': themeState == 'dark' ? '#20212c' : '#e4ebfa'
+            }"
+          ></ngx-skeleton-loader>
+        </div>
+        <span *ngIf="!isFetching">
+          {{ boardName }}
+        </span>
       </div>
       <div class="header-text-mobile" (click)="onOpenMobileMenu()">
         <div class="header-text-mobile-main">
-          {{ mobileBoardName }}
+          <div class="name-loader" *ngIf="isFetching">
+            <ngx-skeleton-loader
+              count="1"
+              [theme]="{
+                height: '20px',
+                'background-color': themeState == 'dark' ? '#20212c' : '#e4ebfa'
+              }"
+            ></ngx-skeleton-loader>
+          </div>
+          <span *ngIf="!isFetching">
+            {{ mobileBoardName }}
+          </span>
         </div>
         <i
           class="fa fa-angle-down"

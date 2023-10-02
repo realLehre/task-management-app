@@ -1,16 +1,32 @@
 <div class="boards-container">
-  <div class="loader">
-    <ngx-skeleton-loader
-      count="1"
-      [appearance]="'line'"
-      [theme]="{ height: '50px' }"
-    ></ngx-skeleton-loader>
-  </div>
   <div class="boards-main">
-    <div class="boards-heading">
+    <div class="loader" *ngIf="isFetching">
+      <ngx-skeleton-loader
+        count="1"
+        [theme]="{
+          height: '30px',
+          'background-color': theme == 'dark' ? '#20212c' : '#e4ebfa'
+        }"
+      ></ngx-skeleton-loader>
+      <ngx-skeleton-loader
+        count="1"
+        [theme]="{
+          height: '50px',
+          'background-color': theme == 'dark' ? '#20212c' : '#e4ebfa'
+        }"
+      ></ngx-skeleton-loader>
+      <ngx-skeleton-loader
+        count="1"
+        [theme]="{
+          height: '30px',
+          'background-color': theme == 'dark' ? '#20212c' : '#e4ebfa'
+        }"
+      ></ngx-skeleton-loader>
+    </div>
+    <div class="boards-heading" *ngIf="!isFetching">
       ALL BOARDS ({{ boards ? boards.length : 0 }})
     </div>
-    <div class="boards">
+    <div class="boards" *ngIf="!isFetching">
       <ul class="boards-list" *ngFor="let board of boards; let i = index">
         <li
           class="board"

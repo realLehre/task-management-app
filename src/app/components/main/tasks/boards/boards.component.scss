@@ -2,6 +2,7 @@
 
 .loader {
   width: 90%;
+  margin-inline: auto;
 }
 
 .boards-container {
@@ -149,8 +150,8 @@
 .user {
   width: 90%;
   color: $grey-medium;
-  margin-inline: auto;
   margin-top: 20px;
+  padding-left: 30px;
   font-size: $heading-M;
   word-wrap: break-word;
 

@@ -133,6 +133,10 @@ export const selectActiveBoard = createSelector(
   selectBoards,
   selectActiveBoardId,
   (boards, activeBoardId) => {
+    // if (boards.length > 0) {
+    //   return boards.find((board) => board.id == activeBoardId);
+    // }
+    // return;
     if (boards.length > 0) {
       return boards.find((board) => board.id == activeBoardId);
     } else {
@@ -140,7 +144,7 @@ export const selectActiveBoard = createSelector(
         name: '',
         columns: [],
         id: '',
-        tasks: [],
+        tasks: {},
       };
     }
   }

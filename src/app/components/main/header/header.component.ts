@@ -27,6 +27,7 @@ export class HeaderComponent implements OnInit, AfterViewChecked {
   mobileBoardName: string | undefined;
   isDrawerOpened: boolean = false;
   isAngleUp: boolean = false;
+  isFetching: boolean = false;
 
   constructor(
     private dialog: MatDialog,
@@ -42,10 +43,22 @@ export class HeaderComponent implements OnInit, AfterViewChecked {
       }
     });
 
+    this.taskService.isLoadingBoards.subscribe((status) => {
+      this.isFetching = status;
+    });
+
     this.store.select(fromStore.selectActiveBoard).subscribe((board) => {
       this.boardName = board?.name != '' ? board?.name : 'Add board';
       this.mobileBoardName =
         board?.name != '' ? board?.name : 'Click to add board';
+    });
+
+    this.store.select(fromStore.selectAllBoards).subscribe((boards) => {
+      if (boards.length == 0) {
+        this.boardName = 'Add board';
+        this.mobileBoardName = 'Click to add board';
+      } else {
+      }
     });
 
     this.taskService.isDrawerOpened.subscribe(

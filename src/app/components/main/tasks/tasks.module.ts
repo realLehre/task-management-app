@@ -25,23 +25,6 @@ import { ShortenBoardName } from 'src/app/shared/pipes/shorten-boardname.pipe';
 import { EffectsModule } from '@ngrx/effects';
 import { BoardsEffects } from './boards/boards-store/boards.effects';
 
-const reducers = {
-  boards: fromStore.getBoardsState,
-};
-
-function localStorageSyncReducer(
-  reducer: ActionReducer<fromStore.State>
-): ActionReducer<fromStore.State> {
-  return localStorageSync({
-    keys: [{ boards: ['boards'] }],
-    rehydrate: true,
-  })(reducer);
-}
-
-const metaReducers: Array<MetaReducer<fromStore.State, any>> = [
-  localStorageSyncReducer,
-];
-
 @NgModule({
   imports: [
     CommonModule,
@@ -50,7 +33,12 @@ const metaReducers: Array<MetaReducer<fromStore.State, any>> = [
     FormsModule,
     ReactiveFormsModule,
     EffectsModule.forFeature([BoardsEffects]),
-    NgxSkeletonLoaderModule,
+    NgxSkeletonLoaderModule.forRoot({
+      animation: 'pulse',
+      loadingText: 'This item is actually loading...',
+      theme: { height: '40px', 'background-color': '#000112' },
+      appearance: 'line',
+    }),
   ],
   declarations: [
     BoardsComponent,

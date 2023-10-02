@@ -13,6 +13,7 @@ import {
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
 import { TaskDialogComponent } from './task-dialog/task-dialog.component';
+import { TaskService } from 'src/app/core/services/task.service';
 
 @Component({
   selector: 'app-b-tasks',
@@ -20,27 +21,41 @@ import { TaskDialogComponent } from './task-dialog/task-dialog.component';
   styleUrls: ['./b-tasks.component.scss'],
 })
 export class BTasksComponent implements OnInit {
-  test: any = 6;
-  activeBoard: Board | any = {
+  boards!: Board[];
+  activeBoard: Board = {
     name: '',
     columns: [],
     id: '',
     tasks: {},
   };
+  isFetching: boolean = false;
   tasks!: { [key: string]: Task[] };
   showTasks: boolean = false;
+  theme!: string;
 
   constructor(
     private store: Store<fromStore.State>,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private taskService: TaskService
   ) {}
 
   ngOnInit(): void {
-    this.store.select(fromStore.selectActiveBoard).subscribe((board) => {
-      this.activeBoard = { ...board };
-      const tasks = structuredClone(this.activeBoard.tasks);
-      this.tasks = tasks;
-      // this.tasks = JSON.parse(JSON.stringify(tasks));
+    this.theme = localStorage.getItem('theme')!;
+    this.taskService.isLoadingBoards.subscribe((status) => {
+      this.isFetching = status;
+      if (status == false) {
+        this.store.select(fromStore.selectActiveBoard).subscribe((board) => {
+          this.activeBoard = { ...board! };
+
+          const tasks = structuredClone(this.activeBoard.tasks);
+          this.tasks = tasks!;
+          // this.tasks = JSON.parse(JSON.stringify(tasks));
+        });
+      }
+    });
+
+    this.store.select(fromStore.selectAllBoards).subscribe((boards) => {
+      this.boards = [...boards];
     });
   }
 

@@ -58,9 +58,9 @@ export class MobileBoardsComponent implements OnInit {
           this.boardIdStored = boardId ?? this.boardIdStored;
 
           if (boardId) {
-            this.onSelectBoard(boardId, boardName!);
+            this.selectBoard(boardId, boardName!);
           } else {
-            this.onSelectBoard(data[0].id, data[0].name);
+            this.selectBoard(data[0].id, data[0].name);
           }
 
           if (this.boards.length == 0) {
@@ -91,6 +91,15 @@ export class MobileBoardsComponent implements OnInit {
       data: { mode: 'create', isAddColumn: false },
     });
     this.dialogRef.close();
+  }
+
+  selectBoard(id: string, name: string) {
+    localStorage.setItem('board_id', id);
+    localStorage.setItem('board_name', name);
+    this.router.navigate(['boards'], {
+      queryParams: { board: name, board_Id: id },
+    });
+    this.store.dispatch(fromBoardsActions.selectBoard({ id: id }));
   }
 
   onSelectBoard(id: string, name: string) {
