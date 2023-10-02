@@ -1,27 +1,52 @@
 <div class="boards-container">
   <div class="boards-main">
     <div class="loader" *ngIf="isFetching">
-      <ngx-skeleton-loader
-        count="1"
-        [theme]="{
-          height: '30px',
-          'background-color': theme == 'dark' ? '#20212c' : '#e4ebfa'
-        }"
-      ></ngx-skeleton-loader>
-      <ngx-skeleton-loader
-        count="1"
-        [theme]="{
-          height: '50px',
-          'background-color': theme == 'dark' ? '#20212c' : '#e4ebfa'
-        }"
-      ></ngx-skeleton-loader>
-      <ngx-skeleton-loader
-        count="1"
-        [theme]="{
-          height: '30px',
-          'background-color': theme == 'dark' ? '#20212c' : '#e4ebfa'
-        }"
-      ></ngx-skeleton-loader>
+      <div class="for-dark" *ngIf="theme == 'dark'">
+        <ngx-skeleton-loader
+          count="1"
+          [theme]="{
+            height: '30px',
+            'background-color': '#20212c'
+          }"
+        ></ngx-skeleton-loader>
+        <ngx-skeleton-loader
+          count="1"
+          [theme]="{
+            height: '50px',
+            'background-color': '#20212c'
+          }"
+        ></ngx-skeleton-loader>
+        <ngx-skeleton-loader
+          count="1"
+          [theme]="{
+            height: '30px',
+            'background-color': '#20212c'
+          }"
+        ></ngx-skeleton-loader>
+      </div>
+      <div class="for-light" *ngIf="theme == 'light'">
+        <ngx-skeleton-loader
+          count="1"
+          [theme]="{
+            height: '30px',
+            'background-color': '#e4ebfa'
+          }"
+        ></ngx-skeleton-loader>
+        <ngx-skeleton-loader
+          count="1"
+          [theme]="{
+            height: '50px',
+            'background-color': '#e4ebfa'
+          }"
+        ></ngx-skeleton-loader>
+        <ngx-skeleton-loader
+          count="1"
+          [theme]="{
+            height: '30px',
+            'background-color': '#e4ebfa'
+          }"
+        ></ngx-skeleton-loader>
+      </div>
     </div>
     <div class="boards-heading" *ngIf="!isFetching">
       ALL BOARDS ({{ boards ? boards.length : 0 }})

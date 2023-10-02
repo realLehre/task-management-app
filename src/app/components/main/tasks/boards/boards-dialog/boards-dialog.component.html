@@ -92,7 +92,11 @@
     </div>
 
     <div class="delete-board-actions">
-      <button id="delete" (click)="onDeleteBoard()">Delete</button>
+      <button id="delete" (click)="onDeleteBoard()">
+        <span class="btn-texts" *ngIf="!isSubmitting"> Delete </span>
+
+        <span class="loader" *ngIf="isSubmitting"></span>
+      </button>
       <button id="cancel" (click)="onCloseDialog()">Cancel</button>
     </div>
   </mat-dialog-content>

@@ -99,4 +99,62 @@ export class TaskService {
       );
     });
   }
+
+  updateBoards(newBoard: Board) {
+    const uid = JSON.parse(localStorage.getItem('kanbanUser')!).uid;
+
+    const user = this.usersDatabase.doc(uid);
+    let boards: Board[];
+    return defer(() => {
+      return from(
+        user.get().pipe(
+          map((data) => {
+            boards = data.data()?.boards!;
+
+            const oldBoard = boards.find((board) => board.id == newBoard.id);
+
+            const updatedBoard = {
+              ...oldBoard,
+              ...newBoard,
+            };
+
+            const boardIndex = boards.findIndex(
+              (board) => board.id == newBoard.id
+            );
+
+            const updateBoards = [...boards];
+
+            updateBoards[boardIndex] = updatedBoard;
+
+            this.usersDatabase.doc(uid).update({
+              boards: [...updateBoards],
+            });
+            return updateBoards;
+          })
+        )
+      );
+    });
+  }
+
+  deleteBoard(boardId: string) {
+    const uid = JSON.parse(localStorage.getItem('kanbanUser')!).uid;
+
+    const user = this.usersDatabase.doc(uid);
+    let boards: Board[];
+    return defer(() => {
+      return from(
+        user.get().pipe(
+          map((data) => {
+            boards = data.data()?.boards!;
+            boards = boards.filter((board) => board.id != boardId);
+
+            this.usersDatabase.doc(uid).update({
+              boards: [...boards],
+            });
+            return boards;
+          })
+        )
+      );
+    });
+  }
 }

@@ -25,7 +25,12 @@ export const createBoardSuccess = createAction(
   props<{ board: Board }>()
 );
 
-export const updateBoards = createAction(
+export const updateBoard = createAction(
   '[Boards HTTP] Update Boards',
-  props<{ boards: Board[] }>()
+  props<{ board: Board }>()
+);
+
+export const deleteBoard = createAction(
+  '[Boards HTTP] Delete Board',
+  props<{ id: string }>()
 );

@@ -80,6 +80,7 @@ export class BoardsDialogComponent implements OnInit {
 
     this.taskService.isSubmitting.subscribe((status) => {
       this.isSubmitting = status;
+      console.log(status);
     });
   }
 
@@ -128,7 +129,7 @@ export class BoardsDialogComponent implements OnInit {
 
     if (this.editState == true) {
       this.store.dispatch(
-        fromBoardsActions.updateBoard({
+        fromBoardsHttpActions.updateBoard({
           board: {
             name: name,
             columns: newColumns,
@@ -139,6 +140,8 @@ export class BoardsDialogComponent implements OnInit {
       );
 
       this.taskService.isSubmitting.subscribe((status) => {
+        console.log(status);
+
         if (!status) {
           localStorage.setItem('board_id', this.board.id);
           localStorage.setItem('board_name', this.board.name);
@@ -162,6 +165,8 @@ export class BoardsDialogComponent implements OnInit {
       );
 
       this.taskService.isSubmitting.subscribe((status) => {
+        console.log(status);
+
         if (!status) {
           localStorage.setItem('board_name', name);
           localStorage.setItem('board_id', generatedId);
@@ -180,24 +185,35 @@ export class BoardsDialogComponent implements OnInit {
 
   onDeleteBoard() {
     if (this.board.id) {
-      this.store.dispatch(fromBoardsActions.deleteBoard({ id: this.boardId }));
+      this.store.dispatch(
+        fromBoardsHttpActions.deleteBoard({ id: this.boardId })
+      );
     }
 
-    this.store.select(fromStore.selectAllBoards).subscribe((boards) => {
-      if (boards.length > 0) {
-        this.store.dispatch(
-          fromBoardsActions.selectBoard({ id: boards[0].id })
-        );
+    this.taskService.isSubmitting.subscribe({
+      next: (status) => {
+        if (status == false) {
+          this.store.select(fromStore.selectAllBoards).subscribe((boards) => {
+            if (boards.length > 0) {
+              this.store.dispatch(
+                fromBoardsActions.selectBoard({ id: boards[0].id })
+              );
 
-        this.router.navigate(['boards'], {
-          queryParams: { board: boards[0].name, board_Id: boards[0].id },
-        });
-        localStorage.setItem('board_id', boards[0].id);
-        localStorage.setItem('board_name', boards[0].name);
-      }
+              this.router.navigate(['boards'], {
+                queryParams: { board: boards[0].name, board_Id: boards[0].id },
+              });
+              localStorage.setItem('board_id', boards[0].id);
+              localStorage.setItem('board_name', boards[0].name);
+            }
+          });
+
+          this.dialog.closeAll();
+        }
+      },
+      error: (err) => {
+        console.log(err);
+      },
     });
-
-    this.dialog.closeAll();
   }
 
   onCloseDialog() {

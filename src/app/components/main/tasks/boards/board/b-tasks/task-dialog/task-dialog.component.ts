@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 
 import * as fromStore from '@store';
 import * as fromTasksActions from '@tasksPageActions';
-import * as fromBoardsActions from '@boardsPageActions';
+import * as fromBoardsHttpActions from '@boardsHttpActions';
 import { TaskService } from 'src/app/core/services/task.service';
 import { Board } from 'src/app/shared/models/board.model';
 import { Task } from 'src/app/shared/models/task.model';
@@ -164,7 +164,7 @@ export class TaskDialogComponent implements OnInit {
     boardTasks[this.task.status] = [...tasksToUpdate];
 
     this.store.dispatch(
-      fromBoardsActions.updateBoard({
+      fromBoardsHttpActions.updateBoard({
         board: {
           ...this.board,
           tasks: { ...boardTasks },
@@ -353,7 +353,7 @@ export class TaskDialogComponent implements OnInit {
     }
 
     this.store.dispatch(
-      fromBoardsActions.updateBoard({
+      fromBoardsHttpActions.updateBoard({
         board: {
           ...this.board,
           tasks: { ...tasks },
@@ -373,7 +373,7 @@ export class TaskDialogComponent implements OnInit {
     );
 
     this.store.dispatch(
-      fromBoardsActions.updateBoard({
+      fromBoardsHttpActions.updateBoard({
         board: {
           ...this.board,
           tasks: { ...tasks },

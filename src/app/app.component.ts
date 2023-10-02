@@ -32,7 +32,7 @@ export class AppComponent implements OnInit {
     }
 
     this.store.select(fromStore.getBoardsState).subscribe((data) => {
-      console.log(data);
+      // console.log(data);
     });
   }
 

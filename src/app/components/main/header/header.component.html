@@ -17,13 +17,24 @@
     <div class="header-content">
       <div class="header-text">
         <div class="name-loader" *ngIf="isFetching">
-          <ngx-skeleton-loader
-            count="1"
-            [theme]="{
-              height: '20px',
-              'background-color': themeState == 'dark' ? '#20212c' : '#e4ebfa'
-            }"
-          ></ngx-skeleton-loader>
+          <div class="for-dark" *ngIf="themeState == 'dark'">
+            <ngx-skeleton-loader
+              count="1"
+              [theme]="{
+                height: '20px',
+                'background-color': '#20212c'
+              }"
+            ></ngx-skeleton-loader>
+          </div>
+          <div class="for-light" *ngIf="themeState == 'light'">
+            <ngx-skeleton-loader
+              count="1"
+              [theme]="{
+                height: '20px',
+                'background-color': '#e4ebfa'
+              }"
+            ></ngx-skeleton-loader>
+          </div>
         </div>
         <span *ngIf="!isFetching">
           {{ boardName }}
@@ -32,13 +43,24 @@
       <div class="header-text-mobile" (click)="onOpenMobileMenu()">
         <div class="header-text-mobile-main">
           <div class="name-loader" *ngIf="isFetching">
-            <ngx-skeleton-loader
-              count="1"
-              [theme]="{
-                height: '20px',
-                'background-color': themeState == 'dark' ? '#20212c' : '#e4ebfa'
-              }"
-            ></ngx-skeleton-loader>
+            <div class="for-dark" *ngIf="themeState == 'dark'">
+              <ngx-skeleton-loader
+                count="1"
+                [theme]="{
+                  height: '20px',
+                  'background-color': '#20212c'
+                }"
+              ></ngx-skeleton-loader>
+            </div>
+            <div class="for-light" *ngIf="themeState == 'light'">
+              <ngx-skeleton-loader
+                count="1"
+                [theme]="{
+                  height: '20px',
+                  'background-color': '#e4ebfa'
+                }"
+              ></ngx-skeleton-loader>
+            </div>
           </div>
           <span *ngIf="!isFetching">
             {{ mobileBoardName }}

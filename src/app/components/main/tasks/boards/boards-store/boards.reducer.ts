@@ -10,12 +10,6 @@ import * as BoardsPageActions from './boards.actions';
 
 const createBoard = (boards: Board[], board: Board) => [...boards, board];
 
-// const viewBoard = (boards: Board[], id: number) => {
-//      boards.map((board, index) => {
-//         return index == id
-//     })
-// }
-
 const addColumn = (boards: Board[], toUpdateBoard: Board) => {
   const oldBoard = boards.find((board) => board.id == toUpdateBoard.id);
 
@@ -88,24 +82,10 @@ export const boardsReducer = createReducer(
     };
   }),
 
-  on(BoardsPageActions.viewBoard, (state, action) => {
+  on(BoardsPageActions.updateBoardsSuccess, (state, action) => {
     return {
       ...state,
-      activeBoard: action.id,
-    };
-  }),
-
-  on(BoardsPageActions.editBoard, (state, action) => {
-    return {
-      ...state,
-      boards: [...state.boards, action.board],
-    };
-  }),
-
-  on(BoardsPageActions.updateBoard, (state, action) => {
-    return {
-      ...state,
-      boards: updateBoard(state.boards, action.board),
+      boards: action.boards,
     };
   }),
 
@@ -114,13 +94,6 @@ export const boardsReducer = createReducer(
       ...state,
       boards: deleteBoard(state.boards, action.id),
       activeBoard: null,
-    };
-  }),
-
-  on(BoardsPageActions.showNoBoard, (state) => {
-    return {
-      ...state,
-      ...initialState,
     };
   })
 );
@@ -133,10 +106,6 @@ export const selectActiveBoard = createSelector(
   selectBoards,
   selectActiveBoardId,
   (boards, activeBoardId) => {
-    // if (boards.length > 0) {
-    //   return boards.find((board) => board.id == activeBoardId);
-    // }
-    // return;
     if (boards.length > 0) {
       return boards.find((board) => board.id == activeBoardId);
     } else {
@@ -149,11 +118,3 @@ export const selectActiveBoard = createSelector(
     }
   }
 );
-
-// export const selectActiveTask = createSelector(
-//   selectBoards,
-//   selectActiveBoardId,
-//   (boards, activeBoardId) => {
-//     boards.find
-//   }
-// )

@@ -23,6 +23,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AuthEffects } from './components/auth/auth-store/auth.effects';
 import { BoardsEffects } from './components/main/tasks/boards/boards-store/boards.effects';
+import { AlertComponent } from './components/alert/alert.component';
 
 // const reducers = {
 //   boards: fromStore.getBoardsState,
@@ -42,7 +43,7 @@ import { BoardsEffects } from './components/main/tasks/boards/boards-store/board
 // ];
 
 @NgModule({
-  declarations: [AppComponent, DialogComponent],
+  declarations: [AppComponent, DialogComponent, AlertComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

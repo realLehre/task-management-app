@@ -10,7 +10,7 @@ import { Store } from '@ngrx/store';
 import { Task } from 'src/app/shared/models/task.model';
 import { TaskDialogComponent } from '../task-dialog/task-dialog.component';
 import * as fromStore from '@store';
-import * as fromBoardsActions from '@boardsPageActions';
+import * as fromBoardsHttpActions from '@boardsHttpActions';
 import { Board } from 'src/app/shared/models/board.model';
 
 @Component({
@@ -84,7 +84,7 @@ export class BTaskComponent implements OnInit {
     });
 
     this.store.dispatch(
-      fromBoardsActions.updateBoard({
+      fromBoardsHttpActions.updateBoard({
         board: {
           ...this.board,
           tasks: { ...this.allTasks },

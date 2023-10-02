@@ -56,12 +56,39 @@ export class BoardsEffects {
         this.taskService.isSubmitting.next(true);
         return this.taskService.createBoard(board.board).pipe(
           map((data) => {
-            this.taskService.isSubmitting.next(false);
             return fromBoardsActions.createNewBoard({ board: data });
           }),
           catchError((err) => {
             console.log(err);
             return of();
+          })
+        );
+      })
+    )
+  );
+
+  updateBoards$ = createEffect(() =>
+    this.actions.pipe(
+      ofType(fromBoardsHttpActions.updateBoard),
+      concatMap((data) => {
+        this.taskService.isSubmitting.next(true);
+        return this.taskService.updateBoards(data.board).pipe(
+          map((data) => {
+            return fromBoardsActions.updateBoardsSuccess({ boards: data });
+          })
+        );
+      })
+    )
+  );
+
+  deleteBoard$ = createEffect(() =>
+    this.actions.pipe(
+      ofType(fromBoardsHttpActions.deleteBoard),
+      concatMap((data) => {
+        this.taskService.isSubmitting.next(true);
+        return this.taskService.deleteBoard(data.id).pipe(
+          map((data) => {
+            return fromBoardsActions.updateBoardsSuccess({ boards: data });
           })
         );
       })
@@ -74,8 +101,29 @@ export class BoardsEffects {
         ofType(fromBoardsActions.loadBoards),
         tap((data) => {
           console.log(1);
-
           this.taskService.isLoadingBoards.next(false);
+        })
+      ),
+    { dispatch: false }
+  );
+
+  createNewBoardSuccess$ = createEffect(
+    () =>
+      this.actions.pipe(
+        ofType(fromBoardsActions.createNewBoard),
+        tap((data) => {
+          this.taskService.isSubmitting.next(false);
+        })
+      ),
+    { dispatch: false }
+  );
+
+  updateBoardsSuccess$ = createEffect(
+    () =>
+      this.actions.pipe(
+        ofType(fromBoardsActions.updateBoardsSuccess),
+        tap((data) => {
+          this.taskService.isSubmitting.next(false);
         })
       ),
     { dispatch: false }

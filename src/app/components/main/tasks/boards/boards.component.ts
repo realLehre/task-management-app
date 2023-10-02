@@ -47,14 +47,14 @@ export class BoardsComponent implements OnInit, AfterViewChecked {
 
   ngOnInit(): void {
     const theme = localStorage.getItem('theme')!;
-    this.theme = theme;
+    this.theme = theme || 'light';
+
     if (theme) {
       theme == 'dark' ? (this.isToggled = true) : (this.isToggled = false);
     }
 
     this.taskService.isLoadingBoards.subscribe((status) => {
       this.isFetching = status;
-      console.log(status);
 
       if (status == false) {
         this.store.select(fromStore.selectAllBoards).subscribe((data) => {

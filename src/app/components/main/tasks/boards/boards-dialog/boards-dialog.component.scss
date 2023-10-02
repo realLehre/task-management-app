@@ -179,6 +179,7 @@
       @include button($orange_dark, $white, 13px);
       font-weight: 700;
       margin-right: 20px;
+      height: 45px;
 
       &:hover {
         background: $orange_light;
@@ -189,6 +190,7 @@
       width: 50%;
       @include button($light, $purple_dark, 13px);
       font-weight: 700;
+      height: 45px;
 
       &:hover {
         background: $purple_X_light;

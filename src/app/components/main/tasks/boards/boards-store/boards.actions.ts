@@ -18,24 +18,12 @@ export const selectBoard = createAction(
   props<{ id: string }>()
 );
 
-export const viewBoard = createAction(
-  '[Boards Page] View Board',
-  props<{ id: string }>()
-);
-
-export const editBoard = createAction(
-  '[Boards Page] Edit Board',
-  props<{ board: Board }>()
-);
-
-export const updateBoard = createAction(
-  '[Boards Page] New Column',
-  props<{ board: Board }>()
+export const updateBoardsSuccess = createAction(
+  '[Boards Page] Update Success',
+  props<{ boards: Board[] }>()
 );
 
 export const deleteBoard = createAction(
   '[Boards Page] Delete Board',
   props<{ id: string }>()
 );
-
-export const showNoBoard = createAction('[Boards Page] Show No Board');
