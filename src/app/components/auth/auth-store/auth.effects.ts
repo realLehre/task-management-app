@@ -203,6 +203,8 @@ export class AuthEffects {
         ofType(fromAuthActions.Logout),
         tap(() => {
           localStorage.removeItem('kanbanUser');
+          localStorage.removeItem('board_id');
+          localStorage.removeItem('board_name');
           this.router.navigate(['/', 'auth', 'sign-in']);
         })
       ),

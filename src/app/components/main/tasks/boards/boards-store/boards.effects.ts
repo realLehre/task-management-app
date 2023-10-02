@@ -68,12 +68,13 @@ export class BoardsEffects {
     )
   );
 
-  loadSucess$ = createEffect(
+  loadSuccess$ = createEffect(
     () =>
       this.actions.pipe(
         ofType(fromBoardsActions.loadBoards),
-        take(1),
         tap((data) => {
+          console.log(1);
+
           this.taskService.isLoadingBoards.next(false);
         })
       ),

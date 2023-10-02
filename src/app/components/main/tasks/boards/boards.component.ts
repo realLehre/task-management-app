@@ -68,6 +68,7 @@ export class BoardsComponent implements OnInit, AfterViewChecked {
             localStorage.removeItem('board_id');
             localStorage.removeItem('board_name');
             this.router.navigate(['boards'], { fragment: 'add-board' });
+            return;
           }
 
           if (boardId) {
