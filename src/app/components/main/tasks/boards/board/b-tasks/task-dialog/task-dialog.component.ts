@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
@@ -11,6 +11,9 @@ import { Board } from 'src/app/shared/models/board.model';
 import { Task } from 'src/app/shared/models/task.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Login } from '@authPageActions';
+import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 
 interface TaskForm {
   title: FormControl<string | null>;
@@ -24,10 +27,11 @@ interface TaskForm {
   templateUrl: './task-dialog.component.html',
   styleUrls: ['./task-dialog.component.scss'],
 })
-export class TaskDialogComponent implements OnInit {
+export class TaskDialogComponent implements OnInit, OnDestroy {
   checked = false;
   type!: string;
   isEdit: boolean = false;
+  isEditing$!: Subscription;
   board!: Board | any;
   boardColumns: string[] = [];
   task!: Task;
@@ -41,15 +45,14 @@ export class TaskDialogComponent implements OnInit {
   boardTasks?: { [key: string]: Task[] };
 
   createTaskForm!: FormGroup;
+  isSubmitting: boolean = false;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
     private store: Store<fromStore.State>,
     private taskService: TaskService,
-    private router: Router,
-    private route: ActivatedRoute,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -206,20 +209,23 @@ export class TaskDialogComponent implements OnInit {
     );
 
     let boardTasks = { ...this.board.tasks };
-    let tasksToUpdate = boardTasks[this.task.status];
-    const newTask = {
-      ...this.task,
-      completed_sub_tasks: this.storedCompletedSubtasks,
-      sub_tasks: this.storedSubtasks,
-    };
-    tasksToUpdate = tasksToUpdate.map((task: Task) => {
-      if (task.id == this.task.id) {
-        task = newTask;
-      }
-      return task;
-    });
-    boardTasks[this.task.status] = [...tasksToUpdate];
-    this.boardTasks = boardTasks;
+
+    if (this.isEdit) {
+      let tasksToUpdate = boardTasks[this.task.status];
+      const newTask = {
+        ...this.task,
+        completed_sub_tasks: this.storedCompletedSubtasks,
+        sub_tasks: this.storedSubtasks,
+      };
+      tasksToUpdate = tasksToUpdate.map((task: Task) => {
+        if (task.id == this.task.id) {
+          task = newTask;
+        }
+        return task;
+      });
+      boardTasks[this.task.status] = [...tasksToUpdate];
+      this.boardTasks = boardTasks;
+    }
   }
 
   onEdit() {
@@ -257,6 +263,8 @@ export class TaskDialogComponent implements OnInit {
       }, 1500);
       return;
     }
+
+    this.isSubmitting = true;
 
     const taskStored: Task = JSON.parse(localStorage.getItem('task') || '{}');
 
@@ -321,6 +329,7 @@ export class TaskDialogComponent implements OnInit {
           (task) => JSON.stringify(task) === JSON.stringify(newTask)
         )
       ) {
+        this.isSubmitting = false;
         this.dialog.closeAll();
         return;
       }
@@ -335,6 +344,14 @@ export class TaskDialogComponent implements OnInit {
       } else {
         tasks[this.status.value] = [...tasks[this.status.value], task];
       }
+
+      this.isEditing$ = this.taskService.isSubmitting.subscribe((status) => {
+        if (!status) {
+          this.isSubmitting = false;
+          this.toastr.success('Task edited');
+          this.dialog.closeAll();
+        }
+      });
     } else {
       task = {
         title: this.title.value,
@@ -350,6 +367,14 @@ export class TaskDialogComponent implements OnInit {
           tasks[key] = [...tasks[key], task];
         }
       }
+
+      this.isEditing$ = this.taskService.isSubmitting.subscribe((status) => {
+        if (!status) {
+          this.toastr.success('Task added');
+          this.isSubmitting = false;
+          this.dialog.closeAll();
+        }
+      });
     }
 
     this.store.dispatch(
@@ -361,10 +386,11 @@ export class TaskDialogComponent implements OnInit {
       })
     );
 
-    this.dialog.closeAll();
+    // this.dialog.closeAll();
   }
 
   onDeleteTask() {
+    this.isSubmitting = true;
     const taskStatus = this.task.status;
     const tasks = { ...this.board.tasks };
 
@@ -381,10 +407,23 @@ export class TaskDialogComponent implements OnInit {
       })
     );
 
+    this.isEditing$ = this.taskService.isSubmitting.subscribe((status) => {
+      if (!status) {
+        this.isSubmitting = false;
+        this.toastr.success('Task deleted');
+      }
+    });
+
     this.dialog.closeAll();
   }
 
   closeDialog() {
     this.dialog.closeAll();
+  }
+
+  ngOnDestroy(): void {
+    if (this.isEditing$) {
+      this.isEditing$.unsubscribe();
+    }
   }
 }

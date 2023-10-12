@@ -1,14 +1,15 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
+import { Router } from '@angular/router';
 
 import * as fromStore from 'src/app/store/app.reducer';
 import * as fromBoardsActions from '@boardsPageActions';
 import * as fromBoardsHttpActions from '@boardsHttpActions';
 import { TaskService } from 'src/app/core/services/task.service';
-import { Board } from 'src/app/shared/models/board.model';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 
 interface boardForm {
   name: FormControl<string | null>;
@@ -19,7 +20,7 @@ interface boardForm {
   templateUrl: './boards-dialog.component.html',
   styleUrls: ['./boards-dialog.component.scss'],
 })
-export class BoardsDialogComponent implements OnInit {
+export class BoardsDialogComponent implements OnInit, OnDestroy {
   type!: string;
   createBoardForm!: FormGroup;
   board!: any;
@@ -28,6 +29,7 @@ export class BoardsDialogComponent implements OnInit {
   tasksStored!: any;
   showError: boolean = false;
   isSubmitting: boolean = false;
+  isEditing$!: Subscription;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
@@ -35,7 +37,7 @@ export class BoardsDialogComponent implements OnInit {
     private dialog: MatDialog,
     private taskService: TaskService,
     private router: Router,
-    private route: ActivatedRoute
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -80,7 +82,6 @@ export class BoardsDialogComponent implements OnInit {
 
     this.taskService.isSubmitting.subscribe((status) => {
       this.isSubmitting = status;
-      console.log(status);
     });
   }
 
@@ -139,16 +140,14 @@ export class BoardsDialogComponent implements OnInit {
         })
       );
 
-      this.taskService.isSubmitting.subscribe((status) => {
-        console.log(status);
-
+      this.isEditing$ = this.taskService.isSubmitting.subscribe((status) => {
         if (!status) {
           localStorage.setItem('board_id', this.board.id);
           localStorage.setItem('board_name', this.board.name);
           this.router.navigate(['boards'], {
             queryParams: { board: this.board.name, board_Id: this.board.id },
           });
-
+          this.toastr.success('Board edited');
           this.dialog.closeAll();
         }
       });
@@ -164,9 +163,7 @@ export class BoardsDialogComponent implements OnInit {
         })
       );
 
-      this.taskService.isSubmitting.subscribe((status) => {
-        console.log(status);
-
+      this.isEditing$ = this.taskService.isSubmitting.subscribe((status) => {
         if (!status) {
           localStorage.setItem('board_name', name);
           localStorage.setItem('board_id', generatedId);
@@ -176,6 +173,8 @@ export class BoardsDialogComponent implements OnInit {
           this.store.dispatch(
             fromBoardsActions.selectBoard({ id: generatedId })
           );
+
+          this.toastr.success('Board added');
 
           this.dialog.closeAll();
         }
@@ -190,7 +189,7 @@ export class BoardsDialogComponent implements OnInit {
       );
     }
 
-    this.taskService.isSubmitting.subscribe({
+    this.isEditing$ = this.taskService.isSubmitting.subscribe({
       next: (status) => {
         if (status == false) {
           this.store.select(fromStore.selectAllBoards).subscribe((boards) => {
@@ -206,17 +205,20 @@ export class BoardsDialogComponent implements OnInit {
               localStorage.setItem('board_name', boards[0].name);
             }
           });
+          this.toastr.success('Board deleted');
 
           this.dialog.closeAll();
         }
       },
-      error: (err) => {
-        console.log(err);
-      },
+      error: (err) => {},
     });
   }
 
   onCloseDialog() {
     this.dialog.closeAll();
+  }
+
+  ngOnDestroy(): void {
+    this.isEditing$.unsubscribe();
   }
 }

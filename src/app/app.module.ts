@@ -13,34 +13,16 @@ import { DialogComponent } from './shared/dialog/dialog.component';
 import * as fromApp from './store/app.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
+import { ToastrModule } from 'ngx-toastr';
 
-import * as fromStore from 'src/app/store/app.reducer';
 import { AuthModule } from './components/auth/auth.module';
 import { MainModule } from './components/main/main.module';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
-import { AuthEffects } from './components/auth/auth-store/auth.effects';
-import { BoardsEffects } from './components/main/tasks/boards/boards-store/boards.effects';
+
 import { AlertComponent } from './components/alert/alert.component';
-
-// const reducers = {
-//   boards: fromStore.getBoardsState,
-// };
-
-// function localStorageSyncReducer(
-//   reducer: ActionReducer<fromStore.State>
-// ): ActionReducer<fromStore.State> {
-//   return localStorageSync({
-//     keys: [{ boards: ['boards'] }],
-//     rehydrate: true,
-//   })(reducer);
-// }
-
-// const metaReducers: Array<MetaReducer<fromStore.State, any>> = [
-//   localStorageSyncReducer,
-// ];
 
 @NgModule({
   declarations: [AppComponent, DialogComponent, AlertComponent],
@@ -62,6 +44,7 @@ import { AlertComponent } from './components/alert/alert.component';
     provideAuth(() => getAuth()),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
+    ToastrModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent],

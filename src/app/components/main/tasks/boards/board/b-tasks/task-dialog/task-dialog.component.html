@@ -93,6 +93,7 @@
               formControlName="status"
               [ngClass]="{ error: status.invalid && status.touched }"
             >
+              <mat-option selected>Select status</mat-option>
               <mat-option *ngFor="let column of boardColumns" [value]="column"
                 >{{ column }}
               </mat-option>
@@ -101,7 +102,11 @@
         </div>
 
         <button type="submit" class="submit-btn">
-          {{ isEdit ? "Save Changes" : "Create Task" }}
+          <span class="btn-texts" *ngIf="!isSubmitting">
+            {{ isEdit ? "Save Changes" : "Create Task" }}
+          </span>
+
+          <span class="loader" *ngIf="isSubmitting"></span>
         </button>
       </form>
     </div>
@@ -147,7 +152,6 @@
             subtask.subtask
           }}</label>
         </div>
-        <!-- <app-sub-task [subtasks]="task.sub_tasks"></app-sub-task> -->
       </div>
     </div>
 

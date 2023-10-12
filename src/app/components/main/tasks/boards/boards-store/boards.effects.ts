@@ -15,7 +15,7 @@ import { from, of } from 'rxjs';
 
 import * as fromBoardsHttpActions from '@boardsHttpActions';
 import { TaskService } from 'src/app/core/services/task.service';
-import { AuthUser, User } from 'src/app/shared/models/user.model';
+import { User } from 'src/app/shared/models/user.model';
 import * as fromBoardsActions from '@boardsPageActions';
 import { Injectable } from '@angular/core';
 
@@ -100,7 +100,6 @@ export class BoardsEffects {
       this.actions.pipe(
         ofType(fromBoardsActions.loadBoards),
         tap((data) => {
-          console.log(1);
           this.taskService.isLoadingBoards.next(false);
         })
       ),

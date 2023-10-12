@@ -26,6 +26,8 @@ $my-theme: mat.define-light-theme(
 // emit any typography styles.
 @include mat.button-theme($my-theme);
 
+@import "ngx-toastr/toastr";
+
 @import "config";
 
 html,

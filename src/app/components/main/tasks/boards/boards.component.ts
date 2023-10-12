@@ -19,6 +19,7 @@ import * as fromBoardsActions from '@boardsPageActions';
 import * as fromBoardsHttpActions from '@boardsHttpActions';
 import * as fromAuthActions from '@authPageActions';
 import { Board } from 'src/app/shared/models/board.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-boards',
@@ -42,7 +43,8 @@ export class BoardsComponent implements OnInit, AfterViewChecked {
     private themeService: ThemeService,
     private store: Store<fromStore.State>,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
