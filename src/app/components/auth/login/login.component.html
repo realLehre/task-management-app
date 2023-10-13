@@ -2,15 +2,18 @@
   <div class="sign-in-main">
     <div class="sign-in-main-content">
       <div class="sign-in-logo">
-        <img src="../../../../assets/logo-light.png" alt="" />
+        <img
+          src="../../../assets/logo-light.png"
+          alt=""
+          [ngClass]="{ light: themeState == 'dark' }"
+        />
+        <img
+          src="../../../assets/logo-dark.png"
+          alt=""
+          [ngClass]="{ dark: themeState == 'light' }"
+        />
       </div>
       <p class="sign-in-heading">Sign In</p>
-
-      <div class="error-message" [ngClass]="{ showerror: errorMessage }">
-        <p>
-          {{ errorMessage }}
-        </p>
-      </div>
 
       <form
         class="sign-in-form"

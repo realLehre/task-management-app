@@ -8,9 +8,9 @@ class ThemeServiceToInject {}
 export class ThemeService {
   private renderer!: Renderer2;
 
-  currentMode: string | null = 'light';
-  themeState = new BehaviorSubject<string | null>(
-    localStorage.getItem('theme')
+  currentMode: string = 'light';
+  themeState = new BehaviorSubject<string>(
+    localStorage.getItem('theme') ? localStorage.getItem('theme')! : 'dark'
   );
 
   constructor(
@@ -24,6 +24,9 @@ export class ThemeService {
       this.currentMode = theme;
       this.themeState.next(theme);
       this.saveTheme(theme);
+    } else {
+      localStorage.setItem('theme', 'dark');
+      this.toggleTheme();
     }
   }
 

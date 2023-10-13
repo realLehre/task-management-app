@@ -7,7 +7,7 @@
   text-align: center;
   display: flex;
   align-items: center;
-  background-color: $dark_slight;
+  background-color: var(--bgColorHeaderBoardTask);
   padding: 50px 0;
 }
 
@@ -18,13 +18,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: $dark_slight;
-}
-
-.sign-up-loader {
-  &.grow {
-    height: 20px;
-  }
+  background-color: var(--bgColorHeaderBoardTask);
 }
 
 .sign-up-main-content {
@@ -35,36 +29,25 @@
 
 .sign-up-logo {
   margin-bottom: 40px;
+
+  display: flex;
+  justify-content: center;
+
+  & img {
+    display: none;
+    &.dark {
+      display: block;
+    }
+    &.light {
+      display: block;
+    }
+  }
 }
 
 .sign-up-heading {
   font-size: 1.8rem;
-  margin-bottom: 10px;
-  color: $white;
-}
-
-.error-message {
-  width: 100%;
-  margin: 20px 0;
-  padding: 5px 10px;
-  background: $orange_dark;
-  opacity: 0;
-  display: flex;
-  align-items: center;
-  transition: all 200ms;
-
-  & P {
-    width: 100%;
-    color: $white;
-    font-size: 1rem;
-    word-wrap: break-word;
-    margin: 0;
-  }
-
-  &.showerror {
-    height: 50px;
-    opacity: 1;
-  }
+  margin-bottom: 30px;
+  color: var(--textHeaderColor);
 }
 
 .sign-up-form {
@@ -85,14 +68,14 @@
       font-weight: 600;
       border: 2px solid rgba($grey-medium, 0.4);
       background: transparent;
-      color: $white;
+      color: var(--taskText);
       &:focus {
         outline: none;
       }
 
       &::placeholder {
         font-size: 1rem;
-        color: rgba(#fff, 0.5);
+        color: var(--textInput);
       }
 
       &.input-error {
@@ -119,7 +102,7 @@
       & i {
         width: 16px;
         font-size: 1rem;
-        color: rgba($grey-medium, 0.4);
+        color: var(--textInput);
       }
 
       &.input-error {
@@ -148,11 +131,11 @@
     transition: all 100ms ease-in-out;
 
     &.invalid {
-      background: rgba($grey-medium, 0.2);
+      background: rgba($grey-medium, 0.4);
       cursor: not-allowed;
 
       &:hover {
-        background: rgba($grey-medium, 0.2);
+        background: rgba($grey-medium, 0.4);
       }
     }
 
@@ -207,9 +190,9 @@
     position: relative;
     padding: 15px 0;
     border-radius: 2px;
-    border: 1px solid white;
+    border: 1px solid var(--sideBar);
     background: transparent;
-    color: white;
+    color: var(--sideBar);
     font-size: 1rem;
     font-weight: 600;
     overflow: hidden;
@@ -217,7 +200,7 @@
     transition: all 100ms ease-in-out;
 
     &:hover {
-      background: white;
+      background: var(--sideBar);
       color: #808080;
     }
 
@@ -237,11 +220,11 @@
   text-align: left;
   font-size: 1.2rem;
   font-weight: 400;
-  color: $light;
+  color: var(--sideBar);
 
   & a {
     font-weight: 600;
-    color: $white;
+    color: var(--sideBar);
     text-decoration: underline;
   }
 }

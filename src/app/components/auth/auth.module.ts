@@ -19,6 +19,6 @@ import { SessionExpiredComponent } from './session-expired/session-expired.compo
     EffectsModule.forFeature([AuthEffects]),
   ],
   declarations: [LoginComponent, SignUpComponent, SessionExpiredComponent],
-  exports: [],
+  exports: [LoginComponent, SignUpComponent],
 })
 export class AuthModule {}

@@ -2,15 +2,18 @@
   <div class="sign-up-main">
     <div class="sign-up-main-content">
       <div class="sign-up-logo">
-        <img src="../../../../assets/logo-light.png" alt="" />
+        <img
+          src="../../../assets/logo-light.png"
+          alt=""
+          [ngClass]="{ light: themeState == 'dark' }"
+        />
+        <img
+          src="../../../assets/logo-dark.png"
+          alt=""
+          [ngClass]="{ dark: themeState == 'light' }"
+        />
       </div>
       <p class="sign-up-heading">Sign up</p>
-
-      <div class="error-message" [ngClass]="{ showerror: errorMessage }">
-        <p>
-          {{ errorMessage }}
-        </p>
-      </div>
 
       <div class="sign-up-loader" *ngIf="isLoading" [class.grow]="isLoading">
         <span class="loader"></span>

@@ -5,6 +5,9 @@ import * as fromStore from '@store';
 import * as fromAuthActions from '@authPageActions';
 import { Store } from '@ngrx/store';
 import { AuthService } from 'src/app/core/services/auth-service/auth.service';
+import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
+import { ThemeService } from 'src/app/core/theme.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -19,16 +22,20 @@ export class SignUpComponent implements OnInit {
   tellEmailHint: boolean = false;
   passwordMatch: boolean = false;
   isLoading: boolean = false;
+  themeState!: string;
   isAuthLoading: boolean = false;
-  errorMessage!: string | null;
-  posterUrl: string = '';
+  authLoading$!: Subscription;
+  authError$!: Subscription;
 
   constructor(
     private store: Store<fromStore.State>,
-    private authService: AuthService
+    private authService: AuthService,
+    private toastr: ToastrService,
+    private theme: ThemeService
   ) {}
 
   ngOnInit(): void {
+    this.theme.themeState.subscribe((state) => (this.themeState = state));
     this.signUpForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
       email: new FormControl('', [
@@ -46,17 +53,12 @@ export class SignUpComponent implements OnInit {
       confirmPassword: new FormControl('', Validators.required),
     });
 
-    this.authService.isAuthLoading.subscribe((status) => {
+    this.authLoading$ = this.authService.isAuthLoading.subscribe((status) => {
       this.isAuthLoading = status;
-      console.log(status);
     });
 
-    this.authService.errorMessage.subscribe((message) => {
-      this.errorMessage = message.errorMessage;
-
-      setTimeout(() => {
-        this.errorMessage = null;
-      }, 2000);
+    this.authError$ = this.authService.errorMessage.subscribe((message) => {
+      this.toastr.error(message.errorMessage);
     });
   }
 
@@ -129,5 +131,10 @@ export class SignUpComponent implements OnInit {
 
   onSignInWithGoogle() {
     this.store.dispatch(fromAuthActions.googleAuth());
+  }
+
+  ngOnDestroy(): void {
+    this.authLoading$.unsubscribe();
+    this.authError$.unsubscribe();
   }
 }
