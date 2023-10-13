@@ -211,6 +211,35 @@ export class AuthEffects {
     { dispatch: false }
   );
 
+  sendPasswordResetEmail$ = createEffect(() =>
+    this.actions.pipe(
+      ofType(fromAuthActions.SendPasswordResetEmail),
+      mergeMap((action) => {
+        return this.authService.sendPasswordResetEmail(action.email).pipe(
+          map((data) => {
+            return fromAuthActions.SendPasswordResetEmailSuccess();
+          }),
+          catchError((err) => {
+            console.log(err);
+
+            return of();
+          })
+        );
+      })
+    )
+  );
+
+  sendPasswordResetEmailSuccess$ = createEffect(
+    () =>
+      this.actions.pipe(
+        ofType(fromAuthActions.SendPasswordResetEmailSuccess),
+        tap((data) => {
+          this.authService.isResetEmailSent.next(true);
+        })
+      ),
+    { dispatch: false }
+  );
+
   autoLogout(res: { user: AuthUser }) {
     const expirationTimeStored: number = res.user.expirationTime;
 
@@ -236,21 +265,32 @@ export class AuthEffects {
 
   getErrorMessage(err: any) {
     switch (err) {
-      case 'auth/email-already-in-use': {
+      case 'auth/email-already-in-use':
         return 'Email already in use';
-      }
-      case 'auth/wrong-password': {
+
+      case 'auth/wrong-password':
         return 'Password is incorrect';
-      }
-      case 'auth/user-not-found': {
+
+      case 'auth/user-not-found':
         return 'User not found';
-      }
-      case 'auth/invalid-login-credentials': {
+
+      case 'auth/invalid-login-credentials':
         return 'Invalid login credentials';
-      }
-      default: {
-        return 'An error occured, try again later';
-      }
+
+      case 'auth/network-request-failed':
+        return 'Please check your internet connection';
+
+      case 'auth/too-many-requests':
+        return 'We have detected too many requests from your device. Take a break please!';
+
+      case 'auth/user-disabled':
+        return 'Your account has been disabled or deleted. Please contact the system administrator.';
+
+      case 'auth/requires-recent-login':
+        return 'Please login again and try again!';
+
+      default:
+        return 'Something went wrong. try again later!';
     }
   }
 }

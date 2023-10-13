@@ -4,15 +4,10 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
-  signOut,
   signInWithEmailAndPassword,
-  updateProfile,
   UserCredential,
+  sendPasswordResetEmail,
 } from '@angular/fire/auth';
-import {
-  AngularFirestore,
-  AngularFirestoreCollection,
-} from '@angular/fire/compat/firestore';
 import { Observable, Subject, defer, from, map } from 'rxjs';
 
 import * as fromStore from '@store';
@@ -26,6 +21,7 @@ export class AuthService {
   isAuthLoading = new Subject<boolean>();
   errorMessage = new Subject<{ errorMessage: string }>();
   isAutoLoggedOut = new Subject<boolean>();
+  isResetEmailSent = new Subject<boolean>();
 
   constructor(
     private auth: Auth,
@@ -56,6 +52,12 @@ export class AuthService {
   signInWithGoogle() {
     return defer(() => {
       return from(signInWithPopup(this.auth, new GoogleAuthProvider()));
+    });
+  }
+
+  sendPasswordResetEmail(email: string) {
+    return defer(() => {
+      return from(sendPasswordResetEmail(this.auth, email));
     });
   }
 

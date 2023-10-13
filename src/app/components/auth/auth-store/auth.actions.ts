@@ -35,4 +35,13 @@ export const LoginFailure = createAction(
   props<{ errorMessage: string }>()
 );
 
+export const SendPasswordResetEmail = createAction(
+  '[AUTH RESET] Password Reset Email',
+  props<{ email: string }>()
+);
+
+export const SendPasswordResetEmailSuccess = createAction(
+  '[AUTH RESET] Password Reset Email Success'
+);
+
 export const Logout = createAction('[AUTH] Logout');

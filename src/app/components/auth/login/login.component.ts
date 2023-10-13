@@ -11,6 +11,7 @@ import { SessionExpiredComponent } from '../session-expired/session-expired.comp
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { ThemeService } from 'src/app/core/theme.service';
+import { PasswordResetDialogComponent } from '../password-reset-dialog/password-reset-dialog.component';
 
 @Component({
   selector: 'app-login',
@@ -63,6 +64,11 @@ export class LoginComponent implements OnInit, OnDestroy {
           autoFocus: false,
         });
       }
+    });
+
+    const dialogRef = this.dialog.open(PasswordResetDialogComponent, {
+      panelClass: 'board_dialog',
+      autoFocus: false,
     });
   }
 

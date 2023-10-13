@@ -9,6 +9,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './auth-store/auth.effects';
 import { SessionExpiredComponent } from './session-expired/session-expired.component';
+import { PasswordResetComponent } from './password-reset/password-reset.component';
+import { PasswordResetDialogComponent } from './password-reset-dialog/password-reset-dialog.component';
 
 @NgModule({
   imports: [
@@ -18,7 +20,7 @@ import { SessionExpiredComponent } from './session-expired/session-expired.compo
     ReactiveFormsModule,
     EffectsModule.forFeature([AuthEffects]),
   ],
-  declarations: [LoginComponent, SignUpComponent, SessionExpiredComponent],
+  declarations: [LoginComponent, SignUpComponent, SessionExpiredComponent, PasswordResetComponent, PasswordResetDialogComponent],
   exports: [LoginComponent, SignUpComponent],
 })
 export class AuthModule {}
