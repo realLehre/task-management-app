@@ -17,6 +17,7 @@ import { DialogComponent } from './shared/dialog/dialog.component';
 import * as fromApp from './store/app.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
+import { AuthModule } from './components/auth/auth.module';
 
 @NgModule({
   declarations: [AppComponent, DialogComponent],
@@ -26,6 +27,7 @@ import { environment } from 'src/environments/environment';
     MaterialModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    AuthModule,
     StoreModule.forRoot(fromApp.appReducer, {}),
     StoreDevtoolsModule.instrument({
       name: 'Kanban Task Management App',
