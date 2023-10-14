@@ -1,25 +1,21 @@
 import {
   AfterViewChecked,
   Component,
-  ElementRef,
   EventEmitter,
   OnInit,
   Output,
-  Renderer2,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { TaskService } from 'src/app/core/services/task.service';
 import { BoardsDialogComponent } from './boards-dialog/boards-dialog.component';
 import { ThemeService } from 'src/app/core/theme.service';
 import * as fromStore from '@store';
 import * as fromBoardsActions from '@boardsPageActions';
-import * as fromBoardsHttpActions from '@boardsHttpActions';
 import * as fromAuthActions from '@authPageActions';
 import { Board } from 'src/app/shared/models/board.model';
-import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-boards',
@@ -37,14 +33,11 @@ export class BoardsComponent implements OnInit, AfterViewChecked {
   theme!: string;
 
   constructor(
-    private renderer: Renderer2,
     private taskService: TaskService,
     private dialog: MatDialog,
     private themeService: ThemeService,
     private store: Store<fromStore.State>,
-    private router: Router,
-    private route: ActivatedRoute,
-    private toastr: ToastrService
+    private router: Router
   ) {}
 
   ngOnInit(): void {

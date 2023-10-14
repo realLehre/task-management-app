@@ -80,22 +80,6 @@ export class SignUpComponent implements OnInit {
     return this.signUpForm.controls['confirmPassword'];
   }
 
-  tell(type: string) {
-    switch (type) {
-      case 'password': {
-        this.tellPasswordHint = true;
-        break;
-      }
-      case 'email': {
-        this.tellEmailHint = true;
-        break;
-      }
-      default: {
-        return;
-      }
-    }
-  }
-
   onKey(event: any) {
     if (this.password.value === this.confirmPassword.value) {
       this.passwordMatch = true;

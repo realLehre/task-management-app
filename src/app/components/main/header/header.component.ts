@@ -1,9 +1,4 @@
-import {
-  AfterViewChecked,
-  AfterViewInit,
-  Component,
-  OnInit,
-} from '@angular/core';
+import { AfterViewChecked, Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 
@@ -12,7 +7,6 @@ import { BoardsDialogComponent } from '../../main/tasks/boards/boards-dialog/boa
 import { TaskService } from 'src/app/core/services/task.service';
 import { ThemeService } from 'src/app/core/theme.service';
 import * as fromStore from '@store';
-import * as fromBoardsActions from '@boardsPageActions';
 import { MobileBoardsComponent } from '../../main/tasks/boards/mobile-boards/mobile-boards.component';
 import { Board } from 'src/app/shared/models/board.model';
 

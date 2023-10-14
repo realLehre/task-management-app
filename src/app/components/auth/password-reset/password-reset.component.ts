@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { Subscription, take } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -81,15 +81,6 @@ export class PasswordResetComponent implements OnInit, OnDestroy {
 
   get confirmPassword() {
     return this.passwordForm.controls['confirmPassword'];
-  }
-
-  tell(type: string) {
-    switch (type) {
-      case 'password': {
-        this.tellPasswordHint = true;
-        break;
-      }
-    }
   }
 
   onKey(event: any) {

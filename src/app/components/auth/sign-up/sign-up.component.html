@@ -52,7 +52,6 @@
             autocomplete="on"
             [formControlName]="'email'"
             [ngClass]="{ 'input-error': email.touched && email.invalid }"
-            (keyup)="tell('email')"
           />
 
           <div
@@ -62,7 +61,7 @@
             <i class="fa-solid fa-envelope"></i>
           </div>
         </div>
-        <p class="error email-error" *ngIf="email.invalid && tellEmailHint">
+        <p class="error email-error" *ngIf="email.invalid && email.dirty">
           Please enter a valid email
         </p>
 
@@ -75,7 +74,7 @@
             [ngClass]="{
               'input-error': password.touched && password.invalid
             }"
-            (keyup)="tell('password')"
+            (keyup)="onKey($event)"
           />
 
           <div
@@ -93,7 +92,7 @@
         </div>
         <p
           class="error password-error"
-          *ngIf="tellPasswordHint && password.invalid"
+          *ngIf="password.dirty && password.invalid"
         >
           Password must be a minimum of six characters and must contain at least
           (one uppercase and one lowercase character) and at least one number

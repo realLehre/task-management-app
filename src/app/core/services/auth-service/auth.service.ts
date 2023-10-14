@@ -56,13 +56,8 @@ export class AuthService {
   }
 
   sendPasswordResetEmail(email: string) {
-    const actionCodeSettings = {
-      url: this.production
-        ? 'http://localhost:4200/auth/password-reset'
-        : 'https://ng-kanban.netlify.app/auth/password-reset',
-    };
     return defer(() => {
-      return from(sendPasswordResetEmail(this.auth, email, actionCodeSettings));
+      return from(sendPasswordResetEmail(this.auth, email));
     });
   }
 

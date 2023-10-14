@@ -2,9 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
 import { TaskService } from './core/services/task.service';
 
-import * as fromStore from '@store';
-import { Store } from '@ngrx/store';
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -15,10 +12,7 @@ export class AppComponent implements OnInit {
   sideNavOpened: boolean = true;
   @ViewChild('drawer', { static: false }) drawer!: MatDrawer;
 
-  constructor(
-    private taskService: TaskService,
-    private store: Store<fromStore.State>
-  ) {}
+  constructor(private taskService: TaskService) {}
 
   ngOnInit(): void {
     if (localStorage.getItem('sideNavOpened')) {
@@ -30,10 +24,6 @@ export class AppComponent implements OnInit {
       }
       this.isShowSideNav = this.sideNavOpened;
     }
-
-    this.store.select(fromStore.getBoardsState).subscribe((data) => {
-      // console.log(data);
-    });
   }
 
   toggleSideNav() {
