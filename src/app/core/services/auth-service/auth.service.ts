@@ -7,6 +7,7 @@ import {
   signInWithEmailAndPassword,
   UserCredential,
   sendPasswordResetEmail,
+  confirmPasswordReset,
 } from '@angular/fire/auth';
 import { Observable, Subject, defer, from, map } from 'rxjs';
 
@@ -22,6 +23,8 @@ export class AuthService {
   errorMessage = new Subject<{ errorMessage: string }>();
   isAutoLoggedOut = new Subject<boolean>();
   isResetEmailSent = new Subject<boolean>();
+  passwordResetSuccess = new Subject<boolean>();
+  passwordResetError = new Subject<boolean>();
 
   constructor(
     private auth: Auth,
@@ -56,8 +59,16 @@ export class AuthService {
   }
 
   sendPasswordResetEmail(email: string) {
+    console.log(email);
+
     return defer(() => {
       return from(sendPasswordResetEmail(this.auth, email));
+    });
+  }
+
+  resetPassword(newPassword: string, oobCode: string) {
+    return defer(() => {
+      return from(confirmPasswordReset(this.auth, oobCode, newPassword));
     });
   }
 

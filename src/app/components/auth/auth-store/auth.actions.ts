@@ -44,4 +44,13 @@ export const SendPasswordResetEmailSuccess = createAction(
   '[AUTH RESET] Password Reset Email Success'
 );
 
+export const resetPassword = createAction(
+  '[AUTH RESET] Password Reset',
+  props<{ password: string; oobCode: string }>()
+);
+
+export const resetPasswordSuccess = createAction(
+  '[AUTH RESET] Password Reset Success'
+);
+
 export const Logout = createAction('[AUTH] Logout');

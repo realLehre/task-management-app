@@ -65,11 +65,6 @@ export class LoginComponent implements OnInit, OnDestroy {
         });
       }
     });
-
-    const dialogRef = this.dialog.open(PasswordResetDialogComponent, {
-      panelClass: 'board_dialog',
-      autoFocus: false,
-    });
   }
 
   get email() {
@@ -96,6 +91,14 @@ export class LoginComponent implements OnInit, OnDestroy {
   onSignInWithGoogle() {
     this.store.dispatch(fromAuthActions.googleAuth());
   }
+
+  onResetPassword() {
+    const dialogRef = this.dialog.open(PasswordResetDialogComponent, {
+      panelClass: 'board_dialog',
+      autoFocus: false,
+    });
+  }
+
   ngOnDestroy(): void {
     this.authLoading$.unsubscribe();
     this.authError$.unsubscribe();

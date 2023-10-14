@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/core/services/auth-service/auth.service';
+import { MatDialog } from '@angular/material/dialog';
+import { take } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
 
 import * as fromStore from '@store';
 import * as fromAuthActions from '@authPageActions';
-import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-password-reset-dialog',
@@ -18,7 +20,8 @@ export class PasswordResetDialogComponent implements OnInit {
   emailForm!: FormGroup;
   constructor(
     private authService: AuthService,
-    private store: Store<fromStore.State>
+    private store: Store<fromStore.State>,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -26,9 +29,11 @@ export class PasswordResetDialogComponent implements OnInit {
       email: new FormControl(null, [Validators.required, Validators.email]),
     });
 
-    this.authService.isResetEmailSent.subscribe(
-      (status) => (this.isSent = status)
-    );
+    this.authService.isResetEmailSent.pipe(take(1)).subscribe((status) => {
+      this.isSent = status;
+      this.isSubmitting = !status;
+      this.isSending = !status;
+    });
   }
 
   onSubmit() {
@@ -38,9 +43,15 @@ export class PasswordResetDialogComponent implements OnInit {
     this.isSubmitting = true;
 
     this.store.dispatch(
-      fromAuthActions.SendPasswordResetEmail(this.emailForm.value.email)
+      fromAuthActions.SendPasswordResetEmail({
+        email: this.emailForm.value.email,
+      })
     );
 
     console.log(this.emailForm.value.email);
+  }
+
+  onContinue() {
+    this.dialog.closeAll();
   }
 }

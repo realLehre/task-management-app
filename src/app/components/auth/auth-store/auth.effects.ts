@@ -240,6 +240,36 @@ export class AuthEffects {
     { dispatch: false }
   );
 
+  resetPassword$ = createEffect(() =>
+    this.actions.pipe(
+      ofType(fromAuthActions.resetPassword),
+      mergeMap((action) => {
+        return this.authService
+          .resetPassword(action.password, action.oobCode)
+          .pipe(
+            map((data) => {
+              return fromAuthActions.resetPasswordSuccess();
+            }),
+            catchError((err) => {
+              this.authService.passwordResetError.next(true);
+              return of();
+            })
+          );
+      })
+    )
+  );
+
+  resetPasswordSuccess$ = createEffect(
+    () =>
+      this.actions.pipe(
+        ofType(fromAuthActions.resetPasswordSuccess),
+        tap((data) => {
+          this.authService.passwordResetSuccess.next(true);
+        })
+      ),
+    { dispatch: false }
+  );
+
   autoLogout(res: { user: AuthUser }) {
     const expirationTimeStored: number = res.user.expirationTime;
 
