@@ -24,10 +24,12 @@
         [formGroup]="signUpForm"
         (ngSubmit)="onSubmit()"
       >
-        <div class="form-group email">
+        <div class="form-group">
           <input
             type="text"
             placeholder="Username"
+            id="name"
+            autocomplete="on"
             [formControlName]="'name'"
             [ngClass]="{ 'input-error': name.touched && name.invalid }"
           />
@@ -46,6 +48,8 @@
           <input
             type="email"
             placeholder="example@mail.com"
+            id="email"
+            autocomplete="on"
             [formControlName]="'email'"
             [ngClass]="{ 'input-error': email.touched && email.invalid }"
             (keyup)="tell('email')"
@@ -64,6 +68,7 @@
 
         <div class="form-group password">
           <input
+            id="password"
             [type]="show ? 'text' : 'password'"
             placeholder="Password"
             [formControlName]="'password'"
@@ -96,6 +101,7 @@
 
         <div class="form-group confirm-password">
           <input
+            id="confirm-password"
             [formControlName]="'confirmPassword'"
             [type]="showConfirm ? 'text' : 'password'"
             id="confirm"

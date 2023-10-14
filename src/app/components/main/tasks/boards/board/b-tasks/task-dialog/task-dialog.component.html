@@ -23,6 +23,7 @@
             <input
               formControlName="title"
               name="title"
+              id="title"
               type="text"
               placeholder="e.g. Take coffee break"
               [ngClass]="{
@@ -41,7 +42,7 @@
             <textarea
               formControlName="description"
               name="description"
-              id=""
+              id="description"
               cols="30"
               rows="10"
               placeholder="e.g. It’s always good to take a break. This 15 minute break will recharge the batteries a little."
@@ -58,7 +59,7 @@
         </div>
 
         <div class="form-group sub-tasks" formArrayName="subtasks">
-          <label>Subtasks</label>
+          <label for="subtask0">Subtasks</label>
           <div
             class="sub-tasks"
             *ngFor="let subTaskControl of subtasks.controls; let i = index"
@@ -69,6 +70,7 @@
                 <input
                   formControlName="subtask"
                   type="text"
+                  [id]="'subtask' + i"
                   placeholder="e.g. Make coffee"
                   [ngClass]="{
                     error: subTaskControl.invalid && subTaskControl.touched
@@ -87,7 +89,7 @@
         </div>
 
         <div class="form-group select">
-          <label for="status">Status</label>
+          <label>Status</label>
           <mat-form-field>
             <mat-select
               formControlName="status"

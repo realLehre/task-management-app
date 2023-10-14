@@ -37,7 +37,7 @@ export class BoardsEffects {
         this.taskService.isLoadingBoards.next(true);
         return this.taskService.getBoards().pipe(
           map((data) => {
-            return fromBoardsActions.loadBoards({ boards: data! });
+            return fromBoardsActions.loadBoards({ boards: data ? data : [] });
           }),
 
           catchError((err) => {

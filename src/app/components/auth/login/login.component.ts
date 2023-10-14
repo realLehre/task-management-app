@@ -75,6 +75,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     return this.signInForm.controls['password'];
   }
 
+  onToggleVisibility() {
+    this.show = !this.show;
+  }
+
   onSignIn() {
     if (this.signInForm.invalid) {
       return;

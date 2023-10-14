@@ -219,6 +219,8 @@ export class BoardsDialogComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.isEditing$.unsubscribe();
+    if (this.isEditing$) {
+      this.isEditing$.unsubscribe();
+    }
   }
 }

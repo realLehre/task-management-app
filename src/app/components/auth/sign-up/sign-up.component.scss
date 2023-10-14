@@ -163,7 +163,7 @@
     transform: translateY(-50%);
 
     & i {
-      color: rgba(#fff, 0.5);
+      color: var(--textInput);
       font-size: 1rem;
     }
   }

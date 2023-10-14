@@ -9,12 +9,11 @@ import {
   sendPasswordResetEmail,
   confirmPasswordReset,
 } from '@angular/fire/auth';
-import { Observable, Subject, defer, from, map } from 'rxjs';
+import { Observable, Subject, defer, from } from 'rxjs';
 
 import * as fromStore from '@store';
 import * as fromAuthActions from '@authPageActions';
 import { Store } from '@ngrx/store';
-import { Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -26,11 +25,7 @@ export class AuthService {
   passwordResetSuccess = new Subject<boolean>();
   passwordResetError = new Subject<boolean>();
 
-  constructor(
-    private auth: Auth,
-    private store: Store<fromStore.State>,
-    private router: Router
-  ) {}
+  constructor(private auth: Auth, private store: Store<fromStore.State>) {}
 
   getUser() {
     return JSON.parse(localStorage.getItem('kanbanUser')!);

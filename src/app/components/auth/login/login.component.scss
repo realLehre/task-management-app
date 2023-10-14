@@ -121,6 +121,19 @@
         }
       }
     }
+
+    & .eye {
+      cursor: pointer;
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+
+      & i {
+        color: var(--textInput);
+        font-size: 1rem;
+      }
+    }
   }
 
   & .sign-in-btn {

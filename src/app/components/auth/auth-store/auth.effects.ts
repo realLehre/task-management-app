@@ -53,7 +53,6 @@ export class AuthEffects {
             return fromAuthActions.LoginSuccess({ user: user });
           }),
           catchError((err) => {
-            console.log(err);
             this.authService.errorMessage.next({
               errorMessage: this.getErrorMessage(err.code),
             });
@@ -146,12 +145,9 @@ export class AuthEffects {
 
           localStorage.setItem('kanbanUser', JSON.stringify(res.user));
           this.router.navigate(['/', 'boards']);
-          console.log(res.user);
-          //   fromBoardsHttpActions.boardsPageLoaded();
 
           this.autoLogout(res);
         })
-        // map((res) => fromBoardsHttpActions.boardsPageLoaded())
       ),
     { dispatch: false }
   );
@@ -165,12 +161,9 @@ export class AuthEffects {
 
           localStorage.setItem('kanbanUser', JSON.stringify(res.user));
           this.router.navigate(['/', 'boards']);
-          console.log(res.user);
-          //   fromBoardsHttpActions.boardsPageLoaded();
 
           this.autoLogout(res);
         })
-        // map((res) => fromBoardsHttpActions.boardsPageLoaded())
       ),
     { dispatch: false }
   );
@@ -205,6 +198,7 @@ export class AuthEffects {
           localStorage.removeItem('kanbanUser');
           localStorage.removeItem('board_id');
           localStorage.removeItem('board_name');
+          localStorage.removeItem('tasks');
           this.router.navigate(['/', 'auth', 'sign-in']);
         })
       ),
@@ -220,8 +214,6 @@ export class AuthEffects {
             return fromAuthActions.SendPasswordResetEmailSuccess();
           }),
           catchError((err) => {
-            console.log(err);
-
             return of();
           })
         );
