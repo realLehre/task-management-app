@@ -39,7 +39,17 @@ export class AuthEffects {
     private router: Router,
     private auth: Auth,
     private store: Store<fromStore.State>
-  ) {}
+  ) {
+    const expirationTimeStored = JSON.parse(
+      localStorage.getItem('expirationTime')!
+    );
+    if (expirationTimeStored != null) {
+      const expirationTime = new Date(+expirationTimeStored).getTime();
+      const currentTime = new Date().getTime();
+      const expirationDuration = expirationTime - currentTime;
+      this.autoLogout(expirationDuration);
+    }
+  }
 
   login$ = createEffect(() =>
     this.actions.pipe(
@@ -140,13 +150,15 @@ export class AuthEffects {
         ofType(fromAuthActions.SignUpSuccess),
         tap((res) => {
           this.taskService.setUserData(res.user);
-
+          localStorage.setItem(
+            'expirationTime',
+            JSON.stringify(res.user.expirationTime)
+          );
           this.authService.isAuthLoading.next(false);
 
           localStorage.setItem('kanbanUser', JSON.stringify(res.user));
           this.router.navigate(['/', 'boards']);
-
-          this.autoLogout(res);
+          this.autoLogout(3600000);
         })
       ),
     { dispatch: false }
@@ -158,11 +170,14 @@ export class AuthEffects {
         ofType(fromAuthActions.LoginSuccess),
         tap((res) => {
           this.authService.isAuthLoading.next(false);
-
+          localStorage.setItem(
+            'expirationTime',
+            JSON.stringify(res.user.expirationTime)
+          );
           localStorage.setItem('kanbanUser', JSON.stringify(res.user));
           this.router.navigate(['/', 'boards']);
 
-          this.autoLogout(res);
+          this.autoLogout(3600000);
         })
       ),
     { dispatch: false }
@@ -199,6 +214,7 @@ export class AuthEffects {
           localStorage.removeItem('board_id');
           localStorage.removeItem('board_name');
           localStorage.removeItem('tasks');
+          localStorage.removeItem('expirationTime');
           this.router.navigate(['/', 'auth', 'sign-in']);
         })
       ),
@@ -262,15 +278,8 @@ export class AuthEffects {
     { dispatch: false }
   );
 
-  autoLogout(res: { user: AuthUser }) {
-    const expirationTimeStored: number = res.user.expirationTime;
-
-    if (expirationTimeStored != null) {
-      const expirationTime = new Date(+expirationTimeStored).getTime();
-      const currentTime = new Date().getTime();
-      const expirationDuration = expirationTime - currentTime;
-      this.authService.autoLogout(expirationDuration);
-    }
+  autoLogout(expirationDuration: number) {
+    this.authService.autoLogout(expirationDuration);
   }
 
   getUserDetails(res: UserCredential) {
