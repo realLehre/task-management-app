@@ -38,7 +38,7 @@ import { AuthModule } from './components/auth/auth.module';
     provideAuth(() => getAuth()),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({ timeOut: 1000, positionClass: 'toast-top-right' }),
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -14,6 +14,7 @@ import { ThemeService } from 'src/app/core/theme.service';
 import * as fromStore from '@store';
 import * as fromBoardsActions from '@boardsPageActions';
 import { MobileBoardsComponent } from '../../main/tasks/boards/mobile-boards/mobile-boards.component';
+import { Board } from 'src/app/shared/models/board.model';
 
 @Component({
   selector: 'app-header',
@@ -28,6 +29,7 @@ export class HeaderComponent implements OnInit, AfterViewChecked {
   isDrawerOpened: boolean = false;
   isAngleUp: boolean = false;
   isFetching: boolean = false;
+  board!: Board;
 
   constructor(
     private dialog: MatDialog,
@@ -51,6 +53,7 @@ export class HeaderComponent implements OnInit, AfterViewChecked {
       this.boardName = board?.name != '' ? board?.name : 'Add board';
       this.mobileBoardName =
         board?.name != '' ? board?.name : 'Click to add board';
+      this.board = board!;
     });
 
     this.store.select(fromStore.selectAllBoards).subscribe((boards) => {

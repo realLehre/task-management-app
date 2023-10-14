@@ -77,6 +77,7 @@ export class TaskDialogComponent implements OnInit, OnDestroy {
     this.store.select(fromStore.selectActiveBoard).subscribe((board) => {
       this.boardColumns = board?.columns ?? [];
       this.board = board ?? this.board;
+
       this.boardTasks = { ...this.board.tasks };
     });
 
@@ -91,7 +92,7 @@ export class TaskDialogComponent implements OnInit, OnDestroy {
           subtask: new FormControl('', Validators.required),
         }),
       ]),
-      status: new FormControl(null, Validators.required),
+      status: new FormControl(this.board.columns[0], Validators.required),
     });
 
     if (this.isEdit) {

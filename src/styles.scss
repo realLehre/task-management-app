@@ -71,6 +71,10 @@ a {
   }
 }
 
+.toast-top-right {
+  top: 95px;
+}
+
 @media (max-width: 550px) {
   .add_view_task_dialog,
   .board_dialog,

@@ -14,6 +14,7 @@ import { Observable, Subject, defer, from } from 'rxjs';
 import * as fromStore from '@store';
 import * as fromAuthActions from '@authPageActions';
 import { Store } from '@ngrx/store';
+import { environment } from 'src/environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -24,6 +25,7 @@ export class AuthService {
   isResetEmailSent = new Subject<boolean>();
   passwordResetSuccess = new Subject<boolean>();
   passwordResetError = new Subject<boolean>();
+  production = environment.production;
 
   constructor(private auth: Auth, private store: Store<fromStore.State>) {}
 
@@ -54,10 +56,13 @@ export class AuthService {
   }
 
   sendPasswordResetEmail(email: string) {
-    console.log(email);
-
+    const actionCodeSettings = {
+      url: this.production
+        ? 'http://localhost:4200/auth/password-reset'
+        : 'https://ng-kanban.netlify.app/auth/password-reset',
+    };
     return defer(() => {
-      return from(sendPasswordResetEmail(this.auth, email));
+      return from(sendPasswordResetEmail(this.auth, email, actionCodeSettings));
     });
   }
 
