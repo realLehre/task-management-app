@@ -41,7 +41,8 @@ export class BoardsEffects {
           }),
 
           catchError((err) => {
-            console.log(err);
+            this.taskService.isLoadingBoards.next(false);
+
             return of();
           })
         );
@@ -59,7 +60,8 @@ export class BoardsEffects {
             return fromBoardsActions.createNewBoard({ board: data });
           }),
           catchError((err) => {
-            console.log(err);
+            this.taskService.isSubmitting.next(false);
+
             return of();
           })
         );
@@ -75,6 +77,10 @@ export class BoardsEffects {
         return this.taskService.updateBoards(data.board).pipe(
           map((data) => {
             return fromBoardsActions.updateBoardsSuccess({ boards: data });
+          }),
+          catchError((err) => {
+            this.taskService.isSubmitting.next(false);
+            return of();
           })
         );
       })
@@ -89,6 +95,10 @@ export class BoardsEffects {
         return this.taskService.deleteBoard(data.id).pipe(
           map((data) => {
             return fromBoardsActions.updateBoardsSuccess({ boards: data });
+          }),
+          catchError((err) => {
+            this.taskService.isSubmitting.next(false);
+            return of();
           })
         );
       })

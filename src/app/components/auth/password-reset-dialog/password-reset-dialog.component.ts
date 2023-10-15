@@ -47,8 +47,6 @@ export class PasswordResetDialogComponent implements OnInit {
         email: this.emailForm.value.email,
       })
     );
-
-    console.log(this.emailForm.value.email);
   }
 
   onContinue() {

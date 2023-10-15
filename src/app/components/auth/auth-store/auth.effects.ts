@@ -102,7 +102,6 @@ export class AuthEffects {
               });
             }),
             catchError((err) => {
-              console.log(err);
               this.authService.errorMessage.next({
                 errorMessage: this.getErrorMessage(err.code),
               });
@@ -132,7 +131,6 @@ export class AuthEffects {
             return fromAuthActions.LoginSuccess({ user: user });
           }),
           catchError((err) => {
-            console.log(err);
             return of(
               fromAuthActions.SignUpFailure({
                 errorMessage: this.getErrorMessage(err.code),

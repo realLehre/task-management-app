@@ -1,13 +1,6 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import {
-  ActionReducer,
-  ActionReducerMap,
-  MetaReducer,
-  StoreModule,
-} from '@ngrx/store';
-import { localStorageSync } from 'ngrx-store-localstorage';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 import { BoardsComponent } from './boards/boards.component';
@@ -18,7 +11,6 @@ import { TasksRoutingModule } from './tasks-routing.module';
 import { TaskDialogComponent } from './boards/board/b-tasks/task-dialog/task-dialog.component';
 import { MaterialModule } from 'src/app/material.module';
 import { BoardsDialogComponent } from './boards/boards-dialog/boards-dialog.component';
-import * as fromStore from 'src/app/store/app.reducer';
 import { SubTaskComponent } from './boards/board/b-tasks/task-dialog/sub-task/sub-task.component';
 import { MobileBoardsComponent } from './boards/mobile-boards/mobile-boards.component';
 import { ShortenBoardName } from 'src/app/shared/pipes/shorten-boardname.pipe';

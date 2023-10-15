@@ -102,7 +102,6 @@ export class SignUpComponent implements OnInit {
     }
 
     const { ...credentials } = this.signUpForm.value;
-    console.log(credentials);
 
     this.store.dispatch(
       fromAuthActions.SignUp({
