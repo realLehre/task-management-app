@@ -276,6 +276,7 @@ export class TaskDialogComponent implements OnInit, OnDestroy {
 
     let newSubtask: { id: string; done: boolean; subtask: string };
 
+    // create subtasks from subtasks input values
     for (const key in this.subtasks.value) {
       newSubtask = {
         id: this.taskService.generateRandomString(),
@@ -291,6 +292,7 @@ export class TaskDialogComponent implements OnInit, OnDestroy {
     let task: Task;
 
     if (this.isEdit) {
+      // change subtask name without changing its data
       const newStoredSubtasks: any[] = [];
       for (let d = 0; d < this.storedSubtasks.length; d++) {
         let newSubtask = {
@@ -300,6 +302,7 @@ export class TaskDialogComponent implements OnInit, OnDestroy {
         newStoredSubtasks.push(newSubtask);
       }
 
+      // return only new subtask from overall subtasks (gotten from form)
       subtasks = subtasks.filter((subtask, index) => {
         if (index >= this.storedSubtasks.length) {
           return subtask;
@@ -307,6 +310,7 @@ export class TaskDialogComponent implements OnInit, OnDestroy {
         return;
       });
 
+      // spread both old subtasks (with name change) and new subtasks into subtasks
       subtasks = [...newStoredSubtasks, ...subtasks];
 
       task = {

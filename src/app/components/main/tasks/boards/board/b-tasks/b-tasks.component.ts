@@ -77,11 +77,11 @@ export class BTasksComponent implements OnInit {
     });
   }
 
-  openModal(isAddColuimn: boolean) {
+  openModal(isAddColumn: boolean) {
     const dialogRef = this.dialog.open(BoardsDialogComponent, {
       panelClass: 'board_dialog',
       autoFocus: false,
-      data: { mode: 'create', isAddColumn: isAddColuimn },
+      data: { mode: 'create', isAddColumn: isAddColumn },
     });
   }
 }

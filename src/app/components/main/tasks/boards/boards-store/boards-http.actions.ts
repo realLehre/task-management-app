@@ -11,7 +11,7 @@ export const getAllBoards = createAction(
 );
 
 export const boardsLoadedSuccess = createAction(
-  '[Boards HTTP] Boards Loaded Sucess',
+  '[Boards HTTP] Boards Loaded Success',
   props<{ boards: Board[] }>()
 );
 
@@ -21,7 +21,7 @@ export const createBoard = createAction(
 );
 
 export const createBoardSuccess = createAction(
-  '[Boards HTTP] Create Board Sucess',
+  '[Boards HTTP] Create Board Success',
   props<{ board: Board }>()
 );
 

@@ -138,16 +138,37 @@ export class BoardsDialogComponent implements OnInit, OnDestroy {
     const generatedId = this.taskService.generateRandomString();
 
     if (this.editState == true) {
-      this.store.dispatch(
-        fromBoardsHttpActions.updateBoard({
-          board: {
-            name: name,
-            columns: newColumns,
-            id: this.board?.id,
-            tasks: { ...tasks, ...this.tasksStored },
-          },
-        })
-      );
+      let newStoredColumns = [];
+      for (let d = 0; d < this.storedColumns.length; d++) {
+        const column = this.storedColumns[d];
+        newStoredColumns.push(column);
+      }
+
+      // checking to add old columns to new one without losing data
+      newColumns = newColumns.filter((subtask, index) => {
+        if (index >= this.storedColumns.length) {
+          return subtask;
+        }
+        return;
+      });
+
+      console.log({
+        name: name,
+        columns: newColumns,
+        id: this.board?.id,
+        tasks: { ...tasks, ...this.tasksStored },
+      });
+
+      // this.store.dispatch(
+      //   fromBoardsHttpActions.updateBoard({
+      //     board: {
+      //       name: name,
+      //       columns: newColumns,
+      //       id: this.board?.id,
+      //       tasks: { ...tasks, ...this.tasksStored },
+      //     },
+      //   })
+      // );
 
       this.isEditing$ = this.taskService.isSubmitting.subscribe((status) => {
         if (!status) {
