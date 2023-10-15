@@ -74,17 +74,6 @@ a {
 .toast-top-right {
   top: 95px;
 }
-
-@media (max-width: 550px) {
-  .add_view_task_dialog,
-  .board_dialog,
-  .mobile_board_dialog {
-    & .mat-dialog-container {
-      width: 375px;
-    }
-  }
-}
-
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
@@ -104,4 +93,21 @@ a {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #3e3f4e;
+}
+
+@media (max-width: 550px) {
+  .add_view_task_dialog,
+  .board_dialog,
+  .mobile_board_dialog {
+    & .mat-dialog-container {
+      width: 375px;
+    }
+  }
+}
+
+@media (pointer: none), (pointer: coarse) {
+  ::-webkit-scrollbar {
+    width: 2px;
+    height: 2px;
+  }
 }
