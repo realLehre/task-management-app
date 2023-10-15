@@ -84,3 +84,24 @@ a {
     }
   }
 }
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #c7c8c8;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #828fa3;
+  border-radius: 4px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #3e3f4e;
+}
