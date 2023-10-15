@@ -188,26 +188,29 @@ export class TaskDialogComponent implements OnInit, OnDestroy {
   removeSubtask(index: number) {
     this.subtasks.removeAt(index);
 
-    this.storedSubtasks = this.storedSubtasks.filter(
-      (task: any, storedIndex: number) => {
-        if (storedIndex != index) {
-          return task;
+    if (this.storedSubtasks) {
+      this.storedSubtasks = this.storedSubtasks.filter(
+        (task: any, storedIndex: number) => {
+          if (storedIndex != index) {
+            return task;
+          }
+          return;
         }
-        return;
-      }
-    );
-
-    this.storedCompletedSubtasks = this.storedCompletedSubtasks.filter(
-      (subtask: any) => {
-        if (
-          this.storedSubtasks.some(
-            (storedSubtask: any) => storedSubtask.id == subtask.id
-          )
-        ) {
-          return subtask;
+      );
+    }
+    if (this.storedCompletedSubtasks) {
+      this.storedCompletedSubtasks = this.storedCompletedSubtasks.filter(
+        (subtask: any) => {
+          if (
+            this.storedSubtasks.some(
+              (storedSubtask: any) => storedSubtask.id == subtask.id
+            )
+          ) {
+            return subtask;
+          }
         }
-      }
-    );
+      );
+    }
 
     let boardTasks = { ...this.board.tasks };
 
