@@ -45,6 +45,8 @@ export class BTasksComponent implements OnInit {
       this.isFetching = status;
       if (status == false) {
         this.store.select(fromStore.selectActiveBoard).subscribe((board) => {
+          console.log(board);
+
           this.activeBoard = { ...board! };
 
           const tasks = structuredClone(this.activeBoard.tasks);

@@ -30,6 +30,7 @@ export class BoardsDialogComponent implements OnInit, OnDestroy {
   showError: boolean = false;
   isSubmitting: boolean = false;
   isEditing$!: Subscription;
+  storedColumns: string[] = [];
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
@@ -58,6 +59,7 @@ export class BoardsDialogComponent implements OnInit, OnDestroy {
 
     this.store.select(fromStore.selectActiveBoard).subscribe((board) => {
       this.board = board ?? this.board;
+      this.storedColumns = [...board?.columns!];
       this.boardId = board?.id ?? this.boardId;
       localStorage.setItem('tasks', JSON.stringify(this.board.tasks));
 
@@ -106,6 +108,13 @@ export class BoardsDialogComponent implements OnInit, OnDestroy {
 
     delete this.tasksStored[taskKey.column];
     localStorage.setItem('tasks', JSON.stringify(this.tasksStored));
+
+    // this.storedColumns = this.storedColumns.filter((column, columnIndex) => {
+    //   if (columnIndex !== index) {
+    //     return column;
+    //   }
+    //   return;
+    // });
   }
 
   onSubmit() {
