@@ -157,12 +157,6 @@ export class BoardsDialogComponent implements OnInit, OnDestroy {
       });
 
       newColumns = [...newStoredColumns, ...newColumns];
-      console.log({
-        name: name,
-        columns: newColumns,
-        id: this.board?.id,
-        tasks: { ...tasks },
-      });
 
       this.store.dispatch(
         fromBoardsHttpActions.updateBoard({
@@ -174,6 +168,13 @@ export class BoardsDialogComponent implements OnInit, OnDestroy {
           },
         })
       );
+
+      this.taskService.board.next({
+        name: name,
+        columns: newColumns,
+        id: this.board?.id,
+        tasks: { ...tasks },
+      });
 
       this.isEditing$ = this.taskService.isSubmitting.subscribe((status) => {
         if (!status) {

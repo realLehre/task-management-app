@@ -18,6 +18,7 @@ import { TaskService } from 'src/app/core/services/task.service';
 import { User } from 'src/app/shared/models/user.model';
 import * as fromBoardsActions from '@boardsPageActions';
 import { Injectable } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({ providedIn: 'root' })
 export class BoardsEffects {
@@ -25,7 +26,8 @@ export class BoardsEffects {
   constructor(
     private actions: Actions,
     private taskService: TaskService,
-    private db: AngularFirestore
+    private db: AngularFirestore,
+    private toastr: ToastrService
   ) {
     this.usersDatabase = this.db.collection('users');
   }
@@ -42,7 +44,7 @@ export class BoardsEffects {
 
           catchError((err) => {
             this.taskService.isLoadingBoards.next(false);
-
+            this.toastr.error('Something went wrong! Try again later');
             return of();
           })
         );

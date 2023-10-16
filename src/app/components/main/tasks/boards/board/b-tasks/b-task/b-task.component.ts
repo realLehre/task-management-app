@@ -53,8 +53,6 @@ export class BTaskComponent implements OnInit, OnDestroy {
         this.isSubmitting = status;
       }
     );
-
-    console.log(this.allTasks, this.columnName);
   }
 
   onViewTask(task: Task) {
@@ -82,27 +80,35 @@ export class BTaskComponent implements OnInit, OnDestroy {
           event.currentIndex
         );
       }
+      const taskStatus = event.container.data[0].status;
+      console.log(event.container);
 
       const id = event.container.id;
-      console.log(event.container);
 
       const index = +id.slice(-1);
 
       const newTask = { ...event.container.data[event.currentIndex] };
-      newTask['status'] = this.columnName[index];
+      console.log(newTask);
 
-      console.log(this.allTasks, index);
+      // newTask['status'] = this.columnName[index];
+      newTask['status'] = taskStatus;
 
-      let newColumnTasks: any[] = [...this.allTasks[this.columnName[index]]];
+      console.log(this.allTasks[taskStatus]);
 
+      // let newColumnTasks: any[] = [...this.allTasks[this.columnName[index]]];
+      let newColumnTasks: any[] = [...this.allTasks[taskStatus]];
+
+      // update task status after dropping
       newColumnTasks = newColumnTasks.map((task) => {
         if (task.id == newTask.id) {
-          task['status'] = this.columnName[index];
+          // task['status'] = this.columnName[index];
+          task['status'] = taskStatus;
         }
         return task;
       });
 
-      this.allTasks[this.columnName[index]] = newColumnTasks;
+      // this.allTasks[this.columnName[index]] = newColumnTasks;
+      this.allTasks[taskStatus] = newColumnTasks;
 
       this.store.select(fromStore.selectActiveBoard).subscribe((board) => {
         this.board = { ...board };
