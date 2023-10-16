@@ -15,6 +15,8 @@ import * as fromStore from '@store';
 import * as fromAuthActions from '@authPageActions';
 import { Store } from '@ngrx/store';
 import { environment } from 'src/environments/environment';
+import { MatDialog } from '@angular/material/dialog';
+import { SessionExpiredComponent } from 'src/app/components/auth/session-expired/session-expired.component';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -27,7 +29,11 @@ export class AuthService {
   passwordResetError = new Subject<boolean>();
   production = environment.production;
 
-  constructor(private auth: Auth, private store: Store<fromStore.State>) {}
+  constructor(
+    private auth: Auth,
+    private store: Store<fromStore.State>,
+    private dialog: MatDialog
+  ) {}
 
   getUser() {
     return JSON.parse(localStorage.getItem('kanbanUser')!);
@@ -71,6 +77,11 @@ export class AuthService {
     this.logOutTimeout = setTimeout(() => {
       this.store.dispatch(fromAuthActions.Logout());
       this.isAutoLoggedOut.next(true);
+
+      const dialogRef = this.dialog.open(SessionExpiredComponent, {
+        panelClass: 'session_dialog',
+        autoFocus: false,
+      });
 
       if (this.logOutTimeout) {
         clearTimeout(this.logOutTimeout);

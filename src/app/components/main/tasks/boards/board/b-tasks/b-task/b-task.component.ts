@@ -53,6 +53,8 @@ export class BTaskComponent implements OnInit, OnDestroy {
         this.isSubmitting = status;
       }
     );
+
+    console.log(this.allTasks, this.columnName);
   }
 
   onViewTask(task: Task) {
@@ -82,10 +84,14 @@ export class BTaskComponent implements OnInit, OnDestroy {
       }
 
       const id = event.container.id;
+      console.log(event.container);
+
       const index = +id.slice(-1);
 
       const newTask = { ...event.container.data[event.currentIndex] };
       newTask['status'] = this.columnName[index];
+
+      console.log(this.allTasks, index);
 
       let newColumnTasks: any[] = [...this.allTasks[this.columnName[index]]];
 

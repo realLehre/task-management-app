@@ -109,12 +109,12 @@ export class BoardsDialogComponent implements OnInit, OnDestroy {
     delete this.tasksStored[taskKey.column];
     localStorage.setItem('tasks', JSON.stringify(this.tasksStored));
 
-    // this.storedColumns = this.storedColumns.filter((column, columnIndex) => {
-    //   if (columnIndex !== index) {
-    //     return column;
-    //   }
-    //   return;
-    // });
+    this.storedColumns = this.storedColumns.filter((column, columnIndex) => {
+      if (columnIndex !== index) {
+        return column;
+      }
+      return;
+    });
   }
 
   onSubmit() {
@@ -140,7 +140,11 @@ export class BoardsDialogComponent implements OnInit, OnDestroy {
     if (this.editState == true) {
       let newStoredColumns = [];
       for (let d = 0; d < this.storedColumns.length; d++) {
-        const column = this.storedColumns[d];
+        const column = newColumns[d];
+
+        // if column name is changed, replace tasks with previous task (don't return empty array)
+        tasks[column] = this.tasksStored[this.storedColumns[d]];
+
         newStoredColumns.push(column);
       }
 
@@ -152,23 +156,24 @@ export class BoardsDialogComponent implements OnInit, OnDestroy {
         return;
       });
 
+      newColumns = [...newStoredColumns, ...newColumns];
       console.log({
         name: name,
         columns: newColumns,
         id: this.board?.id,
-        tasks: { ...tasks, ...this.tasksStored },
+        tasks: { ...tasks },
       });
 
-      // this.store.dispatch(
-      //   fromBoardsHttpActions.updateBoard({
-      //     board: {
-      //       name: name,
-      //       columns: newColumns,
-      //       id: this.board?.id,
-      //       tasks: { ...tasks, ...this.tasksStored },
-      //     },
-      //   })
-      // );
+      this.store.dispatch(
+        fromBoardsHttpActions.updateBoard({
+          board: {
+            name: name,
+            columns: newColumns,
+            id: this.board?.id,
+            tasks: { ...tasks },
+          },
+        })
+      );
 
       this.isEditing$ = this.taskService.isSubmitting.subscribe((status) => {
         if (!status) {

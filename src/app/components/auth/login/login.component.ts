@@ -56,15 +56,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.authError$ = this.authService.errorMessage.subscribe((message) => {
       this.toastr.error(message.errorMessage);
     });
-
-    this.authService.isAutoLoggedOut.subscribe((status) => {
-      if (status) {
-        const dialogRef = this.dialog.open(SessionExpiredComponent, {
-          panelClass: 'session_dialog',
-          autoFocus: false,
-        });
-      }
-    });
   }
 
   get email() {

@@ -28,6 +28,7 @@ export class BTasksComponent implements OnInit {
     id: '',
     tasks: {},
   };
+
   isFetching: boolean = false;
   tasks!: { [key: string]: Task[] };
   showTasks: boolean = false;
@@ -47,11 +48,13 @@ export class BTasksComponent implements OnInit {
         this.store.select(fromStore.selectActiveBoard).subscribe((board) => {
           console.log(board);
 
-          this.activeBoard = { ...board! };
-
           const tasks = structuredClone(this.activeBoard.tasks);
-          this.tasks = tasks!;
-          // this.tasks = JSON.parse(JSON.stringify(tasks));
+          // this.tasks = tasks!;
+
+          if (board?.id) {
+            this.activeBoard = { ...board };
+            this.tasks = JSON.parse(JSON.stringify(this.activeBoard.tasks));
+          }
         });
       }
     });
