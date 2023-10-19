@@ -31,6 +31,7 @@ export class BoardsDialogComponent implements OnInit, OnDestroy {
   isSubmitting: boolean = false;
   isEditing$!: Subscription;
   storedColumns: string[] = [];
+  newStoredColumns: string[] = [];
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
@@ -59,7 +60,7 @@ export class BoardsDialogComponent implements OnInit, OnDestroy {
 
     this.store.select(fromStore.selectActiveBoard).subscribe((board) => {
       this.board = board ?? this.board;
-      this.storedColumns = [...board?.columns!];
+      this.storedColumns = [...this.board.columns];
       this.boardId = board?.id ?? this.boardId;
       localStorage.setItem('tasks', JSON.stringify(this.board.tasks));
 
@@ -142,16 +143,19 @@ export class BoardsDialogComponent implements OnInit, OnDestroy {
     const generatedId = this.taskService.generateRandomString();
 
     if (this.editState == true) {
-      let newStoredColumns = [];
+      let newStoredColumnsX = [];
       for (let d = 0; d < this.storedColumns.length; d++) {
         const column = newColumns[d];
 
         // if column name is changed, replace tasks with previous task (don't return empty array)
         tasks[column] = this.tasksStored[this.storedColumns[d]];
 
-        newStoredColumns.push(column);
+        newStoredColumnsX.push(column);
       }
-      console.log(newStoredColumns);
+
+      this.newStoredColumns = newStoredColumnsX;
+
+      console.log(newStoredColumnsX, this.storedColumns);
 
       // checking to add old columns to new one without losing data
       newColumns = newColumns.filter((subtask, index) => {
@@ -161,8 +165,15 @@ export class BoardsDialogComponent implements OnInit, OnDestroy {
         return;
       });
 
-      newColumns = [...newStoredColumns, ...newColumns];
+      newColumns = [...newStoredColumnsX, ...newColumns];
+      // if (
+      //   JSON.stringify(this.newStoredColumns) !==
+      //   JSON.stringify(this.storedColumns)
+      // ) {
+      //   console.log(1);
 
+      //   window.location.reload();
+      // }
       this.store.dispatch(
         fromBoardsHttpActions.updateBoard({
           board: {

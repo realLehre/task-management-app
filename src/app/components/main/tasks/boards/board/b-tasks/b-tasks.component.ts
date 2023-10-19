@@ -46,11 +46,8 @@ export class BTasksComponent implements OnInit {
       this.isFetching = status;
       if (status == false) {
         this.store.select(fromStore.selectActiveBoard).subscribe((board) => {
-          // const tasks = structuredClone(this.activeBoard.tasks);
-          // this.tasks = tasks;
-
           if (board?.id) {
-            this.activeBoard = { ...board } ?? {};
+            this.activeBoard = board ?? {};
             this.tasks = JSON.parse(JSON.stringify(this.activeBoard.tasks));
           }
         });
@@ -58,7 +55,7 @@ export class BTasksComponent implements OnInit {
     });
 
     this.store.select(fromStore.selectAllBoards).subscribe((boards) => {
-      this.boards = [...boards] ?? [];
+      this.boards = boards ?? [];
     });
   }
 
