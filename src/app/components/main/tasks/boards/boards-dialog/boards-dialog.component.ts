@@ -127,9 +127,13 @@ export class BoardsDialogComponent implements OnInit, OnDestroy {
     }
     const { name, columns } = this.createBoardForm.value;
 
-    let newColumns = [];
+    let newColumns: string[] = [];
     const tasks: any = {};
     for (const key in columns) {
+      if (newColumns.includes(columns[key].column.toLowerCase())) {
+        this.toastr.warning('Column names can not be equal!');
+        return;
+      }
       newColumns.push(columns[key].column.toLowerCase());
 
       tasks[columns[key].column.toLowerCase()] = [];
@@ -147,6 +151,7 @@ export class BoardsDialogComponent implements OnInit, OnDestroy {
 
         newStoredColumns.push(column);
       }
+      console.log(newStoredColumns);
 
       // checking to add old columns to new one without losing data
       newColumns = newColumns.filter((subtask, index) => {
@@ -183,6 +188,8 @@ export class BoardsDialogComponent implements OnInit, OnDestroy {
           this.router.navigate(['boards'], {
             queryParams: { board: this.board.name, board_Id: this.board.id },
           });
+          const currentRoute = this.router.url;
+
           this.toastr.success('Board edited');
           this.dialog.closeAll();
         }
