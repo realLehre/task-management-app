@@ -90,6 +90,9 @@
       &.error {
         border: 2px solid $orange_dark;
       }
+      &.disabled {
+        cursor: not-allowed;
+      }
     }
 
     & .error-msg {

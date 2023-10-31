@@ -1,29 +1,3 @@
-<!-- <div *ngFor="let task of tasks; let i = index">
-  <div>
-    <div
-      class="task-container"
-      cdkDropList
-      [cdkDropListData]="tasks"
-      (cdkDropListDropped)="drop($event)"
-      [cdkDropListConnectedTo]="columnName"
-    >
-      <div class="task-main-container" [id]="columnName[i]" cdkDrag>
-        <div class="task-main" (click)="onViewTask(task)">
-          <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
-          <div class="task-main-title">
-            {{ task.title }}
-          </div>
-
-          <div class="task-main-sub-task">
-            {{ task.completed_sub_tasks.length }} of
-            {{ task.sub_tasks.length }} subtasks
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
-
 <div
   class="task-container"
   cdkDropList

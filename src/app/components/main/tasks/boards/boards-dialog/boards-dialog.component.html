@@ -49,7 +49,8 @@
                 type="text"
                 [id]="'column' + i"
                 [ngClass]="{
-                  error: columnControl.invalid && columnControl.touched
+                  error: columnControl.invalid && columnControl.touched,
+                  disabled: columnControl.disabled
                 }"
               />
               <span

@@ -30,7 +30,9 @@ export class BoardsDialogComponent implements OnInit, OnDestroy {
   showError: boolean = false;
   isSubmitting: boolean = false;
   isEditing$!: Subscription;
+  isLoading$!: Subscription;
   storedColumns: string[] = [];
+  oldStoredColumns: string[] = [];
   newStoredColumns: string[] = [];
 
   constructor(
@@ -62,6 +64,7 @@ export class BoardsDialogComponent implements OnInit, OnDestroy {
       this.board = board ?? this.board;
       this.storedColumns = [...this.board.columns];
       this.boardId = board?.id ?? this.boardId;
+      localStorage.setItem('boardColumns', JSON.stringify(board?.columns));
       localStorage.setItem('tasks', JSON.stringify(this.board.tasks));
 
       if (this.editState == true) {
@@ -78,6 +81,17 @@ export class BoardsDialogComponent implements OnInit, OnDestroy {
             })
           );
         });
+
+        try {
+          const boardColumns = JSON.parse(
+            localStorage.getItem('boardColumns')!
+          );
+          this.columns.controls.filter((column, index) => {
+            if (index <= boardColumns.length) {
+              column.disable();
+            }
+          });
+        } catch {}
       }
     });
 
@@ -105,9 +119,15 @@ export class BoardsDialogComponent implements OnInit, OnDestroy {
   }
 
   removeColumn(index: number, taskKey: { column: string }) {
-    this.columns.removeAt(index);
+    this.columns.controls.forEach((control, ctrlIndex) => {
+      if (index == ctrlIndex) {
+        control.enable();
+        this.columns.removeAt(index);
+      }
+    });
 
     delete this.tasksStored[taskKey.column];
+
     localStorage.setItem('tasks', JSON.stringify(this.tasksStored));
 
     this.storedColumns = this.storedColumns.filter((column, columnIndex) => {
@@ -126,7 +146,7 @@ export class BoardsDialogComponent implements OnInit, OnDestroy {
       }, 1500);
       return;
     }
-    const { name, columns } = this.createBoardForm.value;
+    const { name, columns } = this.createBoardForm.getRawValue();
 
     let newColumns: string[] = [];
     const tasks: any = {};
@@ -154,8 +174,7 @@ export class BoardsDialogComponent implements OnInit, OnDestroy {
       }
 
       this.newStoredColumns = newStoredColumnsX;
-
-      console.log(newStoredColumnsX, this.storedColumns);
+      this.oldStoredColumns = this.storedColumns;
 
       // checking to add old columns to new one without losing data
       newColumns = newColumns.filter((subtask, index) => {
@@ -166,14 +185,7 @@ export class BoardsDialogComponent implements OnInit, OnDestroy {
       });
 
       newColumns = [...newStoredColumnsX, ...newColumns];
-      // if (
-      //   JSON.stringify(this.newStoredColumns) !==
-      //   JSON.stringify(this.storedColumns)
-      // ) {
-      //   console.log(1);
 
-      //   window.location.reload();
-      // }
       this.store.dispatch(
         fromBoardsHttpActions.updateBoard({
           board: {
@@ -185,21 +197,14 @@ export class BoardsDialogComponent implements OnInit, OnDestroy {
         })
       );
 
-      this.taskService.board.next({
-        name: name,
-        columns: newColumns,
-        id: this.board?.id,
-        tasks: { ...tasks },
-      });
-
       this.isEditing$ = this.taskService.isSubmitting.subscribe((status) => {
         if (!status) {
+          this.editState = false;
           localStorage.setItem('board_id', this.board.id);
           localStorage.setItem('board_name', this.board.name);
           this.router.navigate(['boards'], {
             queryParams: { board: this.board.name, board_Id: this.board.id },
           });
-          const currentRoute = this.router.url;
 
           this.toastr.success('Board edited');
           this.dialog.closeAll();
@@ -219,6 +224,7 @@ export class BoardsDialogComponent implements OnInit, OnDestroy {
 
       this.isEditing$ = this.taskService.isSubmitting.subscribe((status) => {
         if (!status) {
+          this.editState = false;
           localStorage.setItem('board_name', name);
           localStorage.setItem('board_id', generatedId);
           this.router.navigate(['boards'], {
