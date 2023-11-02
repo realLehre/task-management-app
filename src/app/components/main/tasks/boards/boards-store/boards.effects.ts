@@ -1,17 +1,10 @@
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import {
-  catchError,
-  concatMap,
-  map,
-  mergeMap,
-  take,
-  tap,
-} from 'rxjs/operators';
+import { catchError, concatMap, map, mergeMap, tap } from 'rxjs/operators';
 import {
   AngularFirestore,
   AngularFirestoreCollection,
 } from '@angular/fire/compat/firestore';
-import { from, of } from 'rxjs';
+import { of } from 'rxjs';
 
 import * as fromBoardsHttpActions from '@boardsHttpActions';
 import { TaskService } from 'src/app/core/services/task.service';

@@ -7,7 +7,6 @@ import * as fromStore from '@store';
 import * as fromAuthActions from '@authPageActions';
 import { AuthService } from 'src/app/core/services/auth-service/auth.service';
 import { MatDialog } from '@angular/material/dialog';
-import { SessionExpiredComponent } from '../session-expired/session-expired.component';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { ThemeService } from 'src/app/core/theme.service';

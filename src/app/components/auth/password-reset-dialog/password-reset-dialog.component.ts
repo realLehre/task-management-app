@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 
 import * as fromStore from '@store';
 import * as fromAuthActions from '@authPageActions';
+import { ThemeService } from 'src/app/core/theme.service';
 
 @Component({
   selector: 'app-password-reset-dialog',
@@ -21,7 +22,8 @@ export class PasswordResetDialogComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private store: Store<fromStore.State>,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private themeService: ThemeService
   ) {}
 
   ngOnInit(): void {

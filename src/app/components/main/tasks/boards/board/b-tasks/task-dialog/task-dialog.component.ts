@@ -4,14 +4,10 @@ import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '@store';
-import * as fromTasksActions from '@tasksPageActions';
 import * as fromBoardsHttpActions from '@boardsHttpActions';
 import { TaskService } from 'src/app/core/services/task.service';
 import { Board } from 'src/app/shared/models/board.model';
 import { Task } from 'src/app/shared/models/task.model';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { Login } from '@authPageActions';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 

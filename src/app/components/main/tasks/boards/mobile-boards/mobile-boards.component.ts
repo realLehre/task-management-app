@@ -1,7 +1,7 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { TaskService } from 'src/app/core/services/task.service';
 import { BoardsDialogComponent } from '../boards-dialog/boards-dialog.component';
@@ -24,13 +24,11 @@ export class MobileBoardsComponent implements OnInit {
   boardIdStored!: string;
 
   constructor(
-    private renderer: Renderer2,
     private taskService: TaskService,
     private dialog: MatDialog,
     private themeService: ThemeService,
     private store: Store<fromStore.State>,
     private router: Router,
-    private route: ActivatedRoute,
     public dialogRef: MatDialogRef<MobileBoardsComponent>
   ) {}
 

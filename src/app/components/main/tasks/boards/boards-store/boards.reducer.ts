@@ -1,9 +1,4 @@
-import {
-  createFeatureSelector,
-  createReducer,
-  createSelector,
-  on,
-} from '@ngrx/store';
+import { createReducer, createSelector, on } from '@ngrx/store';
 
 import { Board } from 'src/app/shared/models/board.model';
 import * as BoardsPageActions from './boards.actions';

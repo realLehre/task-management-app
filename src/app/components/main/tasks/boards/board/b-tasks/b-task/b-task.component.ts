@@ -21,8 +21,6 @@ import * as fromBoardsHttpActions from '@boardsHttpActions';
 import { Board } from 'src/app/shared/models/board.model';
 import { TaskService } from 'src/app/core/services/task.service';
 import { Subscription } from 'rxjs';
-import { DndDropEvent } from 'ngx-drag-drop';
-import { Login } from '@authPageActions';
 
 @Component({
   selector: 'app-b-task',

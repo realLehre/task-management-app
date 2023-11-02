@@ -1,34 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import {
-  catchError,
-  concatMap,
-  map,
-  mergeMap,
-  take,
-  tap,
-} from 'rxjs/operators';
+import { catchError, concatMap, map, mergeMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import {
-  Auth,
-  signInWithPopup,
-  GoogleAuthProvider,
-  createUserWithEmailAndPassword,
-  signOut,
-  signInWithEmailAndPassword,
-  updateProfile,
-} from '@angular/fire/auth';
+import { Auth, updateProfile } from '@angular/fire/auth';
+import { Router } from '@angular/router';
+import { UserCredential } from 'firebase/auth';
 
 import { AuthService } from 'src/app/core/services/auth-service/auth.service';
 import * as fromAuthActions from '@authPageActions';
-import * as fromBoardsHttpActions from '@boardsHttpActions';
-import * as fromStore from '@store';
-import { UserCredential } from 'firebase/auth';
-import { FirebaseError } from 'firebase/app';
 import { TaskService } from 'src/app/core/services/task.service';
-import { Router } from '@angular/router';
 import { AuthUser } from 'src/app/shared/models/user.model';
-import { Store } from '@ngrx/store';
 
 @Injectable()
 export class AuthEffects {
@@ -37,8 +18,7 @@ export class AuthEffects {
     private authService: AuthService,
     private taskService: TaskService,
     private router: Router,
-    private auth: Auth,
-    private store: Store<fromStore.State>
+    private auth: Auth
   ) {
     const expirationTimeStored = JSON.parse(
       localStorage.getItem('expirationTime')!

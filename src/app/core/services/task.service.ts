@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject, defer, from } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Auth } from '@angular/fire/auth';
 import {
   AngularFirestore,
   AngularFirestoreCollection,
 } from '@angular/fire/compat/firestore';
-import { FieldValue, arrayUnion } from 'firebase/firestore';
 
 import { AuthUser, User } from 'src/app/shared/models/user.model';
 import { Board } from 'src/app/shared/models/board.model';

@@ -1,7 +1,6 @@
-import { createReducer, createSelector, on } from '@ngrx/store';
-import { UserCredential } from '@angular/fire/auth';
+import { createReducer, on } from '@ngrx/store';
 
-import { AuthUser, User } from 'src/app/shared/models/user.model';
+import { AuthUser } from 'src/app/shared/models/user.model';
 import * as fromAuthActions from '@authPageActions';
 
 export interface AuthState {

@@ -3,15 +3,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '@store';
-import { switchMap } from 'rxjs';
 import { Board } from 'src/app/shared/models/board.model';
 import { BoardsDialogComponent } from '../../boards-dialog/boards-dialog.component';
 import { Task } from 'src/app/shared/models/task.model';
-import {
-  CdkDragDrop,
-  moveItemInArray,
-  transferArrayItem,
-} from '@angular/cdk/drag-drop';
 import { TaskDialogComponent } from './task-dialog/task-dialog.component';
 import { TaskService } from 'src/app/core/services/task.service';
 
