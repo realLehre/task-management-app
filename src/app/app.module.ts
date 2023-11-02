@@ -9,16 +9,16 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MaterialModule } from './material.module';
 import { DialogComponent } from './shared/dialog/dialog.component';
 import * as fromApp from './store/app.reducer';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
 import { AuthModule } from './components/auth/auth.module';
-import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [AppComponent, DialogComponent],
@@ -39,12 +39,16 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     provideAuth(() => getAuth()),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
-    ToastrModule.forRoot({ timeOut: 1000, positionClass: 'toast-top-right' }),
+    ToastrModule.forRoot({
+      timeOut: 1000,
+      positionClass: 'toast-top-right',
+      progressBar: true,
+    }),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       // Register the ServiceWorker as soon as the application is stable
       // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000'
+      registrationStrategy: 'registerWhenStable:30000',
     }),
   ],
   providers: [],

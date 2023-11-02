@@ -88,7 +88,7 @@ export class BoardsDialogComponent implements OnInit, OnDestroy {
           );
           this.columns.controls.filter((column, index) => {
             if (index <= boardColumns.length) {
-              column.disable();
+              // column.disable();
             }
           });
         } catch {}

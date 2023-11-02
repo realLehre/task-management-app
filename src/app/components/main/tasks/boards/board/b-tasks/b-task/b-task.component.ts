@@ -21,6 +21,8 @@ import * as fromBoardsHttpActions from '@boardsHttpActions';
 import { Board } from 'src/app/shared/models/board.model';
 import { TaskService } from 'src/app/core/services/task.service';
 import { Subscription } from 'rxjs';
+import { DndDropEvent } from 'ngx-drag-drop';
+import { Login } from '@authPageActions';
 
 @Component({
   selector: 'app-b-task',
@@ -88,18 +90,31 @@ export class BTaskComponent implements OnInit, OnDestroy {
       const newTask = { ...event.container.data[event.currentIndex] };
 
       newTask['status'] = this.columnName[index];
+      let newColumnTasks: any[] = [];
 
-      let newColumnTasks: any[] = [...this.allTasks[this.columnName[index]]];
+      if (index >= this.columnName.length) {
+        const newIndex = index - (index - this.columnName.length + 1);
 
-      // update task status after dropping
-      newColumnTasks = newColumnTasks.map((task) => {
-        if (task.id == newTask.id) {
-          task['status'] = this.columnName[index];
-        }
-        return task;
-      });
+        newColumnTasks = [...this.allTasks[this.columnName[newIndex]]];
 
-      this.allTasks[this.columnName[index]] = newColumnTasks;
+        newColumnTasks = newColumnTasks.map((task) => {
+          if (task.id == newTask.id) {
+            task['status'] = this.columnName[newIndex];
+          }
+          return task;
+        });
+
+        this.allTasks[this.columnName[newIndex]] = newColumnTasks;
+      } else {
+        newColumnTasks = [...this.allTasks[this.columnName[index]]];
+        newColumnTasks = newColumnTasks.map((task) => {
+          if (task.id == newTask.id) {
+            task['status'] = this.columnName[index];
+          }
+          return task;
+        });
+        this.allTasks[this.columnName[index]] = newColumnTasks;
+      }
 
       this.store.select(fromStore.selectActiveBoard).subscribe((board) => {
         this.board = { ...board };
