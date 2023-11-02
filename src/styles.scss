@@ -72,8 +72,10 @@ a {
 }
 
 .toast-top-right {
-  top: 95px;
+  top: 15px;
+  box-shadow: none;
 }
+
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;

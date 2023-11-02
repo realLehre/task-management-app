@@ -28,7 +28,6 @@
     "@ngrx/store-devtools": "^14.3.3",
     "firebase": "^9.16.0",
     "ng-angular-popup": "^0.4.7",
-    "ngx-drag-drop": "^14.0.0",
     "ngx-skeleton-loader": "^6.0.0",
     "ngx-toastr": "^15.2.2",
     "rxjs": "~7.5.0",

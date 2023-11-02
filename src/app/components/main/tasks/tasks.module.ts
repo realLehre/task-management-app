@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
-import { DndModule } from 'ngx-drag-drop';
 
 import { BoardsComponent } from './boards/boards.component';
 import { BoardComponent } from './boards/board/board.component';
@@ -32,7 +31,6 @@ import { BoardsEffects } from './boards/boards-store/boards.effects';
       theme: { height: '40px', 'background-color': '#000112' },
       appearance: 'line',
     }),
-    DndModule,
   ],
   declarations: [
     BoardsComponent,
