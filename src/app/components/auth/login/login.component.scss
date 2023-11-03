@@ -179,7 +179,7 @@
 .forgot {
   margin: 20px 0;
   text-align: left;
-  color: $white;
+  color: var(--sideBar);
 
   & a {
     cursor: pointer;
@@ -190,7 +190,7 @@
 .or {
   font-size: 1rem;
   font-weight: 600;
-  color: $white;
+  color: var(--sideBar);
 }
 
 .sign-in-google {
