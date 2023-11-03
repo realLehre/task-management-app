@@ -99,6 +99,7 @@ export class BoardsComponent implements OnInit, AfterViewChecked {
 
   onSelectBoard(id: string, name: string) {
     localStorage.setItem('board_id', id);
+    this.boardIdStored = id;
     localStorage.setItem('board_name', name);
     this.router.navigate(['boards'], {
       queryParams: { board: name, board_Id: id },
