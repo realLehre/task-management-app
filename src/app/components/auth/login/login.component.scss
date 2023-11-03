@@ -81,6 +81,12 @@
         outline: none;
       }
 
+      &:-webkit-autofill {
+        border: 2px solid rgba($grey-medium, 0.4) !important;
+        -webkit-box-shadow: 0 0 0 1000px var(--bgColorContentCheck) inset !important;
+        -webkit-text-fill-color: var(--taskText) !important;
+      }
+
       &::placeholder {
         font-size: 1rem;
         color: var(--textInput);
