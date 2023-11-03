@@ -57,7 +57,6 @@
           class="board"
           [routerLink]="['/', 'boards']"
           [queryParams]="{ board: board.name, board_id: board.id }"
-          routerLinkActive="active"
           [ngClass]="{ active: board.id == boardIdStored }"
           (click)="onSelectBoard(board.id, board.name)"
         >
