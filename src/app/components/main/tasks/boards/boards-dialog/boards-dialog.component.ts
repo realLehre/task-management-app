@@ -10,6 +10,7 @@ import * as fromBoardsHttpActions from '@boardsHttpActions';
 import { TaskService } from 'src/app/core/services/task.service';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
+import { Login } from '@authPageActions';
 
 interface boardForm {
   name: FormControl<string | null>;
@@ -169,6 +170,10 @@ export class BoardsDialogComponent implements OnInit, OnDestroy {
 
         // if column name is changed, replace tasks with previous task (don't return empty array)
         tasks[column] = this.tasksStored[this.storedColumns[d]];
+        tasks[column] = tasks[column].map((newTask: any) => {
+          newTask.status = column;
+          return newTask;
+        });
 
         newStoredColumnsX.push(column);
       }

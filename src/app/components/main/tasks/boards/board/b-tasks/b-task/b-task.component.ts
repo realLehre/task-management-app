@@ -53,6 +53,10 @@ export class BTaskComponent implements OnInit, OnDestroy {
         this.isSubmitting = status;
       }
     );
+
+    this.store.select(fromStore.selectActiveBoard).subscribe((board) => {
+      this.board = { ...board };
+    });
   }
 
   onViewTask(task: Task) {
@@ -65,73 +69,67 @@ export class BTaskComponent implements OnInit, OnDestroy {
   }
 
   drop(event: CdkDragDrop<Task[]>) {
-    if (!this.isSubmitting) {
-      if (event.previousContainer === event.container) {
-        moveItemInArray(
-          event.container.data,
-          event.previousIndex,
-          event.currentIndex
-        );
-      } else {
-        transferArrayItem(
-          event.previousContainer.data,
-          event.container.data,
-          event.previousIndex,
-          event.currentIndex
-        );
-      }
-
-      const id = event.container.id;
-
-      const index = +id.slice(-1);
-
-      const newTask = { ...event.container.data[event.currentIndex] };
-
-      newTask['status'] = this.columnName[index];
-      let newColumnTasks: any[] = [];
-
-      if (index >= this.columnName.length) {
-        const newIndex = index - (index - this.columnName.length + 1);
-
-        newColumnTasks = [...this.allTasks[this.columnName[newIndex]]];
-
-        newColumnTasks = newColumnTasks.map((task) => {
-          if (task.id == newTask.id) {
-            task['status'] = this.columnName[newIndex];
-          }
-          return task;
-        });
-
-        this.allTasks[this.columnName[newIndex]] = newColumnTasks;
-      } else {
-        newColumnTasks = [...this.allTasks[this.columnName[index]]];
-        newColumnTasks = newColumnTasks.map((task) => {
-          if (task.id == newTask.id) {
-            task['status'] = this.columnName[index];
-          }
-          return task;
-        });
-        this.allTasks[this.columnName[index]] = newColumnTasks;
-      }
-
-      this.store.select(fromStore.selectActiveBoard).subscribe((board) => {
-        this.board = { ...board };
-      });
-
-      this.taskService.board.next({
-        ...this.board,
-        tasks: { ...this.allTasks },
-      });
-
-      this.store.dispatch(
-        fromBoardsHttpActions.updateBoard({
-          board: {
-            ...this.board,
-            tasks: { ...this.allTasks },
-          },
-        })
+    if (event.previousContainer === event.container) {
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
       );
     }
+
+    const id = event.container.id;
+
+    const index = +id.slice(-1);
+
+    const newTask = { ...event.container.data[event.currentIndex] };
+
+    newTask['status'] = this.columnName[index];
+    let newColumnTasks: any[] = [];
+
+    if (index >= this.columnName.length) {
+      const newIndex = index - (index - this.columnName.length + 1);
+
+      newColumnTasks = [...this.allTasks[this.columnName[newIndex]]];
+
+      newColumnTasks = newColumnTasks.map((task) => {
+        if (task.id == newTask.id) {
+          task['status'] = this.columnName[newIndex];
+        }
+        return task;
+      });
+
+      this.allTasks[this.columnName[newIndex]] = newColumnTasks;
+    } else {
+      newColumnTasks = [...this.allTasks[this.columnName[index]]];
+      newColumnTasks = newColumnTasks.map((task) => {
+        if (task.id == newTask.id) {
+          task['status'] = this.columnName[index];
+        }
+        return task;
+      });
+      this.allTasks[this.columnName[index]] = newColumnTasks;
+    }
+
+    this.taskService.board.next({
+      ...this.board,
+      tasks: { ...this.allTasks },
+    });
+
+    this.store.dispatch(
+      fromBoardsHttpActions.updateBoard({
+        board: {
+          ...this.board,
+          tasks: { ...this.allTasks },
+        },
+      })
+    );
   }
 
   ngOnDestroy(): void {
