@@ -105,6 +105,7 @@ export class TaskService {
 
     const user = this.usersDatabase.doc(uid);
     let boards: Board[];
+
     return defer(() => {
       return from(
         user.get().pipe(
@@ -141,6 +142,7 @@ export class TaskService {
 
     const user = this.usersDatabase.doc(uid);
     let boards: Board[];
+
     return defer(() => {
       return from(
         user.get().pipe(

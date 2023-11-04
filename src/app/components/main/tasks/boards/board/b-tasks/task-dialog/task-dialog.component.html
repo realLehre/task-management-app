@@ -192,7 +192,11 @@
     </div>
 
     <div class="delete-task-actions">
-      <button id="delete" (click)="onDeleteTask()">Delete</button>
+      <button id="delete" (click)="onDeleteTask()">
+        <span class="btn-texts" *ngIf="!isSubmitting"> Delete </span>
+
+        <span class="loader" *ngIf="isSubmitting"></span>
+      </button>
       <button id="cancel" (click)="closeDialog()">Cancel</button>
     </div>
   </mat-dialog-content>

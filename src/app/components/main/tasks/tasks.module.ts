@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { EffectsModule } from '@ngrx/effects';
 
 import { BoardsComponent } from './boards/boards.component';
 import { BoardComponent } from './boards/board/board.component';
@@ -14,7 +15,6 @@ import { BoardsDialogComponent } from './boards/boards-dialog/boards-dialog.comp
 import { SubTaskComponent } from './boards/board/b-tasks/task-dialog/sub-task/sub-task.component';
 import { MobileBoardsComponent } from './boards/mobile-boards/mobile-boards.component';
 import { ShortenBoardName } from 'src/app/shared/pipes/shorten-boardname.pipe';
-import { EffectsModule } from '@ngrx/effects';
 import { BoardsEffects } from './boards/boards-store/boards.effects';
 
 @NgModule({

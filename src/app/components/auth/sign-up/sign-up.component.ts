@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 
 import * as fromStore from '@store';
 import * as fromAuthActions from '@authPageActions';
 import { Store } from '@ngrx/store';
 import { AuthService } from 'src/app/core/services/auth-service/auth.service';
-import { ToastrService } from 'ngx-toastr';
-import { Subscription } from 'rxjs';
 import { ThemeService } from 'src/app/core/theme.service';
 
 @Component({

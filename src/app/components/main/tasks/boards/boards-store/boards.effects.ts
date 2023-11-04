@@ -37,6 +37,7 @@ export class BoardsEffects {
 
           catchError((err) => {
             this.taskService.isLoadingBoards.next(false);
+
             this.toastr.error('Something went wrong! Try again later');
             return of();
           })
@@ -89,6 +90,8 @@ export class BoardsEffects {
         this.taskService.isSubmitting.next(true);
         return this.taskService.deleteBoard(data.id).pipe(
           map((data) => {
+            console.log(1);
+
             return fromBoardsActions.updateBoardsSuccess({ boards: data });
           }),
           catchError((err) => {

@@ -397,6 +397,7 @@ export class TaskDialogComponent implements OnInit, OnDestroy {
     this.isSubmitting = true;
     const taskStatus = this.task.status;
     const tasks = { ...this.board.tasks };
+    console.log(1);
 
     tasks[taskStatus] = tasks[taskStatus].filter(
       (task: Task) => task.id != this.task.id
@@ -416,9 +417,8 @@ export class TaskDialogComponent implements OnInit, OnDestroy {
         this.isSubmitting = false;
         this.toastr.success('Task deleted');
       }
+      this.dialog.closeAll();
     });
-
-    this.dialog.closeAll();
   }
 
   closeDialog() {

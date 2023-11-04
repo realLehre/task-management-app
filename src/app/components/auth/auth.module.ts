@@ -20,7 +20,13 @@ import { PasswordResetDialogComponent } from './password-reset-dialog/password-r
     ReactiveFormsModule,
     EffectsModule.forFeature([AuthEffects]),
   ],
-  declarations: [LoginComponent, SignUpComponent, SessionExpiredComponent, PasswordResetComponent, PasswordResetDialogComponent],
+  declarations: [
+    LoginComponent,
+    SignUpComponent,
+    SessionExpiredComponent,
+    PasswordResetComponent,
+    PasswordResetDialogComponent,
+  ],
   exports: [LoginComponent, SignUpComponent],
 })
 export class AuthModule {}
