@@ -70,6 +70,7 @@ export class BoardsEffects {
       ofType(fromBoardsHttpActions.updateBoard),
       concatMap((data) => {
         this.taskService.isSubmitting.next(true);
+
         return this.taskService.updateBoards(data.board).pipe(
           map((data) => {
             return fromBoardsActions.updateBoardsSuccess({ boards: data });
@@ -90,8 +91,6 @@ export class BoardsEffects {
         this.taskService.isSubmitting.next(true);
         return this.taskService.deleteBoard(data.id).pipe(
           map((data) => {
-            console.log(1);
-
             return fromBoardsActions.updateBoardsSuccess({ boards: data });
           }),
           catchError((err) => {

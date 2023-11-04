@@ -163,6 +163,11 @@ export class TaskDialogComponent implements OnInit, OnDestroy {
 
     boardTasks[this.task.status] = [...tasksToUpdate];
 
+    this.taskService.board.next({
+      ...this.board,
+      tasks: { ...boardTasks },
+    });
+
     this.store.dispatch(
       fromBoardsHttpActions.updateBoard({
         board: {
@@ -397,7 +402,6 @@ export class TaskDialogComponent implements OnInit, OnDestroy {
     this.isSubmitting = true;
     const taskStatus = this.task.status;
     const tasks = { ...this.board.tasks };
-    console.log(1);
 
     tasks[taskStatus] = tasks[taskStatus].filter(
       (task: Task) => task.id != this.task.id

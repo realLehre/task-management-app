@@ -27,6 +27,7 @@ export class BTasksComponent implements OnInit {
   tasks!: { [key: string]: Task[] };
   showTasks: boolean = false;
   theme!: string;
+  isUpdated: boolean = false;
 
   constructor(
     private store: Store<fromStore.State>,
@@ -36,17 +37,26 @@ export class BTasksComponent implements OnInit {
 
   ngOnInit(): void {
     this.theme = localStorage.getItem('theme')!;
-    this.taskService.isLoadingBoards.subscribe((status) => {
-      this.isFetching = status;
-      if (status == false) {
-        this.store.select(fromStore.selectActiveBoard).subscribe((board) => {
-          if (board?.id) {
-            this.activeBoard = board ?? {};
-            this.tasks = JSON.parse(JSON.stringify(this.activeBoard.tasks));
-          }
-        });
-      }
+
+    this.taskService.board.subscribe((board) => {
+      this.activeBoard = board;
+      this.tasks = board.tasks;
+      this.isUpdated = true;
     });
+
+    if (!this.isUpdated) {
+      this.taskService.isLoadingBoards.subscribe((status) => {
+        this.isFetching = status;
+        if (status == false) {
+          this.store.select(fromStore.selectActiveBoard).subscribe((board) => {
+            if (board?.id) {
+              this.activeBoard = board ?? {};
+              this.tasks = JSON.parse(JSON.stringify(this.activeBoard.tasks));
+            }
+          });
+        }
+      });
+    }
 
     this.store.select(fromStore.selectAllBoards).subscribe((boards) => {
       this.boards = boards ?? [];

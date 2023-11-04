@@ -20,7 +20,7 @@ import * as fromStore from '@store';
 import * as fromBoardsHttpActions from '@boardsHttpActions';
 import { Board } from 'src/app/shared/models/board.model';
 import { TaskService } from 'src/app/core/services/task.service';
-import { Subscription } from 'rxjs';
+import { Subscription, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-b-task',
@@ -116,6 +116,11 @@ export class BTaskComponent implements OnInit, OnDestroy {
 
       this.store.select(fromStore.selectActiveBoard).subscribe((board) => {
         this.board = { ...board };
+      });
+
+      this.taskService.board.next({
+        ...this.board,
+        tasks: { ...this.allTasks },
       });
 
       this.store.dispatch(
