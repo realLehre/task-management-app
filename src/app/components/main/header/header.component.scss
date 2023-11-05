@@ -104,10 +104,23 @@ i {
     }
 
     & .header-extra {
-      & i {
-        font-size: 25px;
-        color: $purple_light;
+      & .board-menu-container {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         cursor: pointer;
+
+        &:hover {
+          background-color: var(--bgColorContentCheck);
+        }
+
+        & i {
+          font-size: 25px;
+          color: $purple_light;
+        }
       }
     }
   }

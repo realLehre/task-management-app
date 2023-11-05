@@ -28,7 +28,11 @@
       ></ngx-skeleton-loader>
     </div>
   </div>
-  <div class="tasks-main" *ngIf="boards.length > 0 && !isFetching">
+  <div
+    class="tasks-main"
+    *ngIf="boards.length > 0 && !isFetching"
+    cdkDropListGroup
+  >
     <div
       class="tasks-main-group"
       *ngFor="let column of activeBoard.columns; let i = index"
@@ -47,6 +51,7 @@
             [tasks]="tasks[column]"
             [allTasks]="tasks"
             [columnName]="activeBoard.columns"
+            [singleColumnName]="column"
           ></app-b-task>
         </div>
       </div>

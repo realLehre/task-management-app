@@ -3,6 +3,7 @@
   cdkDropList
   [cdkDropListData]="tasks"
   (cdkDropListDropped)="drop($event)"
+  [id]="singleColumnName"
 >
   <div
     class="task-main-container"

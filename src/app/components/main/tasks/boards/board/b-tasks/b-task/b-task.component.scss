@@ -37,6 +37,7 @@
   }
 
   &:hover {
+    cursor: grab;
     & .task-main-title {
       color: $purple_dark;
     }

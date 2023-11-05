@@ -219,10 +219,24 @@ mat-form-field {
       }
     }
 
-    & i {
-      color: $grey-medium;
-      font-size: 30px;
+    & .task-menu-container {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
+
+      &:hover {
+        background-color: var(--bgColorContentCheck);
+      }
+
+      & i {
+        color: $grey-medium;
+        font-size: 30px;
+        cursor: pointer;
+      }
     }
   }
 

@@ -87,10 +87,13 @@
         </div>
 
         <div class="header-extra">
-          <i
-            class="fa fa-ellipsis-vertical"
+          <div
+            class="board-menu-container"
+            *ngIf="board.columns.length > 0"
             [matMenuTriggerFor]="board_menu"
-          ></i>
+          >
+            <i class="fa fa-ellipsis-vertical"></i>
+          </div>
 
           <div class="board-menu">
             <mat-menu #board_menu="matMenu">

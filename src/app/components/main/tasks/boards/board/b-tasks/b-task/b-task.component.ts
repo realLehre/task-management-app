@@ -31,6 +31,7 @@ export class BTaskComponent implements OnInit, OnDestroy {
   @Input() tasks: Task[] = [];
   @Input() allTasks!: { [key: string]: Task[] };
   @Input() columnName: string[] = [];
+  @Input() singleColumnName!: string;
   board: Board | any = {
     name: '',
     columns: [],
@@ -84,38 +85,60 @@ export class BTaskComponent implements OnInit, OnDestroy {
       );
     }
 
-    const id = event.container.id;
-
-    const index = +id.slice(-1);
+    const columnName = event.container.id;
 
     const newTask = { ...event.container.data[event.currentIndex] };
+    console.log(event);
 
-    newTask['status'] = this.columnName[index];
+    newTask['status'] = columnName;
     let newColumnTasks: any[] = [];
 
-    if (index >= this.columnName.length) {
-      const newIndex = index - (index - this.columnName.length + 1);
+    // if (index >= this.columnName.length) {
+    //   const newIndex = index - (index - this.columnName.length + 1);
 
-      newColumnTasks = [...this.allTasks[this.columnName[newIndex]]];
+    //   newColumnTasks = [...this.allTasks[this.columnName[newIndex]]];
 
-      newColumnTasks = newColumnTasks.map((task) => {
-        if (task.id == newTask.id) {
-          task['status'] = this.columnName[newIndex];
-        }
-        return task;
-      });
+    //   newColumnTasks = newColumnTasks.map((task) => {
+    //     if (task.id == newTask.id) {
+    //       // task['status'] = this.columnName[newIndex];
+    //       task['status'] = columnName;
+    //     }
 
-      this.allTasks[this.columnName[newIndex]] = newColumnTasks;
-    } else {
-      newColumnTasks = [...this.allTasks[this.columnName[index]]];
-      newColumnTasks = newColumnTasks.map((task) => {
-        if (task.id == newTask.id) {
-          task['status'] = this.columnName[index];
-        }
-        return task;
-      });
-      this.allTasks[this.columnName[index]] = newColumnTasks;
-    }
+    //     return task;
+    //   });
+
+    //   // this.allTasks[this.columnName[newIndex]] = newColumnTasks;
+    //   this.allTasks[columnName] = newColumnTasks;
+    // } else {
+    //   // newColumnTasks = [...this.allTasks[this.columnName[index]]];
+    //   newColumnTasks = [...this.allTasks[columnName]];
+    //   newColumnTasks = newColumnTasks.map((task) => {
+    //     if (task.id == newTask.id) {
+    //       // task['status'] = this.columnName[index];
+    //       task['status'] = columnName;
+    //     }
+
+    //     return task;
+    //   });
+    //   // this.allTasks[this.columnName[index]] = newColumnTasks;
+    //   this.allTasks[columnName] = newColumnTasks;
+    // }
+
+    newColumnTasks = [...this.allTasks[columnName]];
+    console.log(newColumnTasks);
+
+    newColumnTasks = newColumnTasks.map((task) => {
+      if (task.id == newTask.id) {
+        // task['status'] = this.columnName[index];
+        task['status'] = columnName;
+      }
+
+      return task;
+    });
+    // this.allTasks[this.columnName[index]] = newColumnTasks;
+    this.allTasks[columnName] = newColumnTasks;
+
+    console.log(this.allTasks);
 
     this.taskService.board.next({
       ...this.board,
