@@ -17,9 +17,9 @@ Checkout the live application at [](https://ng-kanban.netlify.app/)
 ## Demo
 
 ![App demo](<src/assets/demo/Kanban(1).gif>)
-![App demo](<src/assets/demo/Kanban(2).gif>)
-![App demo](<src/assets/demo/Kanban(3).gif>)
-![App demo](<src/assets/demo/Kanban(4).gif>)
+![App demo2](<src/assets/demo/Kanban(2).gif>)
+![App demo3](<src/assets/demo/Kanban(3).gif>)
+![App demo4](<src/assets/demo/Kanban(4).gif>)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.8.
 
