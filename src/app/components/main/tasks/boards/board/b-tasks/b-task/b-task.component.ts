@@ -88,7 +88,6 @@ export class BTaskComponent implements OnInit, OnDestroy {
     const columnName = event.container.id;
 
     const newTask = { ...event.container.data[event.currentIndex] };
-    console.log(event);
 
     newTask['status'] = columnName;
     let newColumnTasks: any[] = [];
@@ -125,7 +124,6 @@ export class BTaskComponent implements OnInit, OnDestroy {
     // }
 
     newColumnTasks = [...this.allTasks[columnName]];
-    console.log(newColumnTasks);
 
     newColumnTasks = newColumnTasks.map((task) => {
       if (task.id == newTask.id) {
@@ -137,8 +135,6 @@ export class BTaskComponent implements OnInit, OnDestroy {
     });
     // this.allTasks[this.columnName[index]] = newColumnTasks;
     this.allTasks[columnName] = newColumnTasks;
-
-    console.log(this.allTasks);
 
     this.taskService.board.next({
       ...this.board,
