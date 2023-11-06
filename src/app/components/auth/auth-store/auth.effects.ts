@@ -195,6 +195,7 @@ export class AuthEffects {
           localStorage.removeItem('expirationTime');
           localStorage.removeItem('boardColumns');
           localStorage.removeItem('task');
+          localStorage.removeItem('prevStatus');
           this.router.navigate(['/', 'auth', 'sign-in']);
         })
       ),
