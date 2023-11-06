@@ -193,6 +193,8 @@ export class AuthEffects {
           localStorage.removeItem('board_name');
           localStorage.removeItem('tasks');
           localStorage.removeItem('expirationTime');
+          localStorage.removeItem('boardColumns');
+          localStorage.removeItem('task');
           this.router.navigate(['/', 'auth', 'sign-in']);
         })
       ),

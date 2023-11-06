@@ -323,6 +323,7 @@ export class TaskDialogComponent implements OnInit, OnDestroy {
         id: this.task.id,
       };
 
+      // remove task from previous column if status changes
       if (prevStatus && prevStatus != this.status.value) {
         tasks[prevStatus] = tasks[prevStatus].filter(
           (task) => task.id != this.task.id
