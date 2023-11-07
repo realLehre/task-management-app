@@ -13,6 +13,7 @@ Checkout the live application at [https://ng-kanban.netlify.app](https://ng-kanb
 - [x] Creating a new task, editing and deleting
 - [x] Drag and drop to updated tasks between and within columns
 - [x] Light and dark mode
+- [x] PWA enabled
 
 ## Demo
 
