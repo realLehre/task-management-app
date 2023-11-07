@@ -54,6 +54,7 @@ export class TaskDialogComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.type = this.data.type;
     this.isEdit = this.data.mode.isEdit;
+
     if (this.data.selectedTask) {
       this.task = this.data.selectedTask;
       localStorage.setItem('task', JSON.stringify(this.task));
@@ -66,6 +67,7 @@ export class TaskDialogComponent implements OnInit, OnDestroy {
     this.storedSubtasks = JSON.parse(
       localStorage.getItem('task') || '{}'
     ).sub_tasks;
+
     this.storedCompletedSubtasks = JSON.parse(
       localStorage.getItem('task') || '{}'
     ).completed_sub_tasks;
@@ -145,11 +147,15 @@ export class TaskDialogComponent implements OnInit, OnDestroy {
       return newSubtask;
     });
 
+    this.storedSubtasks = this.subTasks;
+
     const newTask = {
       ...this.task,
       completed_sub_tasks: this.completedSubtasks,
       sub_tasks: this.subTasks,
     };
+
+    this.task = newTask;
 
     let boardTasks = { ...this.board.tasks };
     let tasksToUpdate = this.board.tasks[this.task.status];
@@ -158,6 +164,7 @@ export class TaskDialogComponent implements OnInit, OnDestroy {
       if (task.id == this.task.id) {
         return newTask;
       }
+
       return task;
     });
 
@@ -167,6 +174,8 @@ export class TaskDialogComponent implements OnInit, OnDestroy {
       ...this.board,
       tasks: { ...boardTasks },
     });
+
+    // this.storedSubtasks =
 
     this.store.dispatch(
       fromBoardsHttpActions.updateBoard({
@@ -295,6 +304,7 @@ export class TaskDialogComponent implements OnInit, OnDestroy {
     if (this.isEdit) {
       // change subtask name without changing its data
       const newStoredSubtasks: any[] = [];
+
       for (let d = 0; d < this.storedSubtasks.length; d++) {
         let newSubtask = {
           ...this.storedSubtasks[d],
