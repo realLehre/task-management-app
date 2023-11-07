@@ -62,20 +62,6 @@
     </div>
   </div>
 
-  <!-- <div
-    class="empty-tasks"
-    *ngIf="
-      activeBoard.name != '' && activeBoard.columns.length == 0 && !isFetching
-    "
-  >
-    <div class="empty-tasks-heading">
-      This board is empty. Create a new column to get started.
-    </div>
-    <div class="empty-tasks-button">
-      <button (click)="onAddBoard_Column('column')">+Add New Column</button>
-    </div>
-  </div> -->
-
   <div
     class="empty-tasks empty board"
     *ngIf="boards.length == 0 && !isFetching"
