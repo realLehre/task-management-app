@@ -4,7 +4,7 @@ A task management app built with Angular, NgRx and Angular Material.
 
 ## Deployed application
 
-Checkout the live application at [https://ng-kanban.netlify.app](https://ng-kanban.netlify.app)
+Checkout the live application at [https://ng-kanban.netlify.app](https://rl-kanban.netlify.app)
 
 ## Features
 
